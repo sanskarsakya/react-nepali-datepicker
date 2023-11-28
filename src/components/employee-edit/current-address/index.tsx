@@ -18,21 +18,19 @@ import { ConnectForm } from '../../../base/atoms/v2/Form/connect-form';
 import { FormProvider } from '../../../base/atoms/v2/Form/form-provider';
 import InputTextV2 from '../../../base/atoms/v2/Form/rigo-input-text';
 import SelectV2 from '../../../base/atoms/v2/Form/rigo-select';
-import { formMachine } from '../../../machines/fomr-machie';
+import { machine } from '../../../machines/form-machine';
 
 export const EmployeeEditForm = (props: any) => {
     const { state, send, reset, getValues, watch, ...propsRest } = props;
 
     React.useEffect(() => {
         console.log("MOUNT_FORM")
-        send("MOUNT_FORM", { reset, getValues, watch })
+        send("MOUNT_FORM", { reset, getValues, watch, mode: "EDIT" })
     }, [])
 
     return <Flex direction="column" gap={4}>
 
-        <pre>{JSON.stringify(state.value, null, 2)}</pre>
         <Flex gap={4}>
-
             <InputTextV2
                 name="Address"
                 label="Address"
@@ -217,8 +215,10 @@ export const EmployeeEditForm = (props: any) => {
 
 export const EmployeeCurrentAddressEdit = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [state, send] = useMachine(formMachine)
+    const [state, send] = useMachine(machine)
 
+    // FUNCTIONS
+    
     const handleSubmit = (data: any) => {
         console.log(JSON.stringify(data, null, 2));
         if (!data) {

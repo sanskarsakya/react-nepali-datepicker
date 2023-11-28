@@ -1,7 +1,7 @@
 // LIBS
 
 import { useInterpret } from "@xstate/react";
-import { formMachine } from "./fomr-machie";
+import { formMachine } from "./form-machine";
 import { GlobalFormStateContext } from "./context";
 export const FormMachineProvider = (props:any) => {
   const formMachineService = useInterpret(formMachine);

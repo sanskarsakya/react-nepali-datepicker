@@ -18,7 +18,7 @@ import { ConnectForm } from '../../../base/atoms/v2/Form/connect-form';
 import { FormProvider } from '../../../base/atoms/v2/Form/form-provider';
 import InputTextV2 from '../../../base/atoms/v2/Form/rigo-input-text';
 import SelectV2 from '../../../base/atoms/v2/Form/rigo-select';
-import { formMachine } from '../../../machines/fomr-machie';
+import { formMachine } from '../../../machines/form-machine';
 
 export const EmployeeEditForm = (props: any) => {
     const { state, send, reset, getValues, watch, ...propsRest } = props;
