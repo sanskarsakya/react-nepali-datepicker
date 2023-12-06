@@ -1,17 +1,13 @@
 import { create } from 'zustand'
-import { fetchPendingRequest, fetchPersonalInformation } from '../linked-pages/personal-information/machines/fetch-machine'
-import { IPersonalInformation } from '../linked-pages/personal-information/machines/types/personal-information.types'
-
-export interface DataState<T> {
-    loading: 'LOADING' | "IDLE",
-    loaded: boolean,
-    data: T[] | T | [] | null
-}
+import { DataState } from '../shared/ts/data-state'
+import { apiSimulator } from '../libs/api-simulator'
+import { Mock_PerndingRequest as Mock_PendingRequest, Mock_PersonalInformation } from '../mocks'
+import { IPersonalInformation } from '../types/personal-information.types'
 
 export const initialDataState: DataState<any> = {
     loading: "IDLE",
     loaded: false,
-    data: null
+    data: []
 }
 
 interface PersonalInformationState {
@@ -33,11 +29,11 @@ const initial = {
     watch: null,
     getValues: null,
     reset: null,
-    pendingRequest: initialDataState,
-    personalInformation: initialDataState,
+    pendingRequest: {...initialDataState, data:null},
+    personalInformation: {...initialDataState, data:null},
 
 }
-export const usePersonalInformationSotre = create<PersonalInformationState>()((set, get) => ({
+export const usePersonalInformationStore = create<PersonalInformationState>()((set, get) => ({
     ...initial,
 
     // ACTIONS
@@ -49,7 +45,7 @@ export const usePersonalInformationSotre = create<PersonalInformationState>()((s
             }
         })
 
-        const response: any = await fetchPersonalInformation()
+        const response: any = await apiSimulator(Mock_PersonalInformation)
 
         set({
             personalInformation: {
@@ -68,7 +64,7 @@ export const usePersonalInformationSotre = create<PersonalInformationState>()((s
             }
         })
 
-        const response: any = await fetchPendingRequest()
+        const response: any = await apiSimulator(Mock_PendingRequest)
 
         set({
             pendingRequest: {
@@ -87,6 +83,6 @@ export const selectPersonalInformation = (state: PersonalInformationState) => st
 export const selectPendingRequest = (state: PersonalInformationState) => state.pendingRequest;
 
 // actions
-export const fnFetchPrsonalInformation = (state: PersonalInformationState) => state.fetchPersonalInformation;
+export const fnFetchPersonalInformation = (state: PersonalInformationState) => state.fetchPersonalInformation;
 export const fnFetchPendingRequest = (state: PersonalInformationState) => state.fetchPendingRequest;
 export const fnClearStore = (state: PersonalInformationState) => state.clearStore;

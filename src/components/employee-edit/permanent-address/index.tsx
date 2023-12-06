@@ -11,14 +11,12 @@ import {
     ModalOverlay,
     useDisclosure,
 } from '@chakra-ui/react';
-import { useMachine } from '@xstate/react';
 import React from 'react';
 import { When } from 'react-if';
 import { ConnectForm } from '../../../base/atoms/v2/Form/connect-form';
 import { FormProvider } from '../../../base/atoms/v2/Form/form-provider';
 import InputTextV2 from '../../../base/atoms/v2/Form/rigo-input-text';
 import SelectV2 from '../../../base/atoms/v2/Form/rigo-select';
-import { machine } from '../../../machines/form-machine';
 
 export const EmployeeEditForm = (props: any) => {
     const { state, send, reset, getValues, watch, ...propsRest } = props;
@@ -217,22 +215,22 @@ export const EmployeeEditForm = (props: any) => {
 
 export const EmployeePermanentAddressEdit = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [state, send] = useMachine(machine)
+    // const [state, send] = useMachine(machine)
 
     const handleSubmit = (data: any) => {
         console.log(JSON.stringify(data, null, 2));
         if (!data) {
             return
         }
-        send("SUBMIT_FORM", {
-            data
-        })
+        // send("SUBMIT_FORM", {
+        //     data
+        // })
         onClose()
     }
 
     const handleClose = () => {
         onClose()
-        send("CLOSE")
+        // send("CLOSE")
     }
     return (
         <>
@@ -283,8 +281,8 @@ export const EmployeePermanentAddressEdit = () => {
                                         <ModalBody>
                                             <Heading fontWeight="medium" fontSize="lg" >Permanent Address </Heading>
                                             <EmployeeEditForm
-                                                state={state}
-                                                send={send}
+                                                state={null}
+                                                send={null}
                                                 {...inputProps}
                                             />
                                         </ModalBody>
