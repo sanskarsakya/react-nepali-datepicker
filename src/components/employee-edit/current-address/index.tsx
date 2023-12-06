@@ -20,7 +20,7 @@ import InputTextV2 from '../../../base/atoms/v2/Form/rigo-input-text';
 import SelectV2 from '../../../base/atoms/v2/Form/rigo-select';
 import { machine } from '../../../machines/form-machine';
 
-export const EmployeeEditForm = (props: any) => {
+export const PersonalInformationCurrendAddressFormComponent = (props: any) => {
     const { state, send, reset, getValues, watch, ...propsRest } = props;
 
     React.useEffect(() => {
@@ -218,7 +218,6 @@ export const EmployeeCurrentAddressEdit = () => {
     const [state, send] = useMachine(machine)
 
     // FUNCTIONS
-    
     const handleSubmit = (data: any) => {
         console.log(JSON.stringify(data, null, 2));
         if (!data) {
@@ -234,6 +233,7 @@ export const EmployeeCurrentAddressEdit = () => {
         onClose()
         send("CLOSE")
     }
+
     return (
         <>
             <Button onClick={onOpen}>Open Modal</Button>
@@ -282,7 +282,7 @@ export const EmployeeCurrentAddressEdit = () => {
                                     return <>
                                         <ModalBody>
                                             <Heading fontWeight="medium" fontSize="lg" >Current Address </Heading>
-                                            <EmployeeEditForm
+                                            <PersonalInformationCurrendAddressFormComponent
                                                 state={state}
                                                 send={send}
                                                 {...inputProps}

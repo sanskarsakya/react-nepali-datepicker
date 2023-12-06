@@ -38,6 +38,7 @@ mklink /j form-label C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modu
 mklink /j form-error-label C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\form-error-label
 mklink /j rigo-input-text C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\rigo-input-text
 mklink /j rigo-select C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\rigo-select
+mklink /j rigo-text-area C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\rigo-text-area
 
 
 ```

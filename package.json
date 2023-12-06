@@ -12,20 +12,24 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@hookform/devtools": "^4.3.1",
-    "@xstate/react": "^3.2.2",
+    "@storybook/addon-actions": "^7.6.3",
+    "@xstate/react": "^4.0.0",
     "bikram-sambat-js": "^1.0.1",
     "framer-motion": "^10.16.5",
     "lodash": "^4.17.21",
     "nepali-number": "^1.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.11",
     "react-hook-form": "^7.48.2",
     "react-if": "^4.1.5",
-    "xstate": "^4.38.3"
+    "xstate": "^5.0.2",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "7.5.3",

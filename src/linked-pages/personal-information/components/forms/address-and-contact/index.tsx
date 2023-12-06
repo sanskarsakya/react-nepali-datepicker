@@ -1,38 +1,33 @@
 import {
     Button,
     Flex,
-    Heading,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
     ModalFooter,
     ModalHeader,
-    ModalOverlay,
-    useDisclosure,
+    ModalOverlay
 } from '@chakra-ui/react';
-import { useMachine } from '@xstate/react';
 import React from 'react';
 import { When } from 'react-if';
-import { ConnectForm } from '../../../base/atoms/v2/Form/connect-form';
-import { FormProvider } from '../../../base/atoms/v2/Form/form-provider';
-import InputTextV2 from '../../../base/atoms/v2/Form/rigo-input-text';
-import SelectV2 from '../../../base/atoms/v2/Form/rigo-select';
-import { machine } from '../../../machines/form-machine';
+import { ConnectForm } from '../../../../../base/atoms/v2/Form/connect-form';
+import { FormProvider } from '../../../../../base/atoms/v2/Form/form-provider';
+import InputTextV2 from '../../../../../base/atoms/v2/Form/rigo-input-text';
+import SelectV2 from '../../../../../base/atoms/v2/Form/rigo-select';
 
-export const EmployeeEditForm = (props: any) => {
-    const { state, send, reset, getValues, watch, ...propsRest } = props;
+export const AddressAndContactFormComponent = (props: any) => {
+    const { mount, reset, getValues, watch, ...propsRest } = props;
 
     React.useEffect(() => {
-        console.log("MOUNT_FORM")
-        send("MOUNT_FORM", { reset, getValues, watch })
+        mount({
+            reset, getValues, watch
+        })
     }, [])
 
     return <Flex direction="column" gap={4}>
 
-        {/* <pre>{JSON.stringify(state.value, null, 2)}</pre> */}
         <Flex gap={4}>
-
             <InputTextV2
                 name="Address"
                 label="Address"
@@ -53,7 +48,7 @@ export const EmployeeEditForm = (props: any) => {
                 name="Country"
                 label="Country"
                 required
-                options={state.context.countries}
+                options={[]}
                 {...propsRest}
             >
                 <SelectV2.FormControl>
@@ -72,7 +67,7 @@ export const EmployeeEditForm = (props: any) => {
             <SelectV2
                 name="Province"
                 label="Province"
-                options={state.context.provinces}
+                options={[]}
                 required
                 {...propsRest}
             >
@@ -89,7 +84,7 @@ export const EmployeeEditForm = (props: any) => {
             <SelectV2
                 name="District"
                 label="District"
-                options={state.context.districts}
+                options={[]}
                 required
                 {...propsRest}
             >
@@ -215,95 +210,91 @@ export const EmployeeEditForm = (props: any) => {
 
 }
 
-export const EmployeePermanentAddressEdit = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const [state, send] = useMachine(machine)
+interface AddressAndContactFormProps {
+    isOpen: any
+    mount: any
+    close: any
+    submit: any
+}
+export const AddressAndContactForm = ({ isOpen, mount, close, submit }: AddressAndContactFormProps) => {
 
+    // FUNCTIONS
     const handleSubmit = (data: any) => {
-        console.log(JSON.stringify(data, null, 2));
         if (!data) {
             return
         }
-        send("SUBMIT_FORM", {
-            data
-        })
-        onClose()
+        return submit()
     }
 
     const handleClose = () => {
-        onClose()
-        send("CLOSE")
+        close()
     }
+
     return (
-        <>
-            <Button onClick={onOpen}>Open Modal</Button>
 
-            <When condition={isOpen}>
 
-                <Modal isOpen={isOpen} onClose={handleClose}>
-                    <ModalOverlay />
-                    <ModalContent>
-                        <ModalHeader>Your Address</ModalHeader>
-                        <ModalCloseButton />
-                        <FormProvider
-                            onSubmit={handleSubmit}
-                            defaultValues={{
-                                Address: "",
-                                Country: "",
-                                Province: "",
-                                District: "",
-                                Locality: "",
-                                HouseNo: "",
-                                Street: "",
-                                State: "",
-                                ZipCode: "",
-                                Zone: "",
+        <When condition={isOpen}>
+
+            <Modal isOpen={isOpen} onClose={handleClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Your Address</ModalHeader>
+                    <ModalCloseButton />
+                    <FormProvider
+                        onSubmit={handleSubmit}
+                        defaultValues={{
+                            Address: "",
+                            Country: "",
+                            Province: "",
+                            District: "",
+                            Locality: "",
+                            HouseNo: "",
+                            Street: "",
+                            State: "",
+                            ZipCode: "",
+                            Zone: "",
+                        }}
+                        showDevTool={true}
+                    >
+                        <ConnectForm>
+                            {(formProps: any) => {
+                                const {
+                                    control,
+                                    reset,
+                                    getValues,
+                                    watch,
+                                    formState: { errors },
+                                } = formProps;
+
+                                const inputProps = {
+                                    control,
+                                    errors,
+                                    reset,
+                                    getValues,
+                                    watch,
+                                };
+
+                                return <>
+                                    <ModalBody>
+                                        <AddressAndContactFormComponent
+                                            mount={mount}
+                                            {...inputProps}
+                                        />
+                                    </ModalBody>
+
+                                    <ModalFooter as={Flex} gap={2}>
+                                        <Button rounded="none" size="sm" onClick={handleClose}>
+                                            Cancel
+                                        </Button>
+                                        <Button rounded="none" size="sm" colorScheme='blue' type='submit' isLoading={false}>Submit</Button>
+                                    </ModalFooter>
+                                </>
                             }}
-                            showDevTool={true}
-                        >
-                            <ConnectForm>
-                                {(formProps: any) => {
-                                    const {
-                                        control,
-                                        reset,
-                                        getValues,
-                                        watch,
-                                        formState: { errors },
-                                    } = formProps;
-
-                                    const inputProps = {
-                                        control,
-                                        errors,
-                                        reset,
-                                        getValues,
-                                        watch,
-                                    };
-
-                                    return <>
-                                        <ModalBody>
-                                            <Heading fontWeight="medium" fontSize="lg" >Permanent Address </Heading>
-                                            <EmployeeEditForm
-                                                state={state}
-                                                send={send}
-                                                {...inputProps}
-                                            />
-                                        </ModalBody>
-
-                                        <ModalFooter>
-                                            <Button colorScheme='blue' mr={3} onClick={handleClose}>
-                                                Cancel
-                                            </Button>
-                                            <Button type='submit'>Submit</Button>
-                                        </ModalFooter>
-                                    </>
-
-                                }}
-                            </ConnectForm>
-                        </FormProvider>
-                    </ModalContent>
-                </Modal>
-            </When>
-        </>
+                        </ConnectForm>
+                    </FormProvider>
+                </ModalContent>
+            </Modal>
+        </When>
     );
 }
 

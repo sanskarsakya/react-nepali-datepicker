@@ -11,7 +11,7 @@ export interface PzFormProviderProps {
 
 export function FormProvider(props: PzFormProviderProps) {
   const { defaultValues, children, showDevTool = false, onSubmit } = props;
-  const methods = useForm({ mode: 'all', defaultValues: defaultValues });
+  const methods = useForm({ mode: 'all', defaultValues: defaultValues,  });
 
   return (
     <RHFFormProvider {...methods}>
