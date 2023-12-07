@@ -12,8 +12,8 @@ import {
 export const RigoRhfComponent = (
   props: any //PxControlledComponentProps
 ) => {
-  const { control, rule, name, required } = useRigoSelect();
-
+  const context = useRigoSelect();
+  const { control, rule, name, required } = context
   let _rule: any = fromFormHelpers.getDefaultRules({ required });
 
   if (!isEmpty(rule)) {
@@ -26,10 +26,32 @@ export const RigoRhfComponent = (
       name={name}
       rules={_rule}
       render={({ field: { onChange, value } }) => {
+        // const isReturnScalarValue = context?.isReturnScalarValue ?? false
+        // const isMulti = context?.isMulti ?? false
+
+        const valueNormalized = value;
+
+        // if (isReturnScalarValue && !isMulti) {
+        //   valueNormalized = props?.options?.find((option: any) => option.value === value)
+        // } else if (isReturnScalarValue && isMulti) {
+        //   valueNormalized = props?.options?.filter((option: any) => value.includes(option.value))
+        // }
+
+        const handleChange = (val: any) => {
+          // if (isReturnScalarValue && !isMulti) {
+          //   onChange(val.value)
+          // } else if (isReturnScalarValue && isMulti) {
+          //   onChange(val?.map((option: any) => option.value))
+          // } else {
+          //   onChange(val)
+          // }
+          onChange(val)
+        }
+
         return (
           <RigoUncontrollerComponent
-            value={value}
-            onChangeRHF={onChange}
+            value={valueNormalized}
+            onChangeRHF={handleChange}
             {...props}
           />
         );

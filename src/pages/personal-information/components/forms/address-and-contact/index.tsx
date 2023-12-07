@@ -1,5 +1,4 @@
 import {
-    Box,
     Button,
     Flex,
     Modal,
@@ -8,403 +7,14 @@ import {
     ModalContent,
     ModalFooter,
     ModalHeader,
-    ModalOverlay,
-    Text
-} from '@chakra-ui/react';
+    ModalOverlay} from '@chakra-ui/react';
 import React from 'react';
 import { When } from 'react-if';
 import { ConnectForm } from '../../../../../base/atoms/v2/Form/connect-form';
 import { FormProvider } from '../../../../../base/atoms/v2/Form/form-provider';
-import InputTextV2 from '../../../../../base/atoms/v2/Form/rigo-input-text';
-import SelectV2 from '../../../../../base/atoms/v2/Form/rigo-select';
-import CheckboxV2 from '../../../../../base/atoms/v2/Form/rigo-checkbox';
 import { fnWatchChange, useFormStore } from '../../../../../stores/use-form-store';
 import { Watcher } from './watcher';
-
-export const AddressAndContactFormComponent = (props: any) => {
-    const { data, mount, reset, getValues, watch, ...propsRest } = props;
-
-    React.useEffect(() => {
-        mount({
-            reset, getValues, watch
-        })
-    }, [])
-
-    return <Flex direction="column" gap={4}>
-        <Flex direction="column" gap={2}>
-            <Text>Current Address</Text>
-            <Box>
-                <Flex gap={4}>
-                    <InputTextV2
-                        name="Address"
-                        label="Address"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-
-                    <SelectV2
-                        name="Country"
-                        label="Country"
-                        required
-                        options={data.countries.data}
-                        {...propsRest}
-                    >
-                        <SelectV2.FormControl>
-                            <Flex gap={2}>
-                                <SelectV2.FormLabel />
-                            </Flex>
-                            <SelectV2.Component />
-                            <SelectV2.HelperText />
-                            <SelectV2.ErrorLabel />
-                        </SelectV2.FormControl>
-                    </SelectV2>
-                </Flex>
-
-                <Flex gap={4}>
-
-                    <SelectV2
-                        name="Province"
-                        label="Province"
-                        options={data.provinces.data}
-                        required
-                        {...propsRest}
-                    >
-                        <SelectV2.FormControl>
-                            <Flex gap={2}>
-                                <SelectV2.FormLabel />
-                            </Flex>
-                            <SelectV2.Component />
-                            <SelectV2.HelperText />
-                            <SelectV2.ErrorLabel />
-                        </SelectV2.FormControl>
-                    </SelectV2>
-
-                    <SelectV2
-                        name="District"
-                        label="District"
-                        options={data.districts.data}
-                        required
-                        {...propsRest}
-                    >
-                        <SelectV2.FormControl>
-                            <Flex gap={2}>
-                                <SelectV2.FormLabel />
-                            </Flex>
-                            <SelectV2.Component />
-                            <SelectV2.HelperText />
-                            <SelectV2.ErrorLabel />
-                        </SelectV2.FormControl>
-                    </SelectV2>
-                </Flex>
-
-                <Flex gap={4}>
-
-                    <InputTextV2
-                        name="Locality"
-                        label="Locality"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-
-                    <InputTextV2
-                        label="House No"
-                        name="HouseNo"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-                </Flex>
-
-                <Flex gap={4}>
-
-                    <InputTextV2
-                        label="Street"
-                        name="Street"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-
-                    <InputTextV2
-                        label="State"
-                        name="State"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-                </Flex>
-
-                <Flex gap={4}>
-                    <InputTextV2
-                        label="Zip Code"
-                        name="ZipCode"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-
-                    <InputTextV2
-                        name="Zone"
-                        label="Zone"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-
-                </Flex>
-            </Box>
-        </Flex>
-
-        <CheckboxV2.Default
-            name='IsSameAddress'
-            label='My corresponding and permanent address are same'
-            {...propsRest}
-        />
-
-        <Flex direction="column" gap={2}>
-            <Text>Permanent Address</Text>
-            <Box>
-                <Flex gap={4}>
-                    <InputTextV2
-                        name="PermanentAddress"
-                        label="Address"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-
-                    <SelectV2
-                        name="PermanentCountry"
-                        label="Country"
-                        required
-                        options={data.countries.data}
-                        {...propsRest}
-                    >
-                        <SelectV2.FormControl>
-                            <Flex gap={2}>
-                                <SelectV2.FormLabel />
-                            </Flex>
-                            <SelectV2.Component />
-                            <SelectV2.HelperText />
-                            <SelectV2.ErrorLabel />
-                        </SelectV2.FormControl>
-                    </SelectV2>
-                </Flex>
-
-                <Flex gap={4}>
-
-                    <SelectV2
-                        name="PermanentProvince"
-                        label="Province"
-                        options={data.provinces.data}
-                        required
-                        {...propsRest}
-                    >
-                        <SelectV2.FormControl>
-                            <Flex gap={2}>
-                                <SelectV2.FormLabel />
-                            </Flex>
-                            <SelectV2.Component />
-                            <SelectV2.HelperText />
-                            <SelectV2.ErrorLabel />
-                        </SelectV2.FormControl>
-                    </SelectV2>
-
-                    <SelectV2
-                        name="PermanentDistrict"
-                        label="District"
-                        options={data.districts.data}
-                        required
-                        {...propsRest}
-                    >
-                        <SelectV2.FormControl>
-                            <Flex gap={2}>
-                                <SelectV2.FormLabel />
-                            </Flex>
-                            <SelectV2.Component />
-                            <SelectV2.HelperText />
-                            <SelectV2.ErrorLabel />
-                        </SelectV2.FormControl>
-                    </SelectV2>
-                </Flex>
-
-                <Flex gap={4}>
-
-                    <InputTextV2
-                        name="PermanentLocality"
-                        label="Locality"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-
-                    <InputTextV2
-                        name="PermanentHouseNo"
-                        label="House No"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-                </Flex>
-
-                <Flex gap={4}>
-
-                    <InputTextV2
-                        name="PermanentStreet"
-                        label="Street"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-
-                    <InputTextV2
-                        name="PermanentState"
-                        label="State"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-                </Flex>
-
-                <Flex gap={4}>
-                    <InputTextV2
-                        name="PermanentZipCode"
-                        label="Zip Code"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-
-                    <InputTextV2
-                        name="PermanentZone"
-                        label="Zone"
-                        required
-                        {...propsRest}
-                    >
-                        <InputTextV2.FormControl>
-                            <Flex gap={2}>
-                                <InputTextV2.FormLabel />
-                            </Flex>
-                            <InputTextV2.Component />
-                            <InputTextV2.HelperText />
-                            <InputTextV2.ErrorLabel />
-                        </InputTextV2.FormControl>
-                    </InputTextV2>
-
-                </Flex>
-            </Box>
-        </Flex>
-
-    </Flex>
-
-
-}
+import { AddressAndContactFieldset } from './fieldset';
 
 interface AddressAndContactFormProps {
     isOpen: any
@@ -439,27 +49,31 @@ export const AddressAndContactForm = ({ isOpen, mount, close, submit, data }: Ad
                     <FormProvider
                         onSubmit={handleSubmit}
                         defaultValues={{
-                            Address: "",
-                            Country: "",
+                            // Address: "",
+                            // Country: "",
                             Province: "",
                             District: "",
+                            LocalBody: "",
+                            WardNo: "",
                             Locality: "",
-                            HouseNo: "",
-                            Street: "",
-                            State: "",
-                            ZipCode: "",
-                            Zone: "",
+                            // HouseNo: "",
+                            // Street: "",
+                            // State: "",
+                            // ZipCode: "",
+                            // Zone: "",
                             IsSameAddress: false,
-                            PermanentAddress: "",
-                            PermanentCountry: "",
+                            // PermanentAddress: "",
+                            // PermanentCountry: "",
                             PermanentProvince: "",
                             PermanentDistrict: "",
+                            PermanentLocalBody: "",
+                            PermanentWardNo: "",
                             PermanentLocality: "",
-                            PermanentHouseNo: "",
-                            PermanentStreet: "",
-                            PermanentState: "",
-                            PermanentZipCode: "",
-                            PermanentZone: "",
+                            // PermanentHouseNo: "",
+                            // PermanentStreet: "",
+                            // PermanentState: "",
+                            // PermanentZipCode: "",
+                            // PermanentZone: "",
                         }}
                         showDevTool={true}
                     >
@@ -493,7 +107,7 @@ export const AddressAndContactForm = ({ isOpen, mount, close, submit, data }: Ad
 
                                 return <>
                                     <ModalBody>
-                                        <AddressAndContactFormComponent
+                                        <AddressAndContactFieldset
                                             data={data}
                                             mount={mount}
                                             {...inputProps}

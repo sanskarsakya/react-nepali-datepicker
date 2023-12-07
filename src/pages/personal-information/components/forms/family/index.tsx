@@ -7,23 +7,23 @@ import {
     ModalContent,
     ModalFooter,
     ModalHeader,
-    ModalOverlay
-} from '@chakra-ui/react';
+    ModalOverlay} from '@chakra-ui/react';
 import { When } from 'react-if';
 import { ConnectForm } from '../../../../../base/atoms/v2/Form/connect-form';
 import { FormProvider } from '../../../../../base/atoms/v2/Form/form-provider';
 import { fnWatchChange, useFormStore } from '../../../../../stores/use-form-store';
-import { BirthAndMarriageFieldset } from './fieldset';
 import { Watcher } from './watcher';
+import { FamilyFieldset } from './fieldset';
+import { formNameProperties, getDefaultValues } from './forn-name-properties';
 
-
-interface AddressAndContactFormProps {
+interface FamilyFormFormProps {
     isOpen: any
     mount: any
     close: any
     submit: any
+    data: any
 }
-export const BirthAndMarriageForm = ({ isOpen, mount, close, submit, }: AddressAndContactFormProps) => {
+export const FamilyForm = ({ isOpen, mount, close, submit, data }: FamilyFormFormProps) => {
 
     const watchChange = useFormStore(fnWatchChange)
 
@@ -44,13 +44,11 @@ export const BirthAndMarriageForm = ({ isOpen, mount, close, submit, }: AddressA
             <Modal isOpen={isOpen} onClose={handleClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Birth And Marriage</ModalHeader>
+                    <ModalHeader>Family</ModalHeader>
                     <ModalCloseButton />
                     <FormProvider
                         onSubmit={handleSubmit}
-                        defaultValues={{
-                            MaritalStatus: "2"
-                        }}
+                        defaultValues={getDefaultValues(formNameProperties)}
                         showDevTool={true}
                     >
                         <ConnectForm>
@@ -83,7 +81,8 @@ export const BirthAndMarriageForm = ({ isOpen, mount, close, submit, }: AddressA
 
                                 return <>
                                     <ModalBody>
-                                        <BirthAndMarriageFieldset
+                                        <FamilyFieldset
+                                            data={data}
                                             mount={mount}
                                             {...inputProps}
                                         />

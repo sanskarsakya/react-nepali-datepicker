@@ -40,6 +40,7 @@ mklink /j rigo-input-text C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp
 mklink /j rigo-select C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\rigo-select
 mklink /j rigo-text-area C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\rigo-text-area
 mklink /j rigo-checkbox C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\rigo-checkbox
+mklink /j rigo-radio-group C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\rigo-radio-group
 
 
 ```

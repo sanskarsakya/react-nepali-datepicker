@@ -14,6 +14,7 @@ export const RigoUncontrollerComponent = (
 ) => {
   const { onChangeRHF, value: rhfValue } = props;
 
+  const context = useRigoSelect();
   const {
     name,
     options,
@@ -28,7 +29,7 @@ export const RigoUncontrollerComponent = (
     onChange: _onChange,
 
     ...contextRest
-  } = useRigoSelect();
+  } = context
 
   //  explicit passing:
   // custom handle change
@@ -47,12 +48,31 @@ export const RigoUncontrollerComponent = (
   // required: false,
   // rule: undefined,
 
+  const isReturnScalarValue = context?.isReturnScalarValue ?? false
+  const isMulti = context?.isMulti ?? false
+
   const handleChange = (value: any) => {
-    _onChange?.(name, value);
-    onChangeRHF?.(value);
+    let val = value
+    if (isReturnScalarValue && !isMulti) {
+      val = value.value
+    } else if (isReturnScalarValue && isMulti) {
+      val = value?.map((option: any) => option.value)
+    } else {
+      val = value
+    }
+
+    _onChange?.(name, val);
+    onChangeRHF?.(val);
   };
 
-  const valueNormalized = rhfValue ?? value;
+  let valueNormalized = rhfValue ?? value;
+
+  
+  if (isReturnScalarValue && !isMulti) {
+    valueNormalized = context?.options?.find((option: any) => option.value === valueNormalized)
+  } else if (isReturnScalarValue && isMulti) {
+    valueNormalized = context?.options?.filter((option: any) => valueNormalized.includes(option.value))
+  }
 
   const inputProps = {
     name,
