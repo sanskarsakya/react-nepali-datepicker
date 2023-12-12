@@ -22,6 +22,7 @@ specifiers:
   '@vitejs/plugin-react': ^4.2.0
   '@xstate/react': ^4.0.0
   bikram-sambat-js: ^1.0.1
+  dayjs: ^1.11.10
   eslint: ^8.53.0
   eslint-plugin-react-hooks: ^4.6.0
   eslint-plugin-react-refresh: ^0.4.4
@@ -49,6 +50,7 @@ dependencies:
   '@storybook/addon-actions': 7.6.3
   '@xstate/react': 4.0.0_l5vtg2jjgosvepmadlh425htbi
   bikram-sambat-js: 1.0.1
+  dayjs: 1.11.10
   framer-motion: 10.16.5_biqbaboplfbrettd7655fr4n2y
   lodash: 4.17.21
   nepali-number: 1.0.3
@@ -6215,6 +6217,10 @@ packages:
 
   /csstype/3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
+
+  /dayjs/1.11.10:
+    resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
+    dev: false
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}

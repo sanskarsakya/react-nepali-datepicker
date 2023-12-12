@@ -41,12 +41,12 @@ export const formNameProperties = {
     Relation: {
         label: "Relation",
         name: "Relation",
-        value: "Mother"
+        value: ""
     },
     Nationality: {
         label: "Nationality",
         name: "Nationality",
-        value: 2
+        value: ""
     },
     CitizenshipNo: {
         label: "Citizenship No",

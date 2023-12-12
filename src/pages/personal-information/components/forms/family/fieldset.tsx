@@ -1,12 +1,12 @@
-import { Box, Flex, ScaleFade, Text } from '@chakra-ui/react';
-import React from 'react';
-import SelectV2 from '../../../../../base/atoms/v2/Form/rigo-select';
-import TextAreaV2 from '../../../../../base/atoms/v2/Form/rigo-text-area';
-import RadioGroupV2 from '../../../../../base/atoms/v2/Form/rigo-radio-group';
 import { CheckCircleIcon } from '@chakra-ui/icons';
+import { Flex, ScaleFade, Text } from '@chakra-ui/react';
+import React from 'react';
 import { When } from 'react-if';
-import { formNameProperties } from './forn-name-properties';
 import InputTextV2 from '../../../../../base/atoms/v2/Form/rigo-input-text';
+import RadioGroupV2 from '../../../../../base/atoms/v2/Form/rigo-radio-group';
+import SelectV2 from '../../../../../base/atoms/v2/Form/rigo-select';
+import { formNameProperties } from './forn-name-properties';
+import dayjs from 'dayjs';
 
 export const Wrapper = ({ children }: any) => {
     return (
@@ -54,6 +54,40 @@ export const Item = ({ option, isDisabled, isInvalid, ...rest }: any) => {
         </Flex>
     );
 };
+const RELATION_OPTIONS = [
+    {
+        label: "Father",
+        value: "Father",
+    },
+    {
+        label: "Mother",
+        value: "Mother",
+    },
+    {
+        label: "Grandfather",
+        value: "Grandfather",
+    },
+    {
+        label: "Spouse",
+        value: "Spouse",
+    },
+    {
+        label: "Son",
+        value: "Son",
+    },
+    {
+        label: "Daughter",
+        value: "Daughter",
+    },
+    {
+        label: "Daughter",
+        value: "Daughter",
+    },
+    {
+        label: "Sibling",
+        value: "Sibling",
+    },
+];
 export const FamilyFieldset = (props: any) => {
     const { data, mount, reset, getValues, watch, ...propsRest } = props;
 
@@ -86,9 +120,8 @@ export const FamilyFieldset = (props: any) => {
                     label: "Mrs.",
                     value: "Mrs",
                 },
-            ]} />
-
-
+            ]}
+        />
 
         <InputTextV2
             label={formNameProperties.FullName.label}
@@ -110,25 +143,8 @@ export const FamilyFieldset = (props: any) => {
             label={formNameProperties.Relation.label}
             name={formNameProperties.Relation.name}
             isReturnScalarValue={true}
-            options={[
-                {
-                    label: "Father",
-                    value: "Father",
-                },
-                {
-                    label: "Mother",
-                    value: "Mother",
-                },
-                {
-                    label: "Son",
-                    value: "Son",
-                },
-                {
-                    label: "Daughter",
-                    value: "Daughter",
-                },
-            ]}
-            getOptionValue={(option:any) => option.value }
+            options={RELATION_OPTIONS}
+            getOptionValue={(option: any) => option.value}
             required
             {...propsRest}
         >
@@ -142,21 +158,24 @@ export const FamilyFieldset = (props: any) => {
             </SelectV2.FormControl>
         </SelectV2>
 
-        <InputTextV2
-            label={formNameProperties.Dob.label}
-            name={formNameProperties.Dob.name}
-            required
-            {...propsRest}
-        >
-            <InputTextV2.FormControl>
-                <Flex gap={2}>
-                    <InputTextV2.FormLabel />
-                </Flex>
-                <InputTextV2.Component />
-                <InputTextV2.HelperText />
-                <InputTextV2.ErrorLabel />
-            </InputTextV2.FormControl>
-        </InputTextV2>
+        <When condition={watch?.(formNameProperties.Relation.label) === "Son" ||
+            watch?.(formNameProperties.Relation.label) === "Daughter"}>
+            <InputTextV2
+                label={formNameProperties.Dob.label}
+                name={formNameProperties.Dob.name}
+                required
+                {...propsRest}
+            >
+                <InputTextV2.FormControl>
+                    <Flex gap={2}>
+                        <InputTextV2.FormLabel />
+                    </Flex>
+                    <InputTextV2.Component />
+                    <InputTextV2.HelperText />
+                    <InputTextV2.ErrorLabel />
+                </InputTextV2.FormControl>
+            </InputTextV2>
+        </When>
 
         <SelectV2
             label={formNameProperties.Nationality.label}
@@ -212,37 +231,39 @@ export const FamilyFieldset = (props: any) => {
 
         </Flex>
 
-        <InputTextV2
-            label={formNameProperties.Occupation.label}
-            name={formNameProperties.Occupation.name}
-            required
-            {...propsRest}
-        >
-            <InputTextV2.FormControl>
-                <Flex gap={2}>
-                    <InputTextV2.FormLabel />
-                </Flex>
-                <InputTextV2.Component />
-                <InputTextV2.HelperText />
-                <InputTextV2.ErrorLabel />
-            </InputTextV2.FormControl>
-        </InputTextV2>
+        <When condition={watch?.(formNameProperties.Dob.name) && (dayjs().diff(dayjs(watch?.(formNameProperties.Dob.name)), 'year') > 16)}>
+            <InputTextV2
+                label={formNameProperties.Occupation.label}
+                name={formNameProperties.Occupation.name}
+                required
+                {...propsRest}
+            >
+                <InputTextV2.FormControl>
+                    <Flex gap={2}>
+                        <InputTextV2.FormLabel />
+                    </Flex>
+                    <InputTextV2.Component />
+                    <InputTextV2.HelperText />
+                    <InputTextV2.ErrorLabel />
+                </InputTextV2.FormControl>
+            </InputTextV2>
 
-        <InputTextV2
-            label={formNameProperties.Organization.label}
-            name={formNameProperties.Organization.name}
-            required
-            {...propsRest}
-        >
-            <InputTextV2.FormControl>
-                <Flex gap={2}>
-                    <InputTextV2.FormLabel />
-                </Flex>
-                <InputTextV2.Component />
-                <InputTextV2.HelperText />
-                <InputTextV2.ErrorLabel />
-            </InputTextV2.FormControl>
-        </InputTextV2>
+            <InputTextV2
+                label={formNameProperties.Organization.label}
+                name={formNameProperties.Organization.name}
+                required
+                {...propsRest}
+            >
+                <InputTextV2.FormControl>
+                    <Flex gap={2}>
+                        <InputTextV2.FormLabel />
+                    </Flex>
+                    <InputTextV2.Component />
+                    <InputTextV2.HelperText />
+                    <InputTextV2.ErrorLabel />
+                </InputTextV2.FormControl>
+            </InputTextV2>
+        </When>
 
         <InputTextV2
             label={formNameProperties.Note.label}

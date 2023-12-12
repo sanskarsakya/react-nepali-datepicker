@@ -20,6 +20,7 @@
     "@storybook/addon-actions": "^7.6.3",
     "@xstate/react": "^4.0.0",
     "bikram-sambat-js": "^1.0.1",
+    "dayjs": "^1.11.10",
     "framer-motion": "^10.16.5",
     "lodash": "^4.17.21",
     "nepali-number": "^1.0.3",

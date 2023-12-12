@@ -5,16 +5,24 @@ import { IconButton } from "../../../../base/atoms"
 import { fnClearStore, fnFetchPendingRequest, fnFetchPersonalInformation, selectPersonalInformation, usePersonalInformationStore } from "../../../../stores/use-personal-information-store"
 import { IPersonalInformation } from "../../../../types/personal-information.types"
 import { cardBodySx, cardHeaderSx } from "../address-and-contact"
+import { HealthForm } from "../forms/health"
+import { fnClose, fnMount, fnOpen, fnSubmit, selectIsOpen, useHealthFormStore } from "../../../../stores/use-health-form-store"
 
 
 export const Health = () => {
 
     const personalInformation = usePersonalInformationStore(selectPersonalInformation)
+    const isOpen = useHealthFormStore(selectIsOpen)
 
     // ACTIONS
     const fetchPersonalInformation = usePersonalInformationStore(fnFetchPersonalInformation)
     const fetchPendingRequest = usePersonalInformationStore(fnFetchPendingRequest)
     const clearStore = usePersonalInformationStore(fnClearStore)
+    const onOpen = useHealthFormStore(fnOpen)
+    const mount = useHealthFormStore(fnMount)
+    const onClose = useHealthFormStore(fnClose)
+    const submit = useHealthFormStore(fnSubmit)
+
 
     React.useEffect(() => {
         fetchPersonalInformation();
@@ -29,7 +37,13 @@ export const Health = () => {
         <Card p={5} shadow="md">
             <CardHeader as={Flex} justifyContent="space-between">
                 <Heading sx={cardHeaderSx}>Health</Heading>
-                <IconButton aria-label="Edit Address and contact" icon={<EditIcon />}  />
+                <IconButton
+                    aria-label="Edit Address and contact"
+                    icon={<EditIcon />}
+                    onClick={() => {
+                        onOpen({})
+                    }}
+                />
             </CardHeader>
             <CardBody sx={cardBodySx}>
                 <Flex>
@@ -59,6 +73,15 @@ export const Health = () => {
             </CardBody>
         </Card>
 
-       
+        <HealthForm
+            isOpen={isOpen}
+            mount={mount}
+            close={onClose}
+            submit={submit}
+            data={{
+            }}
+        />
+
+
     </>
 }
