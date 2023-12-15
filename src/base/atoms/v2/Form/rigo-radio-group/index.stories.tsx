@@ -1,14 +1,15 @@
 import {
   Box,
   Button,
+  ChakraProvider,
   Container,
   Flex,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import type { Meta } from "@storybook/react";
+import { FormProvider } from "../FormProvider";
+import ConnectForm from "../ConnectForm";
 import RadioGroupV2 from ".";
-import { ConnectForm } from "../connect-form";
-import { FormProvider } from "../form-provider";
 
 const RADIO_OPTIONS = [
   {
@@ -68,6 +69,7 @@ const Story: Meta<typeof RadioGroupV2> = {
   title: "V2/Forms/RadioGroup",
   component: () => {
     return (
+      <ChakraProvider>
         <FormProvider
           onSubmit={(data: any) => {
             console.log({
@@ -166,6 +168,7 @@ const Story: Meta<typeof RadioGroupV2> = {
             }}
           </ConnectForm>
         </FormProvider>
+      </ChakraProvider>
     );
   },
 };

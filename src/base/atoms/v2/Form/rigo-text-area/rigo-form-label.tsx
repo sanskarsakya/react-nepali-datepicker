@@ -1,4 +1,4 @@
-import { FormLabel } from '../form-label';
+import FormLabel from '../FormLabel';
 import { FormLabelPropsType } from './interface';
 import { useTextArea } from './use-textarea';
 

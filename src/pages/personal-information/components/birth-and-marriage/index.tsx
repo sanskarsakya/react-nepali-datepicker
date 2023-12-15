@@ -36,7 +36,7 @@ export const BirthAndMarriage = () => {
     const personalDetail = (personalInformation?.data as IPersonalInformation)?.PersonalDetail
 
     return <>
-        <Card p={5} shadow="md">
+        <Card p={5} shadow="md" w="full">
             <CardHeader as={Flex} justifyContent="space-between">
                 <Heading sx={cardHeaderSx}>Birth And Marriage</Heading>
                 <IconButton aria-label="Edit Birth And Marriage" icon={<EditIcon />}  onClick={onOpen}/>
@@ -44,7 +44,7 @@ export const BirthAndMarriage = () => {
             <CardBody sx={cardBodySx}>
                 <Flex>
                     <Box flex={1}>
-                        <Text>Health Condition</Text>
+                        <Text>Date of Birth</Text>
                     </Box>
                     <Box flex={1}>
                         {personalDetail?.DateOfBirth}

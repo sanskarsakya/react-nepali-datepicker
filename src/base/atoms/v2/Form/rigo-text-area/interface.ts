@@ -1,9 +1,10 @@
 import {
+  InputProps,
+  NumberInputProps,
   FormControlProps,
   FormHelperTextProps,
   FormLabelProps,
-  InputProps,
-  TextProps
+  TextProps,
 } from "@chakra-ui/react";
 
 export interface ConnectFormProps {

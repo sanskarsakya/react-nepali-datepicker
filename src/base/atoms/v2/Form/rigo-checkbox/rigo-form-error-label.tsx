@@ -1,5 +1,5 @@
 import * as fromFormHelpers from '../@form-helper';
-import { FormErrorLable } from '../form-error-label';
+import FormErrorLable from '../FormErrorLabel';
 import { FormErrorLabelProps } from './interface';
 import { useCheckbox } from './use-checkbox';
 

@@ -2,20 +2,14 @@ import { Textarea } from '@chakra-ui/react';
 import { useTextArea } from './use-textarea';
 
 export const RigoUncontrolledComponent = (props: any) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { onChangeRHF, value: rhfValue, onChange, ...propsRest } = props;
   const {
     name,
     value,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     label,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     control,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     errors,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     required,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     rule,
     onChange: _onChange,
     ...contextRest
@@ -36,9 +30,6 @@ export const RigoUncontrolledComponent = (props: any) => {
     ...propsRest,
   };
   return (
-    <Textarea 
-    borderColor="#cccccc"
-    rounded="sm"
-    onChange={handleChange} {...inputProps} />
+    <Textarea onChange={handleChange} {...inputProps} />
   );
 };

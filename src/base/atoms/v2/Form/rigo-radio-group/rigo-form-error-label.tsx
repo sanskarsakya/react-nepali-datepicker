@@ -1,5 +1,5 @@
 import * as fromHelpers from "../@form-helper";
-import { FormErrorLable } from "../form-error-label";
+import FormErrorLable from "../FormErrorLabel";
 import { FormErrorLabelProps } from "./interface";
 import { useRadioGroup } from "./use-radio-group";
 

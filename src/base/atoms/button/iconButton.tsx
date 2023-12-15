@@ -1,10 +1,11 @@
+import React from "react"
 import {
   IconButton as ChakraIconButton,
   IconButtonProps as ChakraIconButtonProps,
 } from "@chakra-ui/react"
 import {
-  buttonSizeType,
   buttonSizes,
+  buttonSizeType,
   buttonTypes,
   buttonTypesType,
 } from "./buttonConstant"
@@ -36,7 +37,7 @@ interface ButtonProps extends ChakraIconButtonProps {
 export const IconButton = (props: ButtonProps) => {
   const { children, buttonType, buttonSize, ...rest } = props
 
-  const def = { ...buttonProps.default }
+  let def = { ...buttonProps.default }
 
   const btnTypeFoundKey = Object.keys(buttonTypes).find(
     key => key === buttonType,

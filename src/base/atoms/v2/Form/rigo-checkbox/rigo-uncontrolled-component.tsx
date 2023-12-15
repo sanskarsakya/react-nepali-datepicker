@@ -22,8 +22,6 @@ export const RigoUncontrolledComponent = (props: any) => {
 
   const valueNormalized = rhfValue ?? value;
 
-  console.log(valueNormalized);
-
   const inputProps = {
     name,
     isChecked: valueNormalized,
