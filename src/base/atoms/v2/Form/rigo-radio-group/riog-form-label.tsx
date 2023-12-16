@@ -1,8 +1,8 @@
-import Label from "../FormLabel";
+import { FormLabel } from "../form-label";
 import { FormLabelProps } from "./interface";
 import { useRadioGroup } from "./use-radio-group";
 
 export const RigoFormLabel = (props: FormLabelProps) => {
   const { label } = useRadioGroup();
-  return <Label label={`${label}`} {...props} />;
+  return <FormLabel label={`${label}`} {...props} />;
 };

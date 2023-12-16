@@ -36,7 +36,7 @@ interface ButtonProps extends ChakraButtonProps {
 export const Button = (props: ButtonProps) => {
   const { children, buttonType, buttonSize, ...rest } = props;
 
-  let def = { ...buttonProps.default };
+  const def = { ...buttonProps.default };
 
   const btnTypeFoundKey = Object.keys(buttonTypes).find(
     key => key === buttonType,

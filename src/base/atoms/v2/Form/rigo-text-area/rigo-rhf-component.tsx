@@ -1,5 +1,5 @@
 import { Controller } from 'react-hook-form';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 import * as fromFormHelpers from '../@form-helper';
 import { ControlledComponentProps } from './interface';

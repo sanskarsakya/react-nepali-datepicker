@@ -1,8 +1,8 @@
-import { Button, ChakraProvider, Container, Flex } from "@chakra-ui/react";
+import { Button, Container, Flex } from "@chakra-ui/react";
 import type { Meta } from "@storybook/react";
 import Select from ".";
-import FormProvider from "../FormProvider";
-import ConnectForm from "../ConnectForm";
+import { ConnectForm } from "../connect-form";
+import { FormProvider } from "../form-provider";
 
 const SELECT_OPTIONS = [
   {
@@ -67,151 +67,149 @@ const SELECT_OPTIONS = [
     };
 
     return (
-      <ChakraProvider>
-        <FormProvider
-          onSubmit={(data: any) => {
-            console.log({
-              data,
-            });
-          }}
-          defaultValues={{
-            empty: "",
-            default: SELECT_OPTIONS[1],
-            composed: SELECT_OPTIONS[2],
-            status: STATUS_OPTIONS[1],
-            priority: PRIORITY_OPTIONS[1],
-            reporter: REPORTER_OPTIONS[1],
-          }}
-          showDevTool
-        >
-          <ConnectForm>
-            {(formProps: any) => {
-              const {
-                control,
-                formState: { errors },
-              } = formProps;
+      <FormProvider
+        onSubmit={(data: any) => {
+          console.log({
+            data,
+          });
+        }}
+        defaultValues={{
+          empty: "",
+          default: SELECT_OPTIONS[1],
+          composed: SELECT_OPTIONS[2],
+          status: STATUS_OPTIONS[1],
+          priority: PRIORITY_OPTIONS[1],
+          reporter: REPORTER_OPTIONS[1],
+        }}
+        showDevTool
+      >
+        <ConnectForm>
+          {(formProps: any) => {
+            const {
+              control,
+              formState: { errors },
+            } = formProps;
 
-              const inputProps = {
-                control,
-                errors,
-              };
+            const inputProps = {
+              control,
+              errors,
+            };
 
-              return (
-                <Container
-                  maxW="xl"
-                  py={5}
-                  display="flex"
-                  flexDirection="column"
-                  gap={3}
+            return (
+              <Container
+                maxW="xl"
+                py={5}
+                display="flex"
+                flexDirection="column"
+                gap={3}
+              >
+                <Select.Default
+                  name="empty"
+                  label="Empty"
+                  required={true}
+                  getOptionLabel={(option: any) =>
+                    `${option.label}: ${option.value}`
+                  }
+                  {...inputProps}
+                  {...commonProps}
+                />
+
+                <Select.Default
+                  name="default"
+                  label="Default"
+                  {...inputProps}
+                  isDisabled
+                  required
+                  {...commonProps}
+                />
+
+                <Select
+                  name="composed"
+                  label="Composed"
+                  {...inputProps}
+                  required
+                  {...commonProps}
                 >
-                  <Select.Default
-                    name="empty"
-                    label="Empty"
-                    required={true}
-                    getOptionLabel={(option: any) =>
-                      `${option.label}: ${option.value}`
-                    }
-                    {...inputProps}
-                    {...commonProps}
-                  />
+                  <Select.FormControl>
+                    <Flex gap={2}>
+                      <Select.FormLabel />
+                    </Flex>
+                    <Select.Component />
+                    <Select.HelperText />
+                    <Select.ErrorLabel />
+                  </Select.FormControl>
+                </Select>
 
-                  <Select.Default
-                    name="default"
-                    label="Default"
-                    {...inputProps}
-                    isDisabled
-                    required
-                    {...commonProps}
-                  />
+                <Select.Default
+                  name="uncontrolled"
+                  label="Uncontrolled"
+                  value={"1"}
+                  onChange={(name: string, value: string) => {
+                    console.log({ name, value });
+                  }}
+                  {...commonProps}
+                />
 
-                  <Select
-                    name="composed"
-                    label="Composed"
-                    {...inputProps}
-                    required
-                    {...commonProps}
-                  >
-                    <Select.FormControl>
-                      <Flex gap={2}>
-                        <Select.FormLabel />
-                      </Flex>
-                      <Select.Component />
+                <Select
+                  name="status"
+                  label="Status"
+                  {...inputProps}
+                  options={STATUS_OPTIONS}
+                  required
+                >
+                  <Select.FormControl>
+                    <Flex gap={2}>
+                      <Select.FormLabel />
                       <Select.HelperText />
-                      <Select.ErrorLabel />
-                    </Select.FormControl>
-                  </Select>
+                    </Flex>
+                    <Select.StatusComponent />
+                    <Select.ErrorLabel />
+                  </Select.FormControl>
+                </Select>
 
-                  <Select.Default
-                    name="uncontrolled"
-                    label="Uncontrolled"
-                    value={"1"}
-                    onChange={(name: string, value: string) => {
-                      console.log({ name, value });
-                    }}
-                    {...commonProps}
-                  />
+                <Select
+                  name="priority"
+                  label="Priority"
+                  {...inputProps}
+                  options={PRIORITY_OPTIONS}
+                  required
+                >
+                  <Select.FormControl>
+                    <Flex gap={2}>
+                      <Select.FormLabel />
+                      <Select.HelperText />
+                    </Flex>
+                    <Select.PriorityComponent />
+                    <Select.ErrorLabel />
+                  </Select.FormControl>
+                </Select>
 
-                  <Select
-                    name="status"
-                    label="Status"
-                    {...inputProps}
-                    options={STATUS_OPTIONS}
-                    required
-                  >
-                    <Select.FormControl>
-                      <Flex gap={2}>
-                        <Select.FormLabel />
-                        <Select.HelperText />
-                      </Flex>
-                      <Select.StatusComponent />
-                      <Select.ErrorLabel />
-                    </Select.FormControl>
-                  </Select>
-
-                  <Select
-                    name="priority"
-                    label="Priority"
-                    {...inputProps}
-                    options={PRIORITY_OPTIONS}
-                    required
-                  >
-                    <Select.FormControl>
-                      <Flex gap={2}>
-                        <Select.FormLabel />
-                        <Select.HelperText />
-                      </Flex>
-                      <Select.PriorityComponent />
-                      <Select.ErrorLabel />
-                    </Select.FormControl>
-                  </Select>
-
-                  <Select
-                    name="reporter"
-                    label="Reporter"
-                    {...inputProps}
-                    options={REPORTER_OPTIONS}
-                    required
-                  >
-                    <Select.FormControl>
-                      <Flex gap={2}>
-                        <Select.FormLabel />
-                        <Select.HelperText />
-                      </Flex>
-                      <Select.ReporterComponent />
-                      <Select.ErrorLabel />
-                    </Select.FormControl>
-                  </Select>
+                <Select
+                  name="reporter"
+                  label="Reporter"
+                  {...inputProps}
+                  options={REPORTER_OPTIONS}
+                  required
+                >
+                  <Select.FormControl>
+                    <Flex gap={2}>
+                      <Select.FormLabel />
+                      <Select.HelperText />
+                    </Flex>
+                    <Select.ReporterComponent />
+                    <Select.ErrorLabel />
+                  </Select.FormControl>
+                </Select>
 
 
-                  <Flex>
-                    <Button type="submit">Submit</Button>
-                  </Flex>
-                </Container>
-              );
-            }}
-          </ConnectForm>
-        </FormProvider>
-      </ChakraProvider>
+                <Flex>
+                  <Button type="submit">Submit</Button>
+                </Flex>
+              </Container>
+            );
+          }}
+        </ConnectForm>
+      </FormProvider>
     );
   },
 };

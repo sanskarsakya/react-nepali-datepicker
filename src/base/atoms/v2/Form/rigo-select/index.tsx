@@ -1,8 +1,5 @@
 import {
-  RigoComponent,
-  PxPriorityComponent,
-  PxReporterComponent,
-  PxStatusComponent,
+  RigoComponent
 } from "./RigoComponent";
 import { RigoDefault } from "./RigoDefault";
 import { RigoFormControl } from "./RigoFormControl";
@@ -22,8 +19,5 @@ SelectV2.HelperText = RigoFormHelperText;
 SelectV2.ErrorLabel = RigoFormErrorLabel;
 SelectV2.FormControl = RigoFormControl;
 SelectV2.Component = RigoComponent;
-SelectV2.StatusComponent = PxStatusComponent;
-SelectV2.PriorityComponent = PxPriorityComponent;
-SelectV2.ReporterComponent = PxReporterComponent;
 
 export default SelectV2;

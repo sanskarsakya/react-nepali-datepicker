@@ -1,4 +1,4 @@
-import FormLabel from "../FormLabel";
+import { FormLabel } from "../form-label";
 import { FormLabelPropsType } from "./interface";
 import { useInput } from "./useInput";
 

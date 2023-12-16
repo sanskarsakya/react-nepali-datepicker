@@ -6,19 +6,9 @@ export const RigoUncontrolledComponent = (props: UncontrollerComponentProps) => 
   const { onChangeRHF, value: rhfValue, ...propsRest } = props;
   const {
     name,
-    value, // this is user defined value for uncontrolled component
-
-    label,
-    control,
-    errors,
-    required,
-    rule,
-
-    // this is user defined value for uncontrolled component
+    value, 
     onChange: _onChange,
-
     ...contextRest
-
   } = useInput();
 
   const handleChange = (e: any) => {
@@ -35,5 +25,11 @@ export const RigoUncontrolledComponent = (props: UncontrollerComponentProps) => 
     ...contextRest,
     ...propsRest,
   };
-  return <Input onChange={handleChange} {...inputProps} />;
+  return <Input
+    borderColor="#cccccc"
+    rounded="sm"
+    height={"38PX"}
+    onChange={handleChange}
+    {...inputProps}
+  />;
 };
