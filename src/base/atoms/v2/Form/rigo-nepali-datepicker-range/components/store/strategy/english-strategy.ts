@@ -30,8 +30,11 @@ export const EnglishStrategy: ICalendarStrategy = {
     },
 
     setCalendarReferenceDate: function (ctx, next): void {
-        debug_mode && console.log("EnglishStrategy: setCalendarReferenceDate");
-        ctx.next.calendarReferenceDate = ctx.next.date || dayjs().format("YYYY-MM-DD");
+        if (ctx.next.isOpen) {
+
+            debug_mode && console.log("EnglishStrategy: setCalendarReferenceDate");
+            ctx.next.calendarReferenceDate = ctx.next.date || dayjs().format("YYYY-MM-DD");
+        }
         next();
     },
 
@@ -60,45 +63,52 @@ export const EnglishStrategy: ICalendarStrategy = {
     },
 
     setGridDates: function (ctx, next): void {
-        debug_mode && console.log("EnglishStrategy: setGridDates");
-        const weeks_in_english_month = ENGLISH_DATE.get_weeks_in_month(new Date(ctx.next.calendarReferenceDate));
-        ctx.next.gridDates = range(0, weeks_in_english_month - 1).map((weekNum: number) => {
-            return range(1, 7).map((weekDayNum: number) => {
-                return ENGLISH_DATE.get_day_info(
-                    weekNum,
-                    weekDayNum,
-                    ctx.next.calendarReferenceDate,
-                    ctx.next.date,
-                    ctx.next.disableDateBefore,
-                    ctx.next.disableDateAfter,
-                    ctx.next.disabledWeekDays,
-                    ctx.next.holidays,
-                );
-            });
-        });
+        if (ctx.next.isOpen) {
 
-        console.log(ctx.next.gridDates)
+            debug_mode && console.log("EnglishStrategy: setGridDates");
+            const weeks_in_english_month = ENGLISH_DATE.get_weeks_in_month(new Date(ctx.next.calendarReferenceDate));
+            ctx.next.gridDates = range(0, weeks_in_english_month - 1).map((weekNum: number) => {
+                return range(1, 7).map((weekDayNum: number) => {
+                    return ENGLISH_DATE.get_day_info(
+                        weekNum,
+                        weekDayNum,
+                        ctx.next.calendarReferenceDate,
+                        ctx.next.date,
+                        ctx.next.disableDateBefore,
+                        ctx.next.disableDateAfter,
+                        ctx.next.disabledWeekDays,
+                        ctx.next.holidays,
+                    );
+                });
+            });
+        }
 
         next();
     },
 
     setMonthYearPanelData: function (ctx, next): void {
-        debug_mode && console.log("EnglishStrategy: setMonthYearPanelData");
-        const now = new Date(ctx.next.calendarReferenceDate);
-        const nepaliDate = ADToBS(ctx.next.calendarReferenceDate);
-        const splited = nepaliDate?.split("-") ?? [];
-        const nepaliYear = englishToNepaliNumber(splited[0]);
+        if (ctx.next.isOpen) {
 
-        ctx.next.monthYearPanelData = `${nepaliMonthMap[now.getMonth()]} ${nepaliYear}`;
+            debug_mode && console.log("EnglishStrategy: setMonthYearPanelData");
+            const now = new Date(ctx.next.calendarReferenceDate);
+            const nepaliDate = ADToBS(ctx.next.calendarReferenceDate);
+            const splited = nepaliDate?.split("-") ?? [];
+            const nepaliYear = englishToNepaliNumber(splited[0]);
+
+            ctx.next.monthYearPanelData = `${nepaliMonthMap[now.getMonth()]} ${nepaliYear}`;
+        }
 
         next();
     },
 
     setCalendarControllerLabels: function (ctx, next): void {
-        debug_mode && console.log("EnglishStrategy: setCalendarControllerLabels");
-        const [year, month] = ctx.next.calendarReferenceDate.split("-");
-        ctx.next.controllerLabel.month = ENGLISH_MONTHS[+month - 1];
-        ctx.next.controllerLabel.year = year;
+        if (ctx.next.isOpen) {
+
+            debug_mode && console.log("EnglishStrategy: setCalendarControllerLabels");
+            const [year, month] = ctx.next.calendarReferenceDate.split("-");
+            ctx.next.controllerLabel.month = ENGLISH_MONTHS[+month - 1];
+            ctx.next.controllerLabel.year = year;
+        }
 
         next();
     },
@@ -265,8 +275,11 @@ export const EnglishStrategy: ICalendarStrategy = {
         next();
     },
     setGridMonths: function (ctx: any, next: Next<any>): void {
-        debug_mode && console.log("EnglishStrategy: setGridMonths");
-        ctx.next.gridMonths = ENGLISH_MONTHS;
+        if (ctx.next.isOpen) {
+
+            debug_mode && console.log("EnglishStrategy: setGridMonths");
+            ctx.next.gridMonths = ENGLISH_MONTHS;
+        }
         next();
     },
     sendChanges: (ctx: any, next: Next<any>) => {

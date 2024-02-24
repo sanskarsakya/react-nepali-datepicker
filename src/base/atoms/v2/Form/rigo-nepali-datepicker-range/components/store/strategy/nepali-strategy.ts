@@ -37,9 +37,10 @@ export const NepaliStrategy: ICalendarStrategy = {
     },
 
     setCalendarReferenceDate: function (ctx: any, next: Next<any>): void {
-        debug_mode && console.log("NepaliStrategy: setCalendarReferenceDate");
-
-        ctx.next.calendarReferenceDate = ctx.next.date || ADToBS(dayjs().format("YYYY-MM-DD"));
+        if (ctx.next.isOpen) {
+            debug_mode && console.log("NepaliStrategy: setCalendarReferenceDate");
+            ctx.next.calendarReferenceDate = ctx.next.date || ADToBS(dayjs().format("YYYY-MM-DD"));
+        }
         next();
     },
 
@@ -81,45 +82,52 @@ export const NepaliStrategy: ICalendarStrategy = {
     },
 
     setGridDates: function (ctx, next): void {
-        debug_mode && console.log("NepaliStrategy: setGridDates");
-        const weeks_in_month = NEPALI_DATE.get_weeks_in_month(parse_date(ctx.next.calendarReferenceDate));
+        if (ctx.next.isOpen) {
 
-        ctx.next.gridDates = range(0, weeks_in_month).map((weekNum: number) => {
-            return range(1, 7).map((weekDayNum: number) => {
-                return NEPALI_DATE.get_day_info(
-                    weekNum,
-                    weekDayNum,
-                    parse_date(ctx.next.calendarReferenceDate),
-                    parse_date(ctx.next.date),
-                    ctx.next.disableDateBefore,
-                    ctx.next.disableDateAfter,
-                    ctx.next.disabledWeekDays,
-                    ctx.next.holidays,
-                );
+            debug_mode && console.log("NepaliStrategy: setGridDates");
+            const weeks_in_month = NEPALI_DATE.get_weeks_in_month(parse_date(ctx.next.calendarReferenceDate));
+
+            ctx.next.gridDates = range(0, weeks_in_month).map((weekNum: number) => {
+                return range(1, 7).map((weekDayNum: number) => {
+                    return NEPALI_DATE.get_day_info(
+                        weekNum,
+                        weekDayNum,
+                        parse_date(ctx.next.calendarReferenceDate),
+                        parse_date(ctx.next.date),
+                        ctx.next.disableDateBefore,
+                        ctx.next.disableDateAfter,
+                        ctx.next.disabledWeekDays,
+                        ctx.next.holidays,
+                    );
+                });
             });
-        });
 
-        console.log(ctx.next.gridDates)
+        }
         next();
     },
 
     setMonthYearPanelData: function (ctx, next): void {
-        debug_mode && console.log("NepaliStrategy: setMonthYearPanelData");
-        const now = new Date(ctx.next.calendarReferenceDate);
-        const englishDate = BSToAD(ctx.next.calendarReferenceDate);
-        const splited = englishDate?.split("-") ?? [];
-        const englishYear = nepaliToEnglishNumber(splited[0]);
+        if (ctx.next.isOpen) {
+            debug_mode && console.log("NepaliStrategy: setMonthYearPanelData");
+            const now = new Date(ctx.next.calendarReferenceDate);
+            const englishDate = BSToAD(ctx.next.calendarReferenceDate);
+            const splited = englishDate?.split("-") ?? [];
+            const englishYear = nepaliToEnglishNumber(splited[0]);
 
-        ctx.next.monthYearPanelData = `${englishMonthMap[now.getMonth()]} ${englishYear}`;
+            ctx.next.monthYearPanelData = `${englishMonthMap[now.getMonth()]} ${englishYear}`;
+        }
 
         next();
     },
 
     setCalendarControllerLabels: function (ctx, next): void {
-        debug_mode && console.log("NepaliStrategy: setCalendarControllerLabels");
-        const [year, month] = ctx.next.calendarReferenceDate.split("-");
-        ctx.next.controllerLabel.month = months.ne[+month - 1];
-        ctx.next.controllerLabel.year = englishToNepaliNumber(year);
+        if (ctx.next.isOpen) {
+
+            debug_mode && console.log("NepaliStrategy: setCalendarControllerLabels");
+            const [year, month] = ctx.next.calendarReferenceDate.split("-");
+            ctx.next.controllerLabel.month = months.ne[+month - 1];
+            ctx.next.controllerLabel.year = englishToNepaliNumber(year);
+        }
 
         next();
     },
@@ -336,8 +344,10 @@ export const NepaliStrategy: ICalendarStrategy = {
     },
 
     setGridMonths: function (ctx: any, next: Next<any>): void {
-        debug_mode && console.log("NepaliStrategy: setGridMonths");
-        ctx.next.gridMonths = months.ne
+        if (ctx.next.isOpen) {
+            debug_mode && console.log("NepaliStrategy: setGridMonths");
+            ctx.next.gridMonths = months.ne
+        }
         next();
     },
 

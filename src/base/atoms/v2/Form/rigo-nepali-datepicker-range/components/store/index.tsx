@@ -263,7 +263,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const p = Pipeline<any>();
 
-      p.push(strategyProvider.checkIfTodayIsValid); // might not nee)
+      p.push(strategyProvider.checkIfTodayIsValid); // might not need
       p.push(strategyProvider.setTodayAsDate);
       p.push(strategyProvider.setTodayAsCalendarReferenceDate);
       p.push(strategyProvider.setGridDates);
@@ -420,7 +420,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       p.push(strategyProvider.setDate(date));
       p.push(strategyProvider.checkIfDateIsValid);
-      p.push(strategyProvider.sendChanges);
+      p.push(strategyProvider.sendChanges); // sus
       p.push(strategyProvider.setCalendarReferenceDate);
       p.push(strategyProvider.setGridDates);
       p.push(strategyProvider.setMonthYearPanelData);
