@@ -1,12 +1,12 @@
 import React from "react";
-import { InputTextProps } from "./interface";
+import { DatePickerProps } from "./interface";
 import { RigoNepaliDatePickerContext } from "./rigo-nepali-date-picker-context";
 
-export const RigoNepaliDatePicker = (props: InputTextProps) => {
+export const RigoNepaliDatePicker = (props: DatePickerProps) => {
   const { children, ...rest } = props
   return (
     <>
-     
+
       <RigoNepaliDatePickerContext.Provider
         value={{
           ...rest,

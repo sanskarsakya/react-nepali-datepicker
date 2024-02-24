@@ -17,11 +17,12 @@ export interface FormProviderProps {
   showDevTool?: boolean;
 }
 
-export interface InputTextProps extends Record<string, any> {
+export interface DatePickerProps extends Record<string, any> {
   children?: React.ReactNode;
   name: string;
   label: React.ReactNode;
   control?: any;
+  isNepali?: boolean;
   errors?: any;
   required?: boolean;
   setError?: any;

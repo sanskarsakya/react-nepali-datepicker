@@ -5,10 +5,10 @@ import { RigoFormErrorLabel } from "./rigo-form-error-label";
 import { RigoFormHelperText } from "./rigo-form-helper-text";
 import { RigoFormLabel } from "./rigo-form-label";
 import { RigoNepaliDatePicker } from "./rigo-nepali-date-picker";
-import { InputTextProps } from "./interface";
+import { DatePickerProps } from "./interface";
 
-export const NepaliDatepickerV2 = (props: InputTextProps) => {
-  console.log({props})
+export const NepaliDatepickerV2 = (props: DatePickerProps) => {
+  console.log({ props })
   return <RigoNepaliDatePicker {...props} />;
 };
 

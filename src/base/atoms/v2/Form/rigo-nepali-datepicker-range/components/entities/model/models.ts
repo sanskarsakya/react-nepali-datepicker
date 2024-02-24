@@ -38,10 +38,19 @@ export interface ICalendarProps {
      */
     disableDateAfter: string;
 
+    /**
+     * This is the change handler
+     */
+    onChange: () => void;
 
 }
 
 export interface ICalendarInternals {
+
+    /**
+     * Determine if the calendar body is open orr not
+     */
+    isOpen: boolean;
 
     /**
      * Determine the direction of animation
@@ -121,9 +130,30 @@ export interface ICalendarCtx extends ICalendarProps, ICalendarInternals { }
 
 export interface ICalendarEvents {
     /**
-         * This is used to setup the calendar
-         */
+     * todo: might not be nneded
+     * This is used to setup the calendar
+     */
     mountSetup: (props: any) => void;
+
+    /**
+     * This is sync the isNepali props
+     */
+    syncIsNepaliProps: (isNepali: boolean) => void;
+
+    /**
+     * This is sync the date props
+     */
+    syncDateProps: (date: string) => void;
+
+    /**
+     * This is sync the disalbe date beofre
+     */
+    syncDisableDateBeforeProps: (disableDateBefore: string) => void;
+
+    /**
+     * This is sync the disalbe date beofre
+     */
+    syncDisableDateAfterProps: (disableDateAfter: string) => void;
 
     /**
      * This is used to sync is nepali props change
@@ -141,6 +171,11 @@ export interface ICalendarEvents {
      *
      */
     openCalendar: () => void;
+
+    /**
+     * This is used to close the calendar body
+     */
+    closeCalendar: () => void;
 
     /**
      * this is used to navigate to next month
@@ -172,12 +207,12 @@ export interface ICalendarEvents {
      * This is used to select a day from the calendar
      * grid.
      */
-    selectDay: (date: string, onClose: any, onChange: any) => void;
+    selectDay: (date: string) => void;
 
     /**
      * This is used to select today's date
      */
-    selectToday: (onClose: any, onChange: any) => void;
+    selectToday: () => void;
 
     /**
      * This is used to navigate to month view

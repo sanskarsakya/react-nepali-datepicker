@@ -32,27 +32,38 @@ export const NepaliStrategy: ICalendarStrategy = {
         next();
     },
 
-    setDisableDateBefore: function (ctx, next): void {
+    setDisableDateBefore: (disableDateBefore) => (ctx, next): void => {
 
         debug_mode && console.log("NepaliStrategy: setDisableDateBefore");
 
         if (ctx.params.disableDateBefore) {
-            ctx.next.disableDateBefore = ctx.params.disableDateBefore;
+            ctx.next.disableDateBefore = disableDateBefore || "";
         }
         next();
     },
 
-    setDisableDateAfter: function (ctx, next): void {
+    setDisableDateAfter: (disableDateAfter) => (ctx, next): void => {
         debug_mode && console.log("NepaliStrategy: setDisableDateAfter");
         if (ctx.params.disableDateAfter) {
-            ctx.next.disableDateAfter = ctx.params.disableDateAfter;
+            ctx.next.disableDateAfter = disableDateAfter || "";
         }
         next();
     },
 
     setIsTodayValid: function (ctx, next): void {
         debug_mode && console.log("NepaliStrategy: setIsTodayValid");
-        const validation_result = validate(today, ctx.next?.disableDateBefore ? BSToAD(ctx.next.disableDateBefore) : "", ctx.next?.disableDateAfter ? BSToAD(ctx.next.disableDateAfter) : "");
+
+        let ddBefore = ""
+        if (ctx?.next?.disableDateBefore) {
+            ddBefore = BSToAD(ctx.next.disableDateBefore) as string
+        }
+
+        let ddAfter = ""
+        if (ctx?.next?.disableDateAfter) {
+            ddAfter = BSToAD(ctx.next.disableDateAfter) as string
+        }
+
+        const validation_result = validate(today, ddBefore, ddAfter);
         ctx.next.isTodayValid = validation_result.is_valid;
 
         next();
@@ -85,7 +96,7 @@ export const NepaliStrategy: ICalendarStrategy = {
         debug_mode && console.log("NepaliStrategy: setMonthYearPanelData");
         const now = new Date(ctx.next.calendarReferenceDate);
         const englishDate = BSToAD(ctx.next.calendarReferenceDate);
-        const splited = englishDate.split("-");
+        const splited = englishDate?.split("-") ?? [];
         const englishYear = nepaliToEnglishNumber(splited[0]);
 
         ctx.next.monthYearPanelData = `${englishMonthMap[now.getMonth()]} ${englishYear}`;
@@ -222,7 +233,18 @@ export const NepaliStrategy: ICalendarStrategy = {
 
     checkIfTodayIsValid: function (ctx: any, next: Next<any>): void {
         debug_mode && console.log("NepaliStrategy: checkIfTodayIsValid");
-        const validation_result = validate(today, ctx.next?.disableDateBefore ? BSToAD(ctx.next.disableDateBefore) : "", ctx.next?.disableDateAfter ? BSToAD(ctx.next.disableDateAfter) : "");
+
+        let ddBefore = ""
+        if (ctx?.next?.disableDateBefore) {
+            ddBefore = BSToAD(ctx.next.disableDateBefore) as string
+        }
+
+        let ddAfter = ""
+        if (ctx?.next?.disableDateAfter) {
+            ddAfter = BSToAD(ctx.next.disableDateAfter) as string
+        }
+
+        const validation_result = validate(today, ddBefore, ddAfter);
         if (validation_result.is_valid) {
             next();
         }
@@ -243,16 +265,27 @@ export const NepaliStrategy: ICalendarStrategy = {
 
     closeCalendarPicker: function (ctx: any, next: Next<any>): void {
         debug_mode && console.log("NepaliStrategy: closeCalendarPicker");
-        ctx.params.onClose();
+        ctx.next.isOpen = false;
         next();
     },
 
     checkIfDateIsValid: function (ctx: any, next: Next<any>): void {
         debug_mode && console.log("NepaliStrategy: checkIfDateIsValid");
+
+        let ddBefore = ""
+        if (ctx?.next?.disableDateBefore) {
+            ddBefore = BSToAD(ctx.next.disableDateBefore) as string
+        }
+
+        let ddAfter = ""
+        if (ctx?.next?.disableDateAfter) {
+            ddAfter = BSToAD(ctx.next.disableDateAfter) as string
+        }
+
         const validation_result = validate(
-            ctx.next.date ? BSToAD(ctx.next.date) : "",
-            ctx.next?.disableDateBefore ? BSToAD(ctx.next.disableDateBefore) : "",
-            ctx.next?.disableDateAfter ? BSToAD(ctx.next.disableDateAfter) : ""
+            ctx.next.date ? BSToAD(ctx.next.date) as string : "",
+            ddBefore,
+            ddAfter
         );
 
         if (validation_result.is_valid) {
@@ -297,15 +330,12 @@ export const NepaliStrategy: ICalendarStrategy = {
         next();
     },
 
-    sendChanges: function (ctx: any, next: Next<any>): void {
+    sendChanges: (ctx: any, next: Next<any>): void => {
         debug_mode && console.log("NepaliStrategy: sendChanges");
-        // ALWAYS RETURN GREGORIAN DATE
-        // ctx.next.onChange(ctx.next.date);
-        ctx.params.onChange({
+        ctx?.onChange?.({
             date: ctx.next.date ? BSToAD(ctx.next.date) : ctx.next.date,
             isNepali: ctx.next.isNepali,
         });
-        // ctx.next.onChange(BSToAD(ctx.next.date));
         next();
     }
 }

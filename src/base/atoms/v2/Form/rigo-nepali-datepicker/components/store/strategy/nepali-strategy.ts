@@ -243,7 +243,7 @@ export const NepaliStrategy: ICalendarStrategy = {
 
     closeCalendarPicker: function (ctx: any, next: Next<any>): void {
         debug_mode && console.log("NepaliStrategy: closeCalendarPicker");
-        ctx.params.onClose();
+        ctx.isOpen = false;
         next();
     },
 

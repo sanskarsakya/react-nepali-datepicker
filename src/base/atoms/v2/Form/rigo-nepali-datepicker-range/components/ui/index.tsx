@@ -1,5 +1,5 @@
 // LIBS
-import { Box, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import React from 'react';
 import { When } from 'react-if';
 
@@ -36,21 +36,20 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   const { isRhfBound = false, disabled, isDark = false } = props;
 
   // HOOKS
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
 
   // HEADLESS HOOK
   const state = useDatePickerStore();
   const {
+    isOpen,
     viewMode,
     error,
     monthYearPanelData
   } = selectCtx(state);
 
   const {
-    mountSetup,
-    propsIsNepaliChange,
     openCalendar,
-    propsDateChange,
+    closeCalendar
   } = selectEvents(state);
 
   const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
@@ -58,24 +57,24 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   const styles = get_base_styles(isDark);
 
   // FUNCTIONS
-  const handleMountSetup = () => {
-    if (props) {
-      mountSetup(props);
-    }
-  };
+  // const handleMountSetup = () => {
+  //   if (props) {
+  //     mountSetup(props);
+  //   }
+  // };
 
-  const handleIsNepaliPropsChange = () => {
-    propsIsNepaliChange(props.isNepali as boolean);
-  };
+  // const handleIsNepaliPropsChange = () => {
+  //   propsIsNepaliChange(props.isNepali as boolean);
+  // };
 
-  const handleDatePropsChange = () => {
-    propsDateChange(props.date as string);
-  };
+  // const handleDatePropsChange = () => {
+  //   propsDateChange(props.date as string);
+  // };
 
   // todo: review later
-  React.useEffect(handleMountSetup, []);
-  React.useEffect(handleIsNepaliPropsChange, [props.isNepali]);
-  React.useEffect(handleDatePropsChange, [props.date]);
+  // React.useEffect(handleMountSetup, []);
+  // React.useEffect(handleIsNepaliPropsChange, [props.isNepali]);
+  // React.useEffect(handleDatePropsChange, [props.date]);
 
   const handleClickOutside = React.useCallback(
     (event: any) => {
@@ -85,9 +84,9 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
       ) {
         return;
       }
-      onClose();
+      closeCalendar();
     },
-    [onClose],
+    [closeCalendar],
   );
 
   React.useLayoutEffect(() => {
@@ -132,7 +131,6 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
       <DateInput
         onOpen={() => {
           openCalendar();
-          onOpen();
         }}
         disabled={disabled}
         styles={styles}
@@ -159,12 +157,12 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
               key={monthYearPanelData}
               styles={styles}
               onChange={props.onChange}
-              onClose={onClose}
+              onClose={closeCalendar}
             />
             <Today
               styles={styles}
               onChange={props.onChange}
-              onClose={onClose}
+              onClose={closeCalendar}
             />
           </When>
         </Box>

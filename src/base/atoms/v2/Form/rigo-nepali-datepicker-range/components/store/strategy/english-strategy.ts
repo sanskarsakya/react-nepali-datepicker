@@ -25,17 +25,19 @@ export const EnglishStrategy: ICalendarStrategy = {
         next();
     },
 
-    setDisableDateBefore: function (ctx, next): void {
+    setDisableDateBefore: (disableDateBefore) => (ctx, next): void => {
         debug_mode && console.log("EnglishStrategy: setDisableDateBefore");
-        if (ctx.params.disableDateBefore) {
-            ctx.next.disableDateBefore = ctx.params.disableDateBefore;
+        if (disableDateBefore.length >= 10) {
+            ctx.next.disableDateBefore = disableDateBefore || "";
         }
         next();
     },
 
-    setDisableDateAfter: function (ctx, next): void {
+    setDisableDateAfter: (disableDateAfter) => (ctx, next): void => {
         debug_mode && console.log("EnglishStrategy: setDisableDateAfter");
-        ctx.next.disableDateAfter = ctx.params.disableDateAfter || "";
+        if (disableDateAfter.length >= 10) {
+            ctx.next.disableDateAfter = disableDateAfter || "";
+        }
         next();
     },
 
@@ -74,7 +76,7 @@ export const EnglishStrategy: ICalendarStrategy = {
         debug_mode && console.log("EnglishStrategy: setMonthYearPanelData");
         const now = new Date(ctx.next.calendarReferenceDate);
         const nepaliDate = ADToBS(ctx.next.calendarReferenceDate);
-        const splited = nepaliDate.split("-");
+        const splited = nepaliDate?.split("-") ?? [];
         const nepaliYear = englishToNepaliNumber(splited[0]);
 
         ctx.next.monthYearPanelData = `${nepaliMonthMap[now.getMonth()]} ${nepaliYear}`;
@@ -216,7 +218,7 @@ export const EnglishStrategy: ICalendarStrategy = {
     },
     closeCalendarPicker: function (ctx, next): void {
         debug_mode && console.log("EnglishStrategy: closeCalendarPicker");
-        ctx.params.onClose();
+        ctx.next.isOpen = false
         next();
     },
     checkIfTodayIsValid: function (ctx, next): void {
@@ -257,12 +259,14 @@ export const EnglishStrategy: ICalendarStrategy = {
         ctx.next.gridMonths = ENGLISH_MONTHS;
         next();
     },
-    sendChanges: function (ctx: any, next: Next<any>): void {
+    sendChanges: (ctx: any, next: Next<any>) => {
         debug_mode && console.log("EnglishStrategy: sendChanges");
-        ctx.params.onChange({
+
+        ctx?.onChange?.({
             date: ctx.next.date,
             isNepali: ctx.next.isNepali,
         });
+
         next();
     },
     normalizeDates: function (ctx: any, next: Next<any>): void {

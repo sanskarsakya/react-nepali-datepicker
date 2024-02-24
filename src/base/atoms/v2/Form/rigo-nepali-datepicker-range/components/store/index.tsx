@@ -7,6 +7,7 @@ import { ENGLISH_MONTHS, weeks } from '../calendar-engine';
 import { ICalendarEvents, ICalendarInternals, ICalendarProps, ICalendarState } from '../entities/model/models';
 import { getStrategy } from './strategy/strategy-provider';
 import { Pipeline } from './utils/execution-pipeline';
+import { selectEvents } from '.';
 
 const DEFAULT_PROPS: ICalendarProps = {
   date: '',
@@ -15,9 +16,11 @@ const DEFAULT_PROPS: ICalendarProps = {
   disableDateAfter: '',
   disabledWeekDays: [],
   holidays: [],
+  onChange: () => { },
 };
 
 const INTERNAL_PROPS: ICalendarInternals = {
+  isOpen: false,
   animationDirection: 'right',
   calendarReferenceDate: dayjs().format('YYYY-MM-DD'),
   gridDates: [],
@@ -94,6 +97,31 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
       set({ ctx: next });
     },
 
+    syncDateProps: async (date) => {
+      const cloned = _.cloneDeep(get().ctx);
+
+      // GET STRATEGY
+      const strategyProvider = getStrategy(cloned.isNepali as boolean);
+
+      const p = Pipeline<any>();
+
+      p.push(strategyProvider.setDate);
+      p.push(strategyProvider.setCalendarReferenceDate);
+      p.push(strategyProvider.setGridMonths);
+      p.push(strategyProvider.setGridDates);
+      p.push(strategyProvider.setMonthYearPanelData);
+      p.push(strategyProvider.setCalendarControllerLabels);
+
+      const { next } = await p.execute({
+        next: cloned,
+        params: {
+          date,
+        },
+      });
+
+      set({ ctx: next });
+    },
+
     propsDateChange: async (date) => {
       const cloned = _.cloneDeep(get().ctx);
 
@@ -123,6 +151,8 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const p = Pipeline<any>();
 
+      cloned.isOpen = true;
+
       p.push(strategyProvider.checkIfDateIsValid);
       p.push(strategyProvider.setViewModeToCalendar);
       p.push(strategyProvider.setCalendarReferenceDate);
@@ -135,6 +165,15 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       set({ ctx: next });
     },
+
+    closeCalendar: async () => {
+      const cloned = _.cloneDeep(get().ctx);
+
+      cloned.isOpen = false;
+
+      set({ ctx: cloned });
+    },
+
     nextMonth: async () => {
       const cloned = _.cloneDeep(get().ctx);
 
@@ -207,7 +246,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       set({ ctx: next });
     },
-    selectDay: async (date, onClose, onChange) => {
+    selectDay: async (date) => {
       const cloned = _.cloneDeep(get().ctx);
 
       const strategyProvider = getStrategy(cloned.isNepali as boolean);
@@ -225,14 +264,13 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
         next: cloned,
         params: {
           date,
-          onClose,
-          onChange,
         },
       });
 
       set({ ctx: next });
     },
-    selectToday: async (onClose, onChange) => {
+
+    selectToday: async () => {
       const cloned = _.cloneDeep(get().ctx);
 
       const strategyProvider = getStrategy(cloned.isNepali as boolean);
@@ -251,12 +289,11 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
       const { next } = await p.execute({
         next: cloned,
         params: {
-          onClose,
-          onChange,
         },
       });
 
       set({ ctx: next });
+
     },
     goToMonthView: async () => {
       const cloned = _.cloneDeep(get().ctx);
@@ -273,6 +310,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       set({ ctx: next });
     },
+
     goToYearView: async () => {
       const cloned = _.cloneDeep(get().ctx);
 
@@ -443,6 +481,71 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       set({ ctx: next });
     },
+
+    syncIsNepaliProps: async (isNepali) => {
+      const cloned = _.cloneDeep(get().ctx);
+
+      // ALWAYS TOGGLE FIRST
+      cloned.isNepali = isNepali;
+
+      // THEN GET STRATEGY
+      const strategyProvider = getStrategy(cloned.isNepali as boolean);
+
+      const p = Pipeline<any>();
+
+      p.push(strategyProvider.convertdatesToCurrentContext);
+      p.push(strategyProvider.setCalendarReferenceDate);
+      p.push(strategyProvider.setGridMonths);
+      p.push(strategyProvider.setGridDates);
+      p.push(strategyProvider.setMonthYearPanelData);
+      p.push(strategyProvider.setCalendarControllerLabels);
+
+      const { next } = await p.execute({
+        next: cloned,
+      });
+
+      set({ ctx: next });
+    },
+
+    syncDisableDateBeforeProps: async (disableDateBefore) => {
+      const cloned = _.cloneDeep(get().ctx);
+
+      // GET STRATEGY
+      const strategyProvider = getStrategy(cloned.isNepali as boolean);
+
+      const p = Pipeline<any>();
+
+      p.push(strategyProvider.setDisableDateBefore(disableDateBefore));
+      p.push(strategyProvider.setGridDates);
+      p.push(strategyProvider.setMonthYearPanelData);
+      p.push(strategyProvider.setCalendarControllerLabels);
+
+      const { next } = await p.execute({
+        next: cloned,
+      });
+
+      set({ ctx: next });
+    },
+
+    syncDisableDateAfterProps: async (disableDateAfter) => {
+      const cloned = _.cloneDeep(get().ctx);
+
+      // GET STRATEGY
+      const strategyProvider = getStrategy(cloned.isNepali as boolean);
+
+      const p = Pipeline<any>();
+
+      p.push(strategyProvider.setDisableDateAfter(disableDateAfter));
+      p.push(strategyProvider.setGridDates);
+      p.push(strategyProvider.setMonthYearPanelData);
+      p.push(strategyProvider.setCalendarControllerLabels);
+
+      const { next } = await p.execute({
+        next: cloned,
+      });
+
+      set({ ctx: next });
+    },
   };
 }
 
@@ -465,6 +568,35 @@ const StoreContext = React.createContext<ReturnType<
   typeof createMyStore
 > | null>(null);
 
+export const Syncer = (props: any) => {
+  const state = useDatePickerStore();
+  const { syncIsNepaliProps, syncDateProps, syncDisableDateBeforeProps, syncDisableDateAfterProps } = selectEvents(state)
+
+  React.useEffect(() => {
+    syncIsNepaliProps(props.isNepali);
+  }, [props.isNepali, syncIsNepaliProps]);
+
+  React.useEffect(() => {
+    if (props.date) {
+      syncDateProps(props.date);
+    }
+  }, [props.date, syncDateProps]);
+
+  React.useEffect(() => {
+    if (props.disableDateBefore) {
+      syncDisableDateBeforeProps(props.disableDateBefore);
+    }
+  }, [props.disableDateBefore, syncDisableDateBeforeProps]);
+
+  React.useEffect(() => {
+    if (props.disableDateAfter) {
+      syncDisableDateAfterProps(props.disableDateAfter);
+    }
+  }, [props.disableDateAfter, syncDisableDateAfterProps]);
+
+  return <></>;
+};
+
 export const DatePickerStoreProvider = ({
   props,
   children,
@@ -475,7 +607,10 @@ export const DatePickerStoreProvider = ({
   // Reference this for singleton ->  https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md
   const store = React.useRef(createMyStore(props)).current;
   return (
-    <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
+    <StoreContext.Provider value={store}>
+      <Syncer {...props} />
+      {children}
+    </StoreContext.Provider>
   );
 };
 
