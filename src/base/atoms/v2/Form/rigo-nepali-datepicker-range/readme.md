@@ -1,6 +1,6 @@
-- [ ] two input
+- [x] two input
 - [ ] ref controls
-- [ ] start and end date validation
+- [x] start and end date validation
 - [ ] input object start and end date
 - [ ] output object start and end date
 - [ ] rhf bindings
