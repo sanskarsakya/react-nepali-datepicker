@@ -28,7 +28,7 @@ const buttonSizeProps: any = {
   ...commonButtonSizeProps,
 };
 
-interface ButtonProps extends ChakraButtonProps {
+export interface ButtonProps extends ChakraButtonProps {
   buttonType?: buttonTypesType;
   buttonSize?: buttonSizeType;
 }

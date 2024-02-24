@@ -17,18 +17,17 @@ If you are developing a production application, we recommend updating the config
 export default {
   // other rules...
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json", "./tsconfig.node.json"],
     tsconfigRootDir: __dirname,
   },
-}
+};
 ```
 
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-
 
 ```
 mklink /j @form-helper C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\@form-helper
@@ -41,6 +40,7 @@ mklink /j rigo-select C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\mod
 mklink /j rigo-text-area C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\rigo-text-area
 mklink /j rigo-checkbox C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\rigo-checkbox
 mklink /j rigo-radio-group C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\rigo-radio-group
+mklink /j rigo-nepali-datepicker C:\projects\rigo\dami-rigo\hrms\nc\HR.Client\ClientApp\modules\ui\src\base\atoms\v2\Form\rigo-nepali-datepicker
 
 
 ```

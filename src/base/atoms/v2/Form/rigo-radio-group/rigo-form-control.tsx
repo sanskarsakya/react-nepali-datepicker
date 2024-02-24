@@ -1,12 +1,9 @@
-import {
-  FormControl ,
-  FormControlProps,
-} from "@chakra-ui/react";
-import { useRadioGroup } from "./use-radio-group";
+import { FormControl, FormControlProps } from '@chakra-ui/react';
+import { useRadioGroup } from './use-radio-group';
 
 export const RigoFormControl = (props: FormControlProps) => {
   const { children, ...rest } = props;
-  const { name } = useRadioGroup();
+  const { name, required } = useRadioGroup();
 
   return (
     <FormControl
@@ -15,7 +12,7 @@ export const RigoFormControl = (props: FormControlProps) => {
       flexDirection='column'
       gap={2}
       width='100%'
-      isRequired={false}
+      isRequired={required}
       {...rest}
     >
       {children}

@@ -6,13 +6,12 @@ import { useCheckbox } from './use-checkbox';
 export const RigoFormErrorLabel = (props: FormErrorLabelProps) => {
   const { name, errors, required } = useCheckbox();
 
-  if (!required) {
-    return null;
-  }
 
   const error =
     errors && fromFormHelpers.resolveObjectValueByPath(errors, name)?.message;
-
+    if (!error) {
+      return null;
+    }
   return (
     <FormErrorLable
       py='2px'

@@ -1,20 +1,15 @@
-import { Flex } from "@chakra-ui/react";
-import { RigoComponent } from "./RigoComponent";
-import { RigoFormControl } from "./RigoFormControl";
-import { RigoFormErrorLabel } from "./RigoFormErrorLabel";
-import { RigoFormHelperText } from "./RigoFormHelperText";
-import { RigoFormLabel } from "./RigoFormLabel";
-import { RigoSelect } from "./RigoSelect";
+import { SelectProps } from './interface';
+import { RigoComponent } from './RigoComponent';
+import { RigoFormControl } from './RigoFormControl';
+import { RigoFormErrorLabel } from './RigoFormErrorLabel';
+import { RigoFormLabel } from './RigoFormLabel';
+import { RigoSelect } from './RigoSelect';
 
-type PxDefaultProps = any;
-export const RigoDefault = (props: PxDefaultProps) => {
+export const RigoDefault = (props: SelectProps) => {
   return (
     <RigoSelect {...props}>
       <RigoFormControl>
-        <Flex gap={2}>
-          <RigoFormLabel />
-          <RigoFormHelperText />
-        </Flex>
+        <RigoFormLabel />
         <RigoComponent />
         <RigoFormErrorLabel />
       </RigoFormControl>

@@ -29,7 +29,7 @@ function Example(props: any) {
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: props.name,
-    value: props.value,
+    value: props.value + "",
     onChange: props.onChange,
   });
 
@@ -44,7 +44,7 @@ function Example(props: any) {
   return (
     <components.wrapper {...rest}>
       {props.options.map((option: any) => {
-        const radio = getRadioProps({ value: option.value });
+        const radio = getRadioProps({ value: option.value + "" });
 
         return (
           <RadioCard key={option.value} {...radio}>

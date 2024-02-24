@@ -1,8 +1,11 @@
-import { FormLabel } from "../form-label";
-import { FormLabelPropsType } from "./interface";
-import { useInput } from "./useInput";
+import { FormLabel } from '../form-label';
+import { FormLabelPropsType } from './interface';
+import { useInput } from './useInput';
 
 export const RigoFormLabel = (props: FormLabelPropsType) => {
   const { label } = useInput();
-  return <FormLabel label={`${label}`} {...props} />;
+  if (label) {
+    return <FormLabel label={`${label}`} {...props} />;
+  }
+  return null;
 };

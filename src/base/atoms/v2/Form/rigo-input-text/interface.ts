@@ -4,7 +4,7 @@ import {
   FormHelperTextProps,
   FormLabelProps,
   TextProps,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 export interface ConnectFormProps {
   children: any;
@@ -17,10 +17,11 @@ export interface FormProviderProps {
   showDevTool?: boolean;
 }
 
-export interface InputTextProps {
+export interface InputTextProps extends InputProps {
   children?: React.ReactNode;
   name: string;
-  label: React.ReactNode;
+  label?: React.ReactNode;
+  placeHolder?: React.ReactNode;
   control?: any;
   errors?: any;
   required?: boolean;
@@ -28,6 +29,7 @@ export interface InputTextProps {
   value?: any;
   onChange?: any;
   errorMessage?: string;
+  isNepaliInput?:boolean
 }
 
 export interface ComponentProps extends InputProps {

@@ -3,7 +3,7 @@ import { useRigoSelect } from './useRigoSelect';
 
 export const RigoFormControl = (props: FormControlProps) => {
   const { children, ...rest } = props;
-  const { name } = useRigoSelect();
+  const { name, required } = useRigoSelect();
 
   return (
     <FormControl
@@ -13,7 +13,7 @@ export const RigoFormControl = (props: FormControlProps) => {
       gap={2}
       width="100%"
       {...rest}
-      isRequired={false}
+      isRequired={required}
     >
       {children}
     </FormControl>

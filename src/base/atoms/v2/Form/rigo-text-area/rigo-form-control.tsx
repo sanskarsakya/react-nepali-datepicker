@@ -3,7 +3,7 @@ import { useTextArea } from './use-textarea';
 
 export const RigoFormControl = (props: FormControlProps) => {
   const { children, ...rest } = props;
-  const { name } = useTextArea();
+  const { name, required } = useTextArea();
 
   return (
     <FormControl
@@ -12,7 +12,7 @@ export const RigoFormControl = (props: FormControlProps) => {
       flexDirection='column'
       gap={2}
       width='100%'
-      isRequired={false}
+      isRequired={required}
       {...rest}
     >
       {children}

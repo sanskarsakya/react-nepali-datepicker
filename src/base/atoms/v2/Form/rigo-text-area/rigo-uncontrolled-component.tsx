@@ -38,6 +38,7 @@ export const RigoUncontrolledComponent = (props: any) => {
   return (
     <Textarea 
     borderColor="#cccccc"
+    bg="white"
     rounded="sm"
     onChange={handleChange} {...inputProps} />
   );

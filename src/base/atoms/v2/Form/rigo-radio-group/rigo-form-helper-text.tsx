@@ -4,20 +4,20 @@ import { useRadioGroup } from "./use-radio-group";
 
 export const RigoFormHelperText = (props: FormHelperTextProps) => {
   const { required } = useRadioGroup();
-  if (required) {
+  if (!required) {
     return null;
   }
 
   return (
-    <FormHelperText 
+    <FormHelperText
       m={0}
       pl='10px'
-      color='gray.500'
+      color='red.600'
       fontWeight='300'
       fontSize='14px'
       {...props}
     >
-      optional
+      *
     </FormHelperText>
   );
 };

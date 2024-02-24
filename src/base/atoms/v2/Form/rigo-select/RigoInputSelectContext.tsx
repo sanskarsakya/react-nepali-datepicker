@@ -1,5 +1,8 @@
 import React from 'react';
 
+// INTERFACE
+import {ContextProps} from "./interface"
+
 /**
  * 1. Define Context with default values
  * 2. Define Parent Component
@@ -11,9 +14,10 @@ import React from 'react';
  */
 // 1.
 
-export const RigoInputSelectContext = React.createContext<any>({
+export const RigoInputSelectContext = React.createContext<ContextProps>({
   label: 'Sample label',
   name: '',
+  returnScalarValue: false,
   options: [],
   control: undefined,
   errors: undefined,

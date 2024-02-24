@@ -6,6 +6,40 @@ import { RigoFormHelperText } from './rigo-form-helper-text';
 import { RigoFormLabel } from './rigo-form-label';
 import { RigoTextarea } from './rigo-textarea';
 
+
+/**
+ *  
+ *  
+ ```tsx
+ <TextAreaV2
+    name="composed"
+    label="Composed"
+    required
+    {...inputProps}>
+    <TextAreaV2.FormControl>
+      <Flex gap={2}>
+        <TextAreaV2.FormLabel />
+      </Flex>
+      <TextAreaV2.Component />
+      <TextAreaV2.HelperText />
+      <TextAreaV2.ErrorLabel />
+    </TextAreaV2.FormControl>
+  </TextAreaV2>
+ ```
+```tsx
+<TextAreaV2.Default
+    name="uncontrolled"
+    label="Uncontrolled"
+    value={"uncontrolled"}
+    onChange={(name: string, value: string) => {
+      console.log({ name, value });
+    }}
+  />
+ ```
+ * 
+ * @param props 
+ * @returns 
+ */
 export const TextAreaV2 = (props: any) => {
   return <RigoTextarea {...props} />;
 };

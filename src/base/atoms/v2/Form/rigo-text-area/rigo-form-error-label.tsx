@@ -6,13 +6,13 @@ import { useTextArea } from './use-textarea';
 export const RigoFormErrorLabel = (props: FormErrorLabelProps) => {
   const { name, errors, required } = useTextArea();
 
-  if (!required) {
-    return null;
-  }
+  
 
   const error =
     errors && fromFormHelpers.resolveObjectValueByPath(errors, name)?.message;
-
+    if (!error) {
+      return null;
+    }
   return (
     <FormErrorLable
       py='2px'

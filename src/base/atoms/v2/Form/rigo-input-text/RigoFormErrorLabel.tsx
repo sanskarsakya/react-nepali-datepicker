@@ -6,13 +6,11 @@ import { useInput } from "./useInput";
 export const RigoFormErrorLabel = (props: FormErrorLabelProps) => {
   const { name, errors, required, errorMessage } = useInput();
 
-  if (!required) {
-    return null;
-  }
-
   const error =
     (errors && fromFormHelpers.resolveObjectValueByPath(errors, name)?.message) || errorMessage
-
+    if (!error) {
+      return null;
+    }
   return (
     <FormErrorLable
       py='2px'

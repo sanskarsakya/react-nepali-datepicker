@@ -9,7 +9,8 @@ import { buttonSizes, buttonTypes } from "./buttonConstant";
 //FILLED BUTTONS
 const fillButtonProps = {
     [buttonTypes.primary]: {
-        bg: "#1677ff",
+        // bg: "#1677ff",
+        bg: "#0486E6",
         color: "#fff",
         _hover: {
             bg: "#4096ff",

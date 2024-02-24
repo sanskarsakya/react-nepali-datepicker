@@ -1,18 +1,15 @@
 import { TextProps } from '@chakra-ui/react';
-import * as fromFormHelpers from '../@form-helper';
-import { useRigoSelect } from './useRigoSelect';
+import get from "lodash/get";
 import { FormErrorLable } from "../form-error-label";
+import { useRigoSelect } from './useRigoSelect';
 
 export const RigoFormErrorLabel = (props: TextProps) => {
   const { name, errors, required } = useRigoSelect();
 
-  if (!required) {
+  const error = errors && get(errors, name)?.message;
+  if (!error) {
     return null;
   }
-
-  const error =
-    errors && fromFormHelpers.resolveObjectValueByPath(errors, name)?.message;
-
   return (
     <FormErrorLable
       py="2px"

@@ -7,7 +7,8 @@ import { useInput } from "./useInput";
 import { RigoUncontrolledComponent } from "./RigoUncontrolledComponent";
 
 export const RigoRhfComponent = (props: ControlledComponentProps) => {
-  const { control, rule, name, required } = useInput();
+  const context = useInput();
+  const { control, rule, name, required } = context;
   let _rule: any = fromFormHelpers.getDefaultRules({ required });
 
   if (!isEmpty(rule)) {

@@ -11,13 +11,13 @@ export interface PzFormProviderProps {
 
 export function FormProvider(props: PzFormProviderProps) {
   const { defaultValues, children, showDevTool = false, onSubmit } = props;
-  const methods = useForm({ mode: 'all', defaultValues: defaultValues,  });
+  const methods = useForm({ mode: 'onSubmit', defaultValues: defaultValues, shouldUseNativeValidation: false });
 
   return (
     <RHFFormProvider {...methods}>
       {showDevTool && <DevTool control={methods.control} />}
 
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <form onSubmit={methods.handleSubmit(onSubmit)} noValidate>{children}</form>
     </RHFFormProvider>
   );
 }

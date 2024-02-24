@@ -1,4 +1,4 @@
-import { Checkbox } from '@chakra-ui/react';
+import { Checkbox, Text } from '@chakra-ui/react';
 import { useCheckbox } from './use-checkbox';
 
 export const RigoUncontrolledComponent = (props: any) => {
@@ -29,8 +29,6 @@ export const RigoUncontrolledComponent = (props: any) => {
     // ...propsRest,
   };
   return (
-    <Checkbox onChange={handleChange} {...inputProps}>
-      {label}
-    </Checkbox>
+    <Checkbox fontSize="8px" onChange={handleChange} {...inputProps} />
   );
 };

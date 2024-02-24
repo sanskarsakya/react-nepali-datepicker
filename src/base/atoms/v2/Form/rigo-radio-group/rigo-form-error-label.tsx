@@ -6,13 +6,11 @@ import { useRadioGroup } from "./use-radio-group";
 export const RigoFormErrorLabel = (props: FormErrorLabelProps) => {
   const { name, errors, required } = useRadioGroup();
 
-  if (!required) {
-    return null;
-  }
-
   const error =
     errors && fromHelpers.resolveObjectValueByPath(errors, name)?.message;
-
+    if (!error) {
+      return null;
+    }
   return (
     <FormErrorLable
       py='2px'

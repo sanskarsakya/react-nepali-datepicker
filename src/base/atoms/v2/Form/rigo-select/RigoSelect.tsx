@@ -6,13 +6,13 @@
 
 // COMPONENTS
 import { RigoInputSelectContext } from './RigoInputSelectContext';
+import { SelectProps } from './interface';
 
-type PxSelectProps = any;
 // 2.
 /**
  * @returns
  */
-export const RigoSelect = (props: PxSelectProps) => {
+export const RigoSelect = (props: SelectProps) => {
   const { children, ...rest } = props;
   return (
     <RigoInputSelectContext.Provider

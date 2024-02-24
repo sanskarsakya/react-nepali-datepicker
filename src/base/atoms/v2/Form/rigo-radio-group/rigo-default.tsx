@@ -11,10 +11,7 @@ export const RigoDefault = (props: RadioGroupProps) => {
   return (
     <RigoRadioGroup {...props}>
       <RigoFormControl>
-        <Flex gap={2}>
           <RigoFormLabel />
-          <RigoFormHelperText />
-        </Flex>
         <RigoComponent />
         <RigoFormErrorLabel />
       </RigoFormControl>

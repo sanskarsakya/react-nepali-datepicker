@@ -4,7 +4,7 @@ import { useTextArea } from './use-textarea';
 
 export const RigoFormHelperText = (props: FormHelperTextPropsType) => {
   const { required } = useTextArea();
-  if (required) {
+  if (!required) {
     return null;
   }
 
@@ -12,12 +12,12 @@ export const RigoFormHelperText = (props: FormHelperTextPropsType) => {
     <FormHelperText
       m={0}
       pl='10px'
-      color='gray.500'
+      color='red.600'
       fontWeight='300'
       fontSize='14px'
       {...props}
     >
-      optional
+      *
     </FormHelperText>
   );
 };
