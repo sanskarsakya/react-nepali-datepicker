@@ -1,7 +1,6 @@
 import { Flex, Table, Tbody, Td, Text, Thead, Tr } from '@chakra-ui/react';
 import { IDayInfo, zero_pad } from '../calendar-engine';
-import { useDatePickerStore } from '../store';
-import { motion } from 'framer-motion';
+import { selectCtx, selectEvents, useDatePickerStore } from '../store';
 
 interface DatepickerBodyProps {
   styles: any;
@@ -13,7 +12,11 @@ export const DatePickerBody = ({
   onClose,
   onChange,
 }: DatepickerBodyProps) => {
-  const { gridDates, selectDay, weeks, animationDirection } = useDatePickerStore();
+
+  // HOOKS
+  const state = useDatePickerStore();
+  const { gridDates, weeks } = selectCtx(state);
+  const { selectDay } = selectEvents(state);
 
   return (
     <Table id='table' sx={styles.date_picker_body.table}>
@@ -35,7 +38,7 @@ export const DatePickerBody = ({
       <Tbody
         id='body'
         p={0}
-        // sx={Styles.date_picker_body.body}
+      // sx={Styles.date_picker_body.body}
       >
         {gridDates.map((calendarDate: IDayInfo[], weekRowIdx: number) => {
           return (
@@ -83,24 +86,24 @@ export const DatePickerBody = ({
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ duration: 0.2 }}
                     > */}
-                      <Flex
-                        aria-label='cell'
-                        id='cell'
-                        sx={styles.date_picker_body.cell}
+                    <Flex
+                      aria-label='cell'
+                      id='cell'
+                      sx={styles.date_picker_body.cell}
+                    >
+                      <Text
+                        id='primary_label'
+                        sx={styles.date_picker_body.primary_label}
                       >
-                        <Text
-                          id='primary_label'
-                          sx={styles.date_picker_body.primary_label}
-                        >
-                          {dayInfo.primaryDay}
-                        </Text>
-                        <Text
-                          id='seconadry_label'
-                          sx={styles.date_picker_body.secondary_label}
-                        >
-                          {dayInfo.secondaryDay}
-                        </Text>
-                      </Flex>
+                        {dayInfo.primaryDay}
+                      </Text>
+                      <Text
+                        id='seconadry_label'
+                        sx={styles.date_picker_body.secondary_label}
+                      >
+                        {dayInfo.secondaryDay}
+                      </Text>
+                    </Flex>
                     {/* </motion.div> */}
                   </Td>
                 );

@@ -1,15 +1,5 @@
 
-export type ICalendarState = {
-    // ====================
-    // PROPS
-    // ====================
-
-    /**
-     * Determine the direction of animation
-     * while rendering
-     */
-    animationDirection: 'left' | 'right';
-
+export interface ICalendarProps {
     /**
      * This is the date that is used to
      * bind in date input.
@@ -48,9 +38,17 @@ export type ICalendarState = {
      */
     disableDateAfter: string;
 
-    // ====================
-    // INTERNALS
-    // ====================
+
+}
+
+export interface ICalendarInternals {
+
+    /**
+     * Determine the direction of animation
+     * while rendering
+     */
+    animationDirection: 'left' | 'right';
+
 
     /**
      * This is the date that is used to
@@ -112,11 +110,19 @@ export type ICalendarState = {
         year: string;
     };
 
-    // ACTIONS
-
     /**
-     * This is used to setup the calendar
+     * This is used to set the week data
+     * for calendar body view
      */
+    weeks: any[];
+}
+
+export interface ICalendarCtx extends ICalendarProps, ICalendarInternals { }
+
+export interface ICalendarEvents {
+    /**
+         * This is used to setup the calendar
+         */
     mountSetup: (props: any) => void;
 
     /**
@@ -233,9 +239,9 @@ export type ICalendarState = {
      */
     toggleContext: (context?: boolean) => void;
 
-    /**
-     * This is used to set the week data
-     * for calendar body view
-     */
-    weeks: any[];
-};
+}
+
+export interface ICalendarState {
+    ctx: ICalendarCtx;
+    events: ICalendarEvents;
+}

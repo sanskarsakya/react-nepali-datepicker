@@ -1,13 +1,15 @@
 import { Button, Flex, IconButton, Text } from "@chakra-ui/react";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
-import { useDatePickerStore } from '../store';
+import { selectCtx, selectEvents, useDatePickerStore } from '../store';
 
 interface YearViewModeProp {
     styles?: any
 }
 export const YearViewMode = ({ styles }: YearViewModeProp) => {
 
-    const { selectYear, gridYears, getNextDecadeYearGrid, getPreviousDecadeYearGrid } = useDatePickerStore()
+    const state = useDatePickerStore()
+    const { gridYears } = selectCtx(state);
+    const { selectYear, getNextDecadeYearGrid, getPreviousDecadeYearGrid } = selectEvents(state);
 
     return <>
         <Flex

@@ -4,7 +4,7 @@ import React from 'react';
 import { When } from 'react-if';
 
 // STORE
-import { DatePickerStoreProvider, useDatePickerStore } from '../store';
+import { DatePickerStoreProvider, selectCtx, selectEvents, useDatePickerStore } from '../store';
 
 // COMPONENTS
 import { CalendarController } from './calendar-controller';
@@ -39,16 +39,19 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // HEADLESS HOOK
+  const state = useDatePickerStore();
+  const {
+    viewMode,
+    error,
+    monthYearPanelData
+  } = selectCtx(state);
+
   const {
     mountSetup,
     propsIsNepaliChange,
     openCalendar,
-    viewMode,
-    error,
-    monthYearPanelData,
     propsDateChange,
-    disableDateAfter,
-  } = useDatePickerStore();
+  } = selectEvents(state);
 
   const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
 

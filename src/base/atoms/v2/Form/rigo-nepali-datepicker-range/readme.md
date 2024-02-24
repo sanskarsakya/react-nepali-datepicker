@@ -4,3 +4,5 @@
 - [ ] input object start and end date
 - [ ] output object start and end date
 - [ ] rhf bindings
+
+- [x] preparing to move to default props value format

@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-import { useDatePickerStore } from '../store';
+import { selectCtx, selectEvents, useDatePickerStore } from '../store';
 
 interface DateInputProps {
   styles: any;
@@ -18,11 +18,11 @@ interface DateInputProps {
 }
 export const DateInput = forwardRef<DateInputProps, 'div'>(
   ({ onOpen, disabled }, ref) => {
+
     // HOOKS
     const state = useDatePickerStore();
-
-    const { date, onDateChange, toggleContext, isNepali } =
-      useDatePickerStore();
+    const { date, isNepali } = selectCtx(state);
+    const { onDateChange, toggleContext } = selectEvents(state);
 
     // LOCAL STATE
     const [value, setValue] = React.useState('');

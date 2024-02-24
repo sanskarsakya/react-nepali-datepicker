@@ -1,6 +1,6 @@
 import { Button, Center, Flex, IconButton, Text } from '@chakra-ui/react';
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight, AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
-import { useDatePickerStore } from '../store';
+import { selectCtx, selectEvents, useDatePickerStore } from '../store';
 
 interface CalendarControllerProps {
   styles: any
@@ -11,8 +11,8 @@ export const CalendarController = ({
 }: CalendarControllerProps) => {
 
   return <Flex
-  px={3}
-  py={0.5}
+    px={3}
+    py={0.5}
     w="full"
     alignItems="center"
     justifyContent="space-between"
@@ -42,10 +42,10 @@ export const CalendarController = ({
 };
 
 export const PreviousYearButton = () => {
-  const { previousYear } = useDatePickerStore()
+  const { previousYear } = selectEvents(useDatePickerStore());
 
   return <IconButton
-  size="sm"
+    size="sm"
     aria-label='previous-year-button'
     id="previous-year-button"
     bg="transparent"
@@ -57,11 +57,11 @@ export const PreviousYearButton = () => {
 
 
 export const PreviousMonthButton = () => {
-  const { previousMonth } = useDatePickerStore();
+  const { previousMonth } = selectEvents(useDatePickerStore());
 
   return (
     <IconButton
-    size="sm"
+      size="sm"
       aria-label='previous-month-button'
       id="previous-month-button"
       bg="transparent"
@@ -74,11 +74,11 @@ export const PreviousMonthButton = () => {
 };
 
 export const NextMonthButton = () => {
-  const { nextMonth } = useDatePickerStore();
+  const { nextMonth } = selectEvents(useDatePickerStore());
 
   return (
     <IconButton
-    size="sm"
+      size="sm"
       aria-label='next-month-button'
       id='next-month-button'
       bg="transparent"
@@ -92,11 +92,11 @@ export const NextMonthButton = () => {
 
 
 export const NextYearButton = () => {
-  const { nextYear } = useDatePickerStore();
+  const { nextYear } = selectEvents(useDatePickerStore());
 
   return (
     <IconButton
-    size="sm"
+      size="sm"
       aria-label='next-year-button'
       id='next-year-button'
       bg="transparent"
@@ -110,14 +110,12 @@ export const NextYearButton = () => {
 
 
 export const MonthButton = () => {
-  const {
-    controllerLabel,
-    goToMonthView,
-  } = useDatePickerStore()
+  const { goToMonthView } = selectEvents(useDatePickerStore());
+  const { controllerLabel } = selectCtx(useDatePickerStore());
 
   return (
     <Button
-    px={2}
+      px={2}
       variant='unstyled'
       size="sm"
       color='rigo.primary'
@@ -133,10 +131,8 @@ export const MonthButton = () => {
 };
 
 export const YearButton = () => {
-  const {
-    controllerLabel,
-    goToYearView,
-  } = useDatePickerStore()
+  const { goToYearView } = selectEvents(useDatePickerStore());
+  const { controllerLabel } = selectCtx(useDatePickerStore());
 
   return (
     <Button
