@@ -19,8 +19,19 @@ export const NepaliStrategy: ICalendarStrategy = {
 
         debug_mode && console.log("NepaliStrategy: setDate");
 
-        // normalize
-        ctx.next.date = date;
+        if (date) {
+            ctx.next.date = date;
+        }
+
+        next();
+    },
+    setConvrtedDate: (date) => (ctx, next): void => {
+
+        debug_mode && console.log("NepaliStrategy: setDate");
+
+        if (date) {
+            ctx.next.date = ADToBS(date);
+        }
 
         next();
     },
@@ -37,7 +48,7 @@ export const NepaliStrategy: ICalendarStrategy = {
         debug_mode && console.log("NepaliStrategy: setDisableDateBefore");
 
         if (disableDateBefore) {
-            ctx.next.disableDateBefore = disableDateBefore || "";
+            ctx.next.disableDateBefore = ADToBS(disableDateBefore) || "";
         }
         next();
     },
@@ -45,7 +56,7 @@ export const NepaliStrategy: ICalendarStrategy = {
     setDisableDateAfter: (disableDateAfter) => (ctx, next): void => {
         debug_mode && console.log("NepaliStrategy: setDisableDateAfter");
         if (disableDateAfter) {
-            ctx.next.disableDateAfter = disableDateAfter || "";
+            ctx.next.disableDateAfter = ADToBS(disableDateAfter) || "";
         }
         next();
     },

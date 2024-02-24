@@ -9,7 +9,7 @@ export const getEnglishDate = (nepYY: number, nepMM: number, nepDD: number) => {
     const startingEngMonth: number = 4;
     const startingEngDay: number = 14;
 
-    const startingNepYear: number = 2000;
+    let startingNepYear: number = 2000;
 
     const tempModel = {
       year: -1,

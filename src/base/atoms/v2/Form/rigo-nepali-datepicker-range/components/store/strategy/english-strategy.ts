@@ -19,6 +19,16 @@ export const EnglishStrategy: ICalendarStrategy = {
         next();
     },
 
+    setConvrtedDate: (date) => (ctx, next): void => {
+        debug_mode && console.log("NepaliStrategy: setDate");
+
+        if (date) {
+            ctx.next.date = date;
+        }
+
+        next();
+    },
+
     setCalendarReferenceDate: function (ctx, next): void {
         debug_mode && console.log("EnglishStrategy: setCalendarReferenceDate");
         ctx.next.calendarReferenceDate = ctx.next.date || dayjs().format("YYYY-MM-DD");

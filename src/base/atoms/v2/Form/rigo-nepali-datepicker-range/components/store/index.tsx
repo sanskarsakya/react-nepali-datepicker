@@ -100,7 +100,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const p = Pipeline<any>();
 
-      p.push(strategyProvider.setDate(date));
+      p.push(strategyProvider.setConvrtedDate(date));
       p.push(strategyProvider.setCalendarReferenceDate);
       p.push(strategyProvider.setGridMonths);
       p.push(strategyProvider.setGridDates);

@@ -216,7 +216,7 @@ export const EnglishStrategy: ICalendarStrategy = {
     },
     closeCalendarPicker: function (ctx, next): void {
         debug_mode && console.log("EnglishStrategy: closeCalendarPicker");
-        ctx.isOpen = false;
+        ctx.params.onClose();
         next();
     },
     checkIfTodayIsValid: function (ctx, next): void {

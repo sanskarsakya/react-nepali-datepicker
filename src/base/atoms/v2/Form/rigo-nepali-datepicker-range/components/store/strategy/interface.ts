@@ -9,6 +9,7 @@ export interface ICalendarStrategy {
    * @returns 
    */
   setDate: (date: string) => (ctx: any, next: Next<any>) => void;
+  setConvrtedDate: (date: string) => (ctx: any, next: Next<any>) => void;
   setCalendarReferenceDate: (ctx: any, next: Next<any>) => void;
   setDisableDateBefore: (disableDateBefore: string) => (ctx: any, next: Next<any>) => void;
   setDisableDateAfter: (disableDateAfter: string) => (ctx: any, next: Next<any>) => void;
