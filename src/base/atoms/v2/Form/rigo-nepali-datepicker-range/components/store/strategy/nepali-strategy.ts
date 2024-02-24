@@ -15,12 +15,12 @@ const today = dayjs().format("YYYY-MM-DD");
 
 export const NepaliStrategy: ICalendarStrategy = {
 
-    setDate: function (ctx: any, next: Next<any>): void {
+    setDate: (date) => (ctx, next): void => {
 
         debug_mode && console.log("NepaliStrategy: setDate");
 
         // normalize
-        ctx.next.date = ctx.params.date;
+        ctx.next.date = date;
 
         next();
     },
@@ -36,7 +36,7 @@ export const NepaliStrategy: ICalendarStrategy = {
 
         debug_mode && console.log("NepaliStrategy: setDisableDateBefore");
 
-        if (ctx.params.disableDateBefore) {
+        if (disableDateBefore) {
             ctx.next.disableDateBefore = disableDateBefore || "";
         }
         next();
@@ -44,7 +44,7 @@ export const NepaliStrategy: ICalendarStrategy = {
 
     setDisableDateAfter: (disableDateAfter) => (ctx, next): void => {
         debug_mode && console.log("NepaliStrategy: setDisableDateAfter");
-        if (ctx.params.disableDateAfter) {
+        if (disableDateAfter) {
             ctx.next.disableDateAfter = disableDateAfter || "";
         }
         next();
@@ -181,11 +181,11 @@ export const NepaliStrategy: ICalendarStrategy = {
 
     },
 
-    selectYear: function (ctx: any, next: Next<any>): void {
+    selectYear: (year) => (ctx, next): void => {
         debug_mode && console.log("NepaliStrategy: selectYear");
         ctx.next.calendarReferenceDate = stitch_date(
             {
-                year: ctx.params.year,
+                year,
                 month: +ctx.next.calendarReferenceDate.split("-")[1],
                 day: 1,
             },
@@ -218,11 +218,11 @@ export const NepaliStrategy: ICalendarStrategy = {
         next();
     },
 
-    selectMonth: (ctx: any, next: Next<any>): void => {
+    selectMonth: (month) => (ctx, next): void => {
         debug_mode && console.log("NepaliStrategy: selectMonth");
         ctx.next.calendarReferenceDate = stitch_date({
             year: +ctx.next.calendarReferenceDate.split("-")[0],
-            month: ctx.params.month,
+            month,
             day: 1,
         },
             "-"

@@ -8,7 +8,7 @@ export interface ICalendarStrategy {
    * @param next 
    * @returns 
    */
-  setDate: (ctx: any, next: Next<any>) => void;
+  setDate: (date: string) => (ctx: any, next: Next<any>) => void;
   setCalendarReferenceDate: (ctx: any, next: Next<any>) => void;
   setDisableDateBefore: (disableDateBefore: string) => (ctx: any, next: Next<any>) => void;
   setDisableDateAfter: (disableDateAfter: string) => (ctx: any, next: Next<any>) => void;
@@ -29,10 +29,10 @@ export interface ICalendarStrategy {
   setGridMonths: (ctx: any, next: Next<any>) => void;
   updateGridYearWithPreviousDecade: (ctx: any, next: Next<any>) => void;
   updateGridYearWithNextDecade: (ctx: any, next: Next<any>) => void;
-  selectYear: (ctx: any, next: Next<any>) => void;
+  selectYear: (year: number) => (ctx: any, next: Next<any>) => void;
+  selectMonth: (month: number) => (ctx: any, next: Next<any>) => void;
   updateMonthViewWithPreviousYear: (ctx: any, next: Next<any>) => void;
   updateMonthViewWithNextYear: (ctx: any, next: Next<any>) => void;
-  selectMonth: (ctx: any, next: Next<any>) => void;
   closeCalendarPicker: (ctx: any, next: Next<any>) => void;
   sendChanges: (ctx: any, next: Next<any>) => void;
 

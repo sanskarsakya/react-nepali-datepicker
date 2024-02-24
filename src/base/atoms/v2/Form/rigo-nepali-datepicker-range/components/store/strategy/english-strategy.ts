@@ -13,9 +13,9 @@ import { debug_mode } from "./constants";
 const today = dayjs().format("YYYY-MM-DD");
 
 export const EnglishStrategy: ICalendarStrategy = {
-    setDate: function (ctx, next): void {
+    setDate: (date) => (ctx, next): void => {
         debug_mode && console.log("EnglishStrategy: setDate");
-        ctx.next.date = ctx.params.date;
+        ctx.next.date = date;
         next();
     },
 
@@ -170,11 +170,11 @@ export const EnglishStrategy: ICalendarStrategy = {
 
         next();
     },
-    selectYear: function (ctx, next): void {
+    selectYear: (year) => (ctx, next): void => {
         debug_mode && console.log("EnglishStrategy: selectYear");
         ctx.next.calendarReferenceDate = stitch_date(
             {
-                year: ctx.params.year,
+                year,
                 month: +ctx.next.calendarReferenceDate.split("-")[1],
                 day: 1,
             },
@@ -204,11 +204,11 @@ export const EnglishStrategy: ICalendarStrategy = {
 
         next();
     },
-    selectMonth: function (ctx, next): void {
+    selectMonth: (month) => (ctx, next): void => {
         debug_mode && console.log("EnglishStrategy: selectMonth");
         ctx.next.calendarReferenceDate = stitch_date({
             year: +ctx.next.calendarReferenceDate.split("-")[0],
-            month: ctx.params.month,
+            month,
             day: 1,
         },
             "-"

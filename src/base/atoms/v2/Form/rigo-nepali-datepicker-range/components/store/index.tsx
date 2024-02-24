@@ -55,18 +55,13 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const p = Pipeline<any>();
 
-      p.push(strategyProvider.setDate);
+      p.push(strategyProvider.setDate(date));
       p.push(strategyProvider.normalizeDates);
       p.push(strategyProvider.setGridMonths);
       p.push(strategyProvider.setCalendarReferenceDate);
 
       const { next } = await p.execute({
         next: cloned,
-        params: {
-          date,
-          disableDateBefore,
-          disableDateAfter,
-        },
       });
 
       set({ ctx: next });
@@ -105,7 +100,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const p = Pipeline<any>();
 
-      p.push(strategyProvider.setDate);
+      p.push(strategyProvider.setDate(date));
       p.push(strategyProvider.setCalendarReferenceDate);
       p.push(strategyProvider.setGridMonths);
       p.push(strategyProvider.setGridDates);
@@ -114,9 +109,6 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const { next } = await p.execute({
         next: cloned,
-        params: {
-          date,
-        },
       });
 
       set({ ctx: next });
@@ -129,16 +121,13 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const p = Pipeline<any>();
 
-      p.push(strategyProvider.setDate);
+      p.push(strategyProvider.setDate(date));
       p.push(strategyProvider.normalizeDates);
       p.push(strategyProvider.setGridMonths);
       p.push(strategyProvider.setCalendarReferenceDate);
 
       const { next } = await p.execute({
         next: cloned,
-        params: {
-          date,
-        },
       });
 
       set({ ctx: next });
@@ -253,7 +242,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const p = Pipeline<any>();
 
-      p.push(strategyProvider.setDate);
+      p.push(strategyProvider.setDate(date));
       p.push(strategyProvider.setGridDates);
       p.push(strategyProvider.setMonthYearPanelData);
       p.push(strategyProvider.setCalendarControllerLabels);
@@ -262,9 +251,6 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const { next } = await p.execute({
         next: cloned,
-        params: {
-          date,
-        },
       });
 
       set({ ctx: next });
@@ -288,8 +274,6 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const { next } = await p.execute({
         next: cloned,
-        params: {
-        },
       });
 
       set({ ctx: next });
@@ -365,14 +349,11 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const p = Pipeline<any>();
 
-      p.push(strategyProvider.selectYear);
+      p.push(strategyProvider.selectYear(year));
       p.push(strategyProvider.setViewModeToMonth);
 
       const { next } = await p.execute({
         next: cloned,
-        params: {
-          year,
-        },
       });
 
       set({ ctx: next });
@@ -417,7 +398,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const p = Pipeline<any>();
 
-      p.push(strategyProvider.selectMonth);
+      p.push(strategyProvider.selectMonth(month));
       p.push(strategyProvider.setGridDates);
       p.push(strategyProvider.setMonthYearPanelData);
       p.push(strategyProvider.setCalendarControllerLabels);
@@ -425,7 +406,6 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const { next } = await p.execute({
         next: cloned,
-        params: { month },
       });
 
       set({ ctx: next });
@@ -438,7 +418,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const p = Pipeline<any>();
 
-      p.push(strategyProvider.setDate);
+      p.push(strategyProvider.setDate(date));
       p.push(strategyProvider.checkIfDateIsValid);
       p.push(strategyProvider.sendChanges);
       p.push(strategyProvider.setCalendarReferenceDate);
@@ -448,9 +428,6 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const { next } = await p.execute({
         next: cloned,
-        params: {
-          date,
-        },
       });
 
       set({ ctx: next });
