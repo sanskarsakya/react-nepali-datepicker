@@ -43,7 +43,7 @@ function Example(props: any) {
 
   return (
     <components.wrapper {...rest}>
-      {props.options.map((option: any) => {
+      {props?.options?.map((option: any) => {
         const radio = getRadioProps({ value: option.value + "" });
 
         return (
