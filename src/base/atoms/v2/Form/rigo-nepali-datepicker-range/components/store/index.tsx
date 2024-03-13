@@ -12,6 +12,7 @@ import { selectEvents } from '.';
 const DEFAULT_PROPS: ICalendarProps = {
   date: '',
   isNepali: false,
+  showToggle: true,
   disableDateBefore: '',
   disableDateAfter: '',
   disabledWeekDays: [],
@@ -183,6 +184,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       set({ ctx: next });
     },
+
     previousMonth: async () => {
       const cloned = _.cloneDeep(get().ctx);
 
@@ -263,7 +265,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const p = Pipeline<any>();
 
-      p.push(strategyProvider.checkIfTodayIsValid); // might not need
+      p.push(strategyProvider.checkIfTodayIsValid);  // might not need
       p.push(strategyProvider.setTodayAsDate);
       p.push(strategyProvider.setTodayAsCalendarReferenceDate);
       p.push(strategyProvider.setGridDates);
@@ -420,7 +422,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       p.push(strategyProvider.setDate(date));
       p.push(strategyProvider.checkIfDateIsValid);
-      p.push(strategyProvider.sendChanges); // sus
+      p.push(strategyProvider.sendChanges);  // sus
       p.push(strategyProvider.setCalendarReferenceDate);
       p.push(strategyProvider.setGridDates);
       p.push(strategyProvider.setMonthYearPanelData);
@@ -482,6 +484,15 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
       });
 
       set({ ctx: next });
+    },
+
+    syncShowIsNepaliToggleProps: async (showToggle) => {
+      const cloned = _.cloneDeep(get().ctx);
+
+      // ALWAYS TOGGLE FIRST
+      cloned.showToggle = showToggle;
+
+      set({ ctx: cloned });
     },
 
     syncDisableDateBeforeProps: async (disableDateBefore) => {

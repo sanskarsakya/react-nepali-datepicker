@@ -1,10 +1,22 @@
-import { Box, Flex, FormLabel, Button, Input } from "@chakra-ui/react"
+import { ChevronDownIcon } from "@chakra-ui/icons"
+import {
+    Box,
+    Button,
+    Flex, FormLabel,
+    IconButton,
+    Input, Menu,
+    MenuButton,
+    MenuItem,
+    MenuList
+} from "@chakra-ui/react"
 import dayjs from "dayjs"
 import React from "react"
 import NepaliDatepickerV2 from "."
 import { ADToBS, BSToAD, lookUp } from "./components/nepali-date-carburetor"
 
 export const RangeIndex = () => {
+
+    // LOCAL STATES
     const [error, setError] = React.useState("as")
     const [startDate, setStartDate] = React.useState("")
     const [endDate, setEndDate] = React.useState("")
@@ -91,28 +103,35 @@ export const RangeIndex = () => {
             <Input placeholder="Disable Date After" size="sm" value={disabelDateAfter} onChange={handleDiableDateAfterChange} w="100px" />
         </Flex>
 
-        <Flex gap={2}>
-            <Box w="200px">
-                <NepaliDatepickerV2.Default
+        <Flex alignItems="flex-end">
+            <Box w="120px">
+                <NepaliDatepickerV2
                     label='Start Date'
                     name='startDate'
                     disableDateAfter={disabelDateAfter}
                     disableDateBefore={disabelDateBefore}
                     // disabledWeekDays={[1,2]}
+                    showToggle={false}
                     value={startDate}
                     is_dark={false}
                     isNepali={isNepali}
                     onChange={(name: string, value: any) => {
                         handleDateChange(name, value.date, "start")
                     }}
-                />
+                >
+                    <NepaliDatepickerV2.FormControl>
+                        <NepaliDatepickerV2.FormLabel />
+                        <NepaliDatepickerV2.Component borderRight="none" bg="red" />
+                    </NepaliDatepickerV2.FormControl>
+                </NepaliDatepickerV2>
             </Box>
 
-            <Box w="200px">
+            <Box w="120px">
                 <NepaliDatepickerV2.Default
                     name='endDate'
                     label='End Date'
                     value={endDate}
+                    showToggle={false}
                     disableDateAfter={disabelDateAfter}
                     disableDateBefore={disabelDateBefore}
                     is_dark={false}
@@ -122,6 +141,17 @@ export const RangeIndex = () => {
                     }}
                 />
             </Box>
+            <Menu placement="bottom-end">
+                {({ isOpen }) => (
+                    <>
+                        <MenuButton isActive={isOpen} as={IconButton} icon={<ChevronDownIcon />} />
+                        <MenuList >
+                            <MenuItem onClick={handleThisWeekClick}>This Week</MenuItem>
+                            <MenuItem onClick={handleThisMonthClick}>This Month</MenuItem>
+                        </MenuList>
+                    </>
+                )}
+            </Menu>
         </Flex>
         <FormLabel color="red.600">{error}</FormLabel>
     </Flex>

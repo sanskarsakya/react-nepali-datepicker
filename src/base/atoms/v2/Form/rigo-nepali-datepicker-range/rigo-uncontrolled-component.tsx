@@ -11,7 +11,7 @@ export const RigoUncontrolledComponent = (props: any) => {
     isRhfBound = false,
     onChangeRHF,
     value: rhfValue,
-    // ...propRest
+    ...propRest
   } = props;
 
   const context = useDatePicker();
@@ -62,6 +62,7 @@ export const RigoUncontrolledComponent = (props: any) => {
       onChange={handleChange}
       date={valueNormalized}
       {...contextRest}
+      {...propRest}
     />
   );
 };

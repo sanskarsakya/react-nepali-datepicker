@@ -27,6 +27,12 @@ export interface ICalendarProps {
     isNepali: boolean | null;
 
     /**
+     * Determine if the is nepali toggle button should
+     * be shown or not
+     */
+    showToggle: boolean;
+
+    /**
      * This is the date that is used to
      * disable dates before this date.
      */
@@ -154,6 +160,11 @@ export interface ICalendarEvents {
      * This is sync the disalbe date beofre
      */
     syncDisableDateAfterProps: (disableDateAfter: string) => void;
+
+    /**
+     * This is sync the hide/show calendar cepali toggle
+     */
+    syncShowIsNepaliToggleProps: (show: boolean) => void;
 
     /**
      * This is used to sync is nepali props change

@@ -26,15 +26,13 @@ export const RigoUncontrolledComponent = (
     isNepaliInput = false,
     ...contextRest
   } = useInput();
-
+  const valueNormalized = control ? rhfValue : value;
   React.useEffect(() => {
-    const valueNormalized = control ? rhfValue : value;
     _setValue(valueNormalized);
   }, []);
 
-
   const handleChange = (e: any) => {
-    const inputval = e.target.value
+    const inputval = e.target.value;
     if (isNepaliInput) {
       let returnValue = getNepaliFromEnglish(inputval);
       _setValue(returnValue);
@@ -45,12 +43,11 @@ export const RigoUncontrolledComponent = (
     _setValue(inputval);
     _onChange?.(name, inputval);
     onChangeRHF?.(inputval);
-      
   };
 
   const inputProps = {
     name,
-    value: _value,
+    value: _value ?? valueNormalized,
     ...contextRest,
     ...propsRest,
   };

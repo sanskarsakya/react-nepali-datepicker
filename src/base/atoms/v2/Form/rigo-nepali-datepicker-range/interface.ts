@@ -5,6 +5,7 @@ import {
   FormLabelProps,
   TextProps,
 } from "@chakra-ui/react";
+import { ICalendarProps } from "./components/entities/model/models";
 
 export interface ConnectFormProps {
   children: any;
@@ -17,7 +18,7 @@ export interface FormProviderProps {
   showDevTool?: boolean;
 }
 
-export interface DatePickerProps extends Record<string, any> {
+export interface DatePickerProps extends Partial<ICalendarProps>, Record<string, any> {
   children?: React.ReactNode;
   name: string;
   label: React.ReactNode;
