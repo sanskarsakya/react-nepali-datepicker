@@ -16,7 +16,6 @@ export const DateRangeImplementation = () => {
     const [isNepali, setIsNepali] = React.useState<boolean>(false)
 
 
-
     const handleToggleContext = () => {
         setIsNepali(prev => !prev)
     }
@@ -49,7 +48,8 @@ export const DateRangeImplementation = () => {
 
                 setValue(prev => ({
                     ...prev,
-                    ...params
+                    ...(params.startDate && { startDate: params.startDate }),
+                    ...(params.endDate && { endDate: params.endDate }),
                 }))
             }}
             onError={error => console.log(error)}

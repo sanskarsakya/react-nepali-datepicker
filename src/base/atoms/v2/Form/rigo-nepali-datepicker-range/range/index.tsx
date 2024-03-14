@@ -38,14 +38,20 @@ export const RangeComponent = ({ value, isNepali, disabelDateAfter, disabelDateB
 
     const [error, setError] = React.useState<string>("")
 
-
     React.useEffect(() => {
-        console.log("refactorchange", value)
-        _setValue(prev => ({
-            ...prev,
-            ...value
-        }))
-    }, [value])
+        if (value.startDate) {
+            _setValue(prev => ({
+                ...prev,
+                startDate: value.startDate
+            }))
+        }
+        if (value.endDate) {
+            _setValue(prev => ({
+                ...prev,
+                endDate: value.endDate
+            }))
+        }
+    }, [value.startDate, value.endDate, value])
 
     const handleDateChange = (name: string, newValue: string, type: string) => {
 
