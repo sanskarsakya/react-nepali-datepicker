@@ -47,9 +47,6 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
       }
       setValue(inputValue);
       onDateChange(inputValue);
-      // if (inputValue?.length >= 10) {
-      //     onDateChange(inputValue)
-      // }
     };
 
     return (

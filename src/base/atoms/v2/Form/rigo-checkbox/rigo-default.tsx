@@ -15,6 +15,7 @@ export const RigoDefault = (props: InputNumberProps) => {
           <RigoFormLabel />
           <RigoFormHelperText />
         </Flex> */}
+        
         <RigoComponent />
         <RigoFormErrorLabel />
       </RigoFormControl>

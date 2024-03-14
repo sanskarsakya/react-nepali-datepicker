@@ -1,6 +1,15 @@
 // LIBS
-import { Box, Text } from '@chakra-ui/react';
 import React from 'react';
+import {
+  Box,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Text,
+  useOutsideClick
+} from '@chakra-ui/react';
 import { When } from 'react-if';
 
 // STORE
@@ -18,9 +27,6 @@ import { YearViewMode } from './year-view-mode';
 // STYLES
 import { get_base_styles } from './style';
 
-export const childOf = (childNode: any, parentNode: any): boolean =>
-  parentNode.contains(childNode);
-
 interface DatepickerComponentProps extends Record<string, any> {
   onChange?: any;
   isRhfBound?: boolean;
@@ -34,9 +40,7 @@ interface DatepickerComponentProps extends Record<string, any> {
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
   // VARIABLES
   const { isRhfBound = false, disabled, isDark = false } = props;
-
-  // HOOKS
-  // const { isOpen, onOpen, onClose } = useDisclosure();
+  const ref = React.useRef<HTMLDivElement>(null)
 
   // HEADLESS HOOK
   const state = useDatePickerStore();
@@ -52,73 +56,12 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
     closeCalendar
   } = selectEvents(state);
 
-  const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
-
   const styles = get_base_styles(isDark);
 
-  // FUNCTIONS
-  // const handleMountSetup = () => {
-  //   if (props) {
-  //     mountSetup(props);
-  //   }
-  // };
-
-  // const handleIsNepaliPropsChange = () => {
-  //   propsIsNepaliChange(props.isNepali as boolean);
-  // };
-
-  // const handleDatePropsChange = () => {
-  //   propsDateChange(props.date as string);
-  // };
-
-  // todo: review later
-  // React.useEffect(handleMountSetup, []);
-  // React.useEffect(handleIsNepaliPropsChange, [props.isNepali]);
-  // React.useEffect(handleDatePropsChange, [props.date]);
-
-  const handleClickOutside = React.useCallback(
-    (event: any) => {
-      if (
-        nepaliDatePickerWrapper.current &&
-        childOf(event.target, nepaliDatePickerWrapper.current)
-      ) {
-        return;
-      }
-      closeCalendar();
-    },
-    [closeCalendar],
-  );
-
-  React.useLayoutEffect(() => {
-    // console.log('useLayoutEffect');
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [handleClickOutside]);
-
-  React.useLayoutEffect(() => {
-    if (isOpen && nepaliDatePickerWrapper.current) {
-      const nepaliDatePicker =
-        nepaliDatePickerWrapper.current.getBoundingClientRect();
-      const screenHeight = window.innerHeight;
-
-      const calender: HTMLDivElement | null =
-        nepaliDatePickerWrapper.current.querySelector('.calender');
-      if (calender) {
-        setTimeout(() => {
-          const calenderHeight = calender.clientHeight;
-
-          if (calenderHeight + nepaliDatePicker.bottom > screenHeight) {
-            if (calenderHeight < nepaliDatePicker.top) {
-              calender.style.bottom = `${nepaliDatePicker.height}px`;
-            }
-          }
-        }, 0);
-      }
-    }
-  }, [isOpen]);
+  useOutsideClick({
+    ref: ref,
+    handler: () => closeCalendar(),
+  })
 
   return (
     <div
@@ -126,47 +69,51 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
       style={{
         position: 'relative',
       }}
-      ref={nepaliDatePickerWrapper}
+      ref={ref}
     >
-      <DateInput
-        onOpen={() => {
-          openCalendar();
-        }}
-        disabled={disabled}
-        styles={styles}
-      />
-      <When condition={!isRhfBound && error}>
-        <Text color='red.300'>{error}</Text>
-      </When>
-
-      {/* RENDER CALENDAR BODY */}
-      <When condition={isOpen}>
-        <Box sx={styles.panel}>
-          <When condition={isOpen && viewMode === 'YEAR_VIEW'}>
-            <YearViewMode styles={styles} />
-          </When>
-
-          <When condition={isOpen && viewMode === 'MONTH_VIEW'}>
-            <MonthViewMode styles={styles} />
-          </When>
-
-          <When condition={isOpen && viewMode === 'CALENDAR_VIEW'}>
-            <CalendarController styles={styles} />
-            <MonthYearPanel styles={styles} />
-            <DatePickerBody
-              key={monthYearPanelData}
+      <Popover isOpen={isOpen} closeOnBlur={false}>
+        <PopoverTrigger>
+          <Box>
+            <DateInput
+              onOpen={() => {
+                openCalendar();
+              }}
+              disabled={disabled}
               styles={styles}
-              onChange={props.onChange}
-              onClose={closeCalendar}
             />
-            <Today
-              styles={styles}
-              onChange={props.onChange}
-              onClose={closeCalendar}
-            />
-          </When>
-        </Box>
-      </When>
+            <When condition={!isRhfBound && error}>
+              <Text color='red.300'>{error}</Text>
+            </When>
+          </Box>
+        </PopoverTrigger>
+        <PopoverContent >
+          <PopoverArrow />
+          <PopoverBody >
+            <When condition={viewMode === 'YEAR_VIEW'}>
+              <YearViewMode styles={styles} />
+            </When>
+
+            <When condition={viewMode === 'MONTH_VIEW'}>
+              <MonthViewMode styles={styles} />
+            </When>
+            <When condition={viewMode === 'CALENDAR_VIEW'}>
+              <CalendarController styles={styles} />
+              <MonthYearPanel styles={styles} />
+              <DatePickerBody
+                key={monthYearPanelData}
+                styles={styles}
+                onChange={props.onChange}
+                onClose={closeCalendar}
+              />
+              <Today
+                styles={styles}
+                onChange={props.onChange}
+                onClose={closeCalendar}
+              />
+            </When>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 };

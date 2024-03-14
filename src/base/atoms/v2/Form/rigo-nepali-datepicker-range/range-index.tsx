@@ -1,8 +1,10 @@
 import { ChevronDownIcon } from "@chakra-ui/icons"
 import {
     Box,
+    Text,
     Button,
-    Flex, FormLabel,
+    Flex,
+    FormLabel,
     IconButton,
     Input, Menu,
     MenuButton,
@@ -103,56 +105,65 @@ export const RangeIndex = () => {
             <Input placeholder="Disable Date After" size="sm" value={disabelDateAfter} onChange={handleDiableDateAfterChange} w="100px" />
         </Flex>
 
-        <Flex alignItems="flex-end">
-            <Box w="120px">
-                <NepaliDatepickerV2
-                    label='Start Date'
-                    name='startDate'
-                    disableDateAfter={disabelDateAfter}
-                    disableDateBefore={disabelDateBefore}
-                    // disabledWeekDays={[1,2]}
-                    showToggle={false}
-                    value={startDate}
-                    is_dark={false}
-                    isNepali={isNepali}
-                    onChange={(name: string, value: any) => {
-                        handleDateChange(name, value.date, "start")
-                    }}
-                >
-                    <NepaliDatepickerV2.FormControl>
-                        <NepaliDatepickerV2.FormLabel />
-                        <NepaliDatepickerV2.Component borderRight="none" bg="red" />
-                    </NepaliDatepickerV2.FormControl>
-                </NepaliDatepickerV2>
-            </Box>
+        <Flex direction="column" gap={1}>
+            <Text>Date Picker</Text>
+            <Flex alignItems="flex-end">
+                <Box w="120px">
+                    <NepaliDatepickerV2
+                        label='Start Date'
+                        name='startDate'
+                        disableDateAfter={disabelDateAfter}
+                        disableDateBefore={disabelDateBefore}
+                        // disabledWeekDays={[1,2]}
+                        showToggle={false}
+                        value={startDate}
+                        is_dark={false}
+                        isNepali={isNepali}
+                        onChange={(name: string, value: any) => {
+                            handleDateChange(name, value.date, "start")
+                        }}
+                    >
+                        <NepaliDatepickerV2.FormControl>
+                            <NepaliDatepickerV2.Component borderRight="none" bg="red" />
+                        </NepaliDatepickerV2.FormControl>
+                    </NepaliDatepickerV2>
+                </Box>
 
-            <Box w="120px">
-                <NepaliDatepickerV2.Default
-                    name='endDate'
-                    label='End Date'
-                    value={endDate}
-                    showToggle={false}
-                    disableDateAfter={disabelDateAfter}
-                    disableDateBefore={disabelDateBefore}
-                    is_dark={false}
-                    isNepali={isNepali}
-                    onChange={(name: string, value: any) => {
-                        handleDateChange(name, value.date, "end")
-                    }}
-                />
-            </Box>
-            <Menu placement="bottom-end">
-                {({ isOpen }) => (
-                    <>
-                        <MenuButton isActive={isOpen} as={IconButton} icon={<ChevronDownIcon />} />
-                        <MenuList >
-                            <MenuItem onClick={handleThisWeekClick}>This Week</MenuItem>
-                            <MenuItem onClick={handleThisMonthClick}>This Month</MenuItem>
-                        </MenuList>
-                    </>
-                )}
-            </Menu>
+                <Box w="120px">
+                    <NepaliDatepickerV2
+                        name='endDate'
+                        label='End Date'
+                        value={endDate}
+                        showToggle={false}
+                        disableDateAfter={disabelDateAfter}
+                        disableDateBefore={disabelDateBefore}
+                        is_dark={false}
+                        isNepali={isNepali}
+                        onChange={(name: string, value: any) => {
+                            handleDateChange(name, value.date, "end")
+                        }}
+                    >
+                        <NepaliDatepickerV2.FormControl>
+                            <NepaliDatepickerV2.Component borderRight="none" bg="red" />
+                        </NepaliDatepickerV2.FormControl>
+                    </NepaliDatepickerV2>
+                </Box>
+
+                <Menu placement="bottom-end">
+                    {({ isOpen }) => (
+                        <>
+                            <MenuButton borderRadius="none" isActive={isOpen} as={IconButton} icon={<ChevronDownIcon />} />
+                            <MenuList >
+                                <MenuItem onClick={handleThisWeekClick}>This Week</MenuItem>
+                                <MenuItem onClick={handleThisMonthClick}>This Month</MenuItem>
+                            </MenuList>
+                        </>
+                    )}
+                </Menu>
+            </Flex>
+
         </Flex>
+
         <FormLabel color="red.600">{error}</FormLabel>
     </Flex>
 }
