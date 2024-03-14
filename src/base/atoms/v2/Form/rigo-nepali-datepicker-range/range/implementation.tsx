@@ -46,14 +46,11 @@ export const DateRangeImplementation = () => {
             isNepali={isNepali}
             onChange={params => {
                 console.log("$$", params)
-                const next = { ...value, }
-                if (params.type === "start") {
-                    next.startDate = params.startDate
-                } else {
-                    next.endDate = params.endDate
-                }
 
-                setValue(next)
+                setValue(prev => ({
+                    ...prev,
+                    ...params
+                }))
             }}
             onError={error => console.log(error)}
         />

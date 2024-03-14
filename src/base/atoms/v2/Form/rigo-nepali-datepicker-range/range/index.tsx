@@ -23,7 +23,7 @@ interface RangeComponentProps {
     isNepali: boolean;
     disabelDateBefore: string;
     disabelDateAfter: string;
-    onChange: (params: { startDate: string, endDate: string, type: string }) => void
+    onChange: (params: { startDate: string, endDate: string }) => void
     onError: (error: string) => void
 }
 export const RangeComponent = ({ value, isNepali, disabelDateAfter, disabelDateBefore, onChange }: RangeComponentProps) => {
@@ -50,11 +50,9 @@ export const RangeComponent = ({ value, isNepali, disabelDateAfter, disabelDateB
     const handleDateChange = (name: string, newValue: string, type: string) => {
 
         if (type === "start") {
-            debugger
             onChange({
                 startDate: newValue,
                 endDate: _value.endDate,
-                type: "start",
             })
             const isValid = isStartDateBeforeEndDate(newValue, _value.endDate)
 
@@ -67,7 +65,6 @@ export const RangeComponent = ({ value, isNepali, disabelDateAfter, disabelDateB
             onChange({
                 startDate: _value.startDate,
                 endDate: newValue,
-                type: "end",
             })
 
             const isValid = isStartDateBeforeEndDate(_value.startDate, newValue)
