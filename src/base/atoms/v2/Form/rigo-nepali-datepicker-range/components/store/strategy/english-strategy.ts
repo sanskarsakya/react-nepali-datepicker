@@ -285,13 +285,11 @@ export const EnglishStrategy: ICalendarStrategy = {
     sendChanges: (ctx: any, next: Next<any>) => {
         debug_mode && console.log("EnglishStrategy: sendChanges");
 
-        ctx?.onChange?.({
-            date: ctx.next.date,
-            isNepali: ctx.next.isNepali,
-        });
+        ctx?.next?.onChange?.(ctx.next.date);
 
         next();
     },
+    // TODO: REMOVE LATER
     normalizeDates: function (ctx: any, next: Next<any>): void {
         debug_mode && console.log("EnglishStrategy: normalizeDates");
         next();

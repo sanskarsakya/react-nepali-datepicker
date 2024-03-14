@@ -4,7 +4,7 @@ import _ from 'lodash';
 import React from 'react';
 import { createStore, useStore as useZustandStore } from 'zustand';
 import { ENGLISH_MONTHS, weeks } from '../calendar-engine';
-import { ICalendarEvents, ICalendarInternals, ICalendarProps, ICalendarState } from '../entities/model/models';
+import { ICalendarCtx, ICalendarEvents, ICalendarInternals, ICalendarProps, ICalendarState } from '../entities/model/models';
 import { getStrategy } from './strategy/strategy-provider';
 import { Pipeline } from './utils/execution-pipeline';
 import { selectEvents } from '.';
@@ -242,7 +242,9 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 
       const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
-      const p = Pipeline<any>();
+      const p = Pipeline<{
+        next: ICalendarCtx;
+      }>();
 
       p.push(strategyProvider.setDate(date));
       p.push(strategyProvider.setGridDates);

@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/react';
 import NepaliDatepickerV2 from '.';
-import { RangeIndex } from './range-index';
+import { DateRangeImplementation } from './range/implementation';
 
 const meta: Meta<typeof NepaliDatepickerV2> = {
   component: NepaliDatepickerV2,
@@ -19,7 +19,7 @@ export default meta;
 export const EngDefault = {
   // args: argsBase,
   render: () => {
-    return <RangeIndex />
+    return <DateRangeImplementation />
   },
 };
 

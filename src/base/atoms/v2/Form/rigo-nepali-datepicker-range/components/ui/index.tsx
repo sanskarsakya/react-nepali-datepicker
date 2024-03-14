@@ -28,7 +28,7 @@ import { YearViewMode } from './year-view-mode';
 import { get_base_styles } from './style';
 
 interface DatepickerComponentProps extends Record<string, any> {
-  onChange?: any;
+  onChange?: (date: string) => void;
   isRhfBound?: boolean;
   isNepali?: boolean;
   date?: string;
@@ -38,6 +38,10 @@ interface DatepickerComponentProps extends Record<string, any> {
   disabled?: boolean;
 }
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
+
+  console.log({
+    props
+  })
   // VARIABLES
   const { isRhfBound = false, disabled, isDark = false } = props;
   const ref = React.useRef<HTMLDivElement>(null)
@@ -102,8 +106,6 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
               <DatePickerBody
                 key={monthYearPanelData}
                 styles={styles}
-                onChange={props.onChange}
-                onClose={closeCalendar}
               />
               <Today
                 styles={styles}
@@ -122,7 +124,7 @@ interface Props extends Record<string, any> {
   isRhfBound?: boolean;
   isNepali?: boolean;
   isDark?: boolean;
-  onChange?: any;
+  onChange?: (date: string) => void;
   date?: string;
   disableDateBefore?: string;
   disableDateAfter?: string;

@@ -47,7 +47,7 @@ export interface ICalendarProps {
     /**
      * This is the change handler
      */
-    onChange: () => void;
+    onChange: (date: string) => void;
 
 }
 

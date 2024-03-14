@@ -1,3 +1,4 @@
+import { ICalendarCtx } from "../../entities/model/models";
 import { Next } from "../utils/execution-pipeline";
 
 export interface ICalendarStrategy {
@@ -35,7 +36,7 @@ export interface ICalendarStrategy {
   updateMonthViewWithPreviousYear: (ctx: any, next: Next<any>) => void;
   updateMonthViewWithNextYear: (ctx: any, next: Next<any>) => void;
   closeCalendarPicker: (ctx: any, next: Next<any>) => void;
-  sendChanges: (ctx: any, next: Next<any>) => void;
+  sendChanges: (ctx: { next: ICalendarCtx }, next: Next<any>) => void;
 
   // vvalidation
   /**

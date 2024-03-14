@@ -4,13 +4,9 @@ import { selectCtx, selectEvents, useDatePickerStore } from '../store';
 
 interface DatepickerBodyProps {
   styles: any;
-  onClose: any;
-  onChange: any;
 }
 export const DatePickerBody = ({
   styles,
-  onClose,
-  onChange,
 }: DatepickerBodyProps) => {
 
   // HOOKS
@@ -78,7 +74,7 @@ export const DatePickerBody = ({
                         dayInfo?.workingMonth as number,
                       )}-${zero_pad(dayInfo?.workingDay as number)}`;
                       // todo: add onchange here
-                      selectDay(working_date, onClose, onChange);
+                      selectDay(working_date);
                     }}
                   >
                     {/* <motion.div
