@@ -3,8 +3,18 @@ import { RangeComponent } from "."
 import React from "react"
 import dayjs from "dayjs"
 import { When } from "react-if"
+import { ICalendarProps } from "../components/entities/model/models"
 
-export const DateRangeImplementation = () => {
+type dateValue = {
+    startDate: string,
+    endDate: string
+}
+interface DateRangeImplementationProps extends Partial<ICalendarProps> {
+    value: dateValue,
+    onCHange: (value: dateValue) => void
+}
+
+export const DateRangeImplementation = ({ value: _value }: DateRangeImplementationProps) => {
     const [value, setValue] = React.useState<{
         startDate: string;
         endDate: string
@@ -16,6 +26,13 @@ export const DateRangeImplementation = () => {
     const [disabelDateAfter, setDisabelDateAfter] = React.useState("")
     const [isNepali, setIsNepali] = React.useState<boolean>(false)
 
+
+    // FUNCTIONS
+    React.useEffect(() => {
+        if (_value) {
+            setValue(_value)
+        }
+    }, [_value])
 
     const handleToggleContext = () => {
         setIsNepali(prev => !prev)

@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { DateRangeImplementation } from './range/implementation';
 
 export const RigoUncontrolledComponent = (props: any) => {
-  
+
   const {
     isRhfBound = false,
     onChangeRHF,
@@ -13,7 +13,7 @@ export const RigoUncontrolledComponent = (props: any) => {
 
   const context = useDatePicker();
 
-   const {
+  const {
     name,
     value,
     control,
@@ -43,6 +43,10 @@ export const RigoUncontrolledComponent = (props: any) => {
   }
 
   return (
-    <DateRangeImplementation />
+    <DateRangeImplementation onCHange={() => { }} value={{
+      startDate: "",
+      endDate: ""
+
+    }} />
   );
 };
