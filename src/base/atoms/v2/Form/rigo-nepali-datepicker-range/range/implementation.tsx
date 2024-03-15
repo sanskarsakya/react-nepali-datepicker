@@ -14,7 +14,7 @@ interface DateRangeImplementationProps extends Partial<ICalendarProps> {
     onCHange: (value: dateValue) => void
 }
 
-export const DateRangeImplementation = ({ value: _value }: DateRangeImplementationProps) => {
+export const DateRangeImplementation = ({ value: _value, onCHange }: DateRangeImplementationProps) => {
     const [value, setValue] = React.useState<{
         startDate: string;
         endDate: string
@@ -56,9 +56,9 @@ export const DateRangeImplementation = ({ value: _value }: DateRangeImplementati
     const error = isStartDateBeforeEndDate(value.startDate, value.endDate) ? "" : "error"
 
     return <Flex direction="column" gap={2}>
-        <pre>{JSON.stringify({
+        {/* <pre>{JSON.stringify({
             value
-        }, null, 2)}</pre>
+        }, null, 2)}</pre> */}
         <Flex gap={2}>
             <Button size="sm" onClick={handleToggleContext}>Toggle Content (current: {isNepali ? "Nepali" : "English"})</Button>
             <Input placeholder="Disable Date Before" size="sm" value={disabelDateBefore} onChange={handleDisableDateBeforeChange} w="100px" />
@@ -76,7 +76,11 @@ export const DateRangeImplementation = ({ value: _value }: DateRangeImplementati
                     ...prev,
                     ...(params.startDate && { startDate: params.startDate }),
                     ...(params.endDate && { endDate: params.endDate }),
-                }))
+                }));
+                onCHange({
+                    startDate: params.startDate,
+                    endDate: params.endDate
+                })
             }}
             onError={error => console.log(error)}
         />
