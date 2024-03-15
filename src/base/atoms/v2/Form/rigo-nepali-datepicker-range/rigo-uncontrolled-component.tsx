@@ -23,30 +23,38 @@ export const RigoUncontrolledComponent = (props: any) => {
 
   const handleChange = (value: any) => {
     _onChange?.(name, value);
-    onChangeRHF?.(value.date);
+    onChangeRHF?.({
+      startDate: value.startDate, 
+      endDate: value.endDate
+    });
   };
 
-  let valueNormalized = '';
+  let valueNormalized = {
+    startDate: "",
+    endDate: ""
+  };
 
   if (control) {
     if (rhfValue) {
-      valueNormalized = dayjs(rhfValue).format('YYYY-MM-DD');
+      valueNormalized = {
+        startDate: dayjs(rhfValue.startDate).format('YYYY-MM-DD'),
+        endDate:dayjs(rhfValue.endDate).format('YYYY-MM-DD')
+      };
     } else {
       valueNormalized = rhfValue;
     }
   } else {
     if (value) {
-      valueNormalized = dayjs(value).format('YYYY-MM-DD');
+      valueNormalized = {
+        startDate: dayjs(value.startDate).format('YYYY-MM-DD'), 
+        endDate:dayjs(value.endDate).format('YYYY-MM-DD')
+      };
     } else {
       valueNormalized = value;
     }
   }
 
   return (
-    <DateRangeImplementation onCHange={() => { }} value={{
-      startDate: "",
-      endDate: ""
-
-    }} />
+    <DateRangeImplementation onCHange={handleChange} value={valueNormalized} />
   );
 };

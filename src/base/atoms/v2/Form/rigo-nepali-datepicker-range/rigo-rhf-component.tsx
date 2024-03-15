@@ -22,21 +22,21 @@ export const RigoRhfComponent = (props: ControlledComponentProps) => {
           value: required,
           message: 'Required',
         },
-        validate: (value: string) => {
-          // always gets english date, avlidate for english date
-          const validation_result = validate(
-            value,
-            context.disableDateBefore as string,
-            context.disableDateAfter as string,
-          );
+        // validate: (value: string) => {
+        //   // always gets english date, avlidate for english date
+        //   const validation_result = validate(
+        //     value,
+        //     context.disableDateBefore as string,
+        //     context.disableDateAfter as string,
+        //   );
 
-          // console.log({validation_result, value});
+        //   // console.log({validation_result, value});
 
-          if (!validation_result.is_valid) {
-            return validation_result.message;
-          }
-          return true;
-        },
+        //   if (!validation_result.is_valid) {
+        //     return validation_result.message;
+        //   }
+        //   return true;
+        // },
       }}
       render={({ field: { onChange, value } }) => (
         <RigoUncontrolledComponent
