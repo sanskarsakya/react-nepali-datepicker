@@ -1,5 +1,5 @@
-import { FormControl, FormControlProps } from "@chakra-ui/react";
-import { useDatePicker } from "./use-date-picker";
+import { FormControl, FormControlProps } from '@chakra-ui/react';
+import { useDatePicker } from './use-date-picker';
 
 export const RigoFormControl = (props: FormControlProps) => {
   const { children, ...rest } = props;
@@ -8,10 +8,10 @@ export const RigoFormControl = (props: FormControlProps) => {
   return (
     <FormControl
       id={name}
-      display="flex"
-      flexDirection="column"
-      gap={2}
-      width="100%"
+      display='flex'
+      flexDirection='column'
+      gap={1}
+      width='100%'
       isRequired={required}
       {...rest}
     >

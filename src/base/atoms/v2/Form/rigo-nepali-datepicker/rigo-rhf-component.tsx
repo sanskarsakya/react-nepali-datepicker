@@ -20,7 +20,7 @@ export const RigoRhfComponent = (props: ControlledComponentProps) => {
       rules={{
         required: {
           value: required,
-          message: 'Required',
+          message: 'required',
         },
         validate: (value: string) => {
           // always gets english date, avlidate for english date

@@ -8,10 +8,10 @@ export const RigoFormControl = (props: FormControlProps) => {
   return (
     <FormControl
       id={name}
-      display="flex"
-      flexDirection="column"
+      display='flex'
+      flexDirection='column'
       gap={1}
-      width="100%"
+      width='100%'
       {...rest}
       isRequired={required}
     >

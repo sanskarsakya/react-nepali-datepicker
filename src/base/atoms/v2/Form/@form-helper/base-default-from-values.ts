@@ -1,6 +1,6 @@
 export const getDefaultRules = ({ required }: { required?: boolean }) => ({
-    required: {
-        value: required,
-        message: 'Required',
-    },
+  required: {
+    value: required,
+    message: 'required',
+  },
 });

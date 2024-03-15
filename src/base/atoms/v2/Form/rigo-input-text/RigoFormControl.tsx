@@ -1,5 +1,5 @@
-import { FormControl, FormControlProps } from "@chakra-ui/react";
-import { useInput } from "./useInput";
+import { FormControl, FormControlProps } from '@chakra-ui/react';
+import { useInput } from './useInput';
 
 export const RigoFormControl = (props: FormControlProps) => {
   const { children, ...rest } = props;
@@ -10,7 +10,7 @@ export const RigoFormControl = (props: FormControlProps) => {
       id={name}
       display='flex'
       flexDirection='column'
-      // gap={2}
+      gap={1}
       width='100%'
       isRequired={required}
       {...rest}

@@ -22,7 +22,7 @@ export const FormLabel = ({ label, customLabel, ...rest }: FormLabelProps) => {
         fontSize='14px'
         p={0}
         m={0}
-        // lineHeight='1.5'
+        lineHeight='1.4'
         {...rest}
       >
         {label}
