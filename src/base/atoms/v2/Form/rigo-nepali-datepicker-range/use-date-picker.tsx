@@ -1,10 +1,10 @@
 import React from "react";
-import { RigoNepaliDatePickerContext } from "./rigo-nepali-date-picker-context";
+import { RigoNepaliDatepickerRangeContext } from "./rigo-nepali-date-picker-context";
 
 export const useDatePicker = () => {
-  const context = React.useContext(RigoNepaliDatePickerContext);
+  const context = React.useContext(RigoNepaliDatepickerRangeContext);
   if (context === undefined) {
-    throw new Error("useDatePicker must be used within a <NepaliDatePickerv2 />");
+    throw new Error("useDatePicker must be used within a <NepaliDatePickerRangev2 />");
   }
   return context;
 };

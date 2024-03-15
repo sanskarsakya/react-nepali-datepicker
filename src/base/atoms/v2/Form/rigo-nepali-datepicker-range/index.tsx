@@ -4,20 +4,20 @@ import { RigoFormControl } from "./rigo-form-control";
 import { RigoFormErrorLabel } from "./rigo-form-error-label";
 import { RigoFormHelperText } from "./rigo-form-helper-text";
 import { RigoFormLabel } from "./rigo-form-label";
-import { RigoNepaliDatePicker } from "./rigo-nepali-date-picker";
+import { RigoNepaliDatepickerRange } from "./rigo-nepali-date-picker";
 import { DatePickerProps } from "./interface";
 
-export const NepaliDatepickerV2 = (props: DatePickerProps) => {
+export const NepaliDatepickerRangeV2 = (props: DatePickerProps) => {
   console.log({ props })
-  return <RigoNepaliDatePicker {...props} />;
+  return <RigoNepaliDatepickerRange {...props} />;
 };
 
-NepaliDatepickerV2.Default = RigoDefault;
-NepaliDatepickerV2.FormLabel = RigoFormLabel;
-NepaliDatepickerV2.HelperText = RigoFormHelperText;
-NepaliDatepickerV2.ErrorLabel = RigoFormErrorLabel;
-NepaliDatepickerV2.FormControl = RigoFormControl;
-NepaliDatepickerV2.Component = RigoComponent;
+NepaliDatepickerRangeV2.Default = RigoDefault;
+NepaliDatepickerRangeV2.FormLabel = RigoFormLabel;
+NepaliDatepickerRangeV2.HelperText = RigoFormHelperText;
+NepaliDatepickerRangeV2.ErrorLabel = RigoFormErrorLabel;
+NepaliDatepickerRangeV2.FormControl = RigoFormControl;
+NepaliDatepickerRangeV2.Component = RigoComponent;
 
 
-export default NepaliDatepickerV2;
+export default NepaliDatepickerRangeV2;
