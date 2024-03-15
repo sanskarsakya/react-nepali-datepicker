@@ -13,8 +13,6 @@ export const RigoFormErrorLabel = (props: FormErrorLabelProps) => {
     }
   return (
     <FormErrorLable
-      py='2px'
-      px={1}
       fontSize='14px'
       message={error}
       {...props}

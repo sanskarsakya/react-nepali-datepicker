@@ -10,7 +10,7 @@ import { RigoFormErrorLabel } from './RigoFormErrorLabel';
 export const RigoDefault = (props: InputTextProps) => {
   return (
     <RigoInputText {...props}>
-      <RigoFormControl>
+      <RigoFormControl >
         <RigoFormLabel />
         <RigoComponent />
         <RigoFormErrorLabel />
