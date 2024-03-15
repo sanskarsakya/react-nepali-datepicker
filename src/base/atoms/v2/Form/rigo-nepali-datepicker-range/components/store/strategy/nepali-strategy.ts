@@ -353,10 +353,8 @@ export const NepaliStrategy: ICalendarStrategy = {
 
     sendChanges: (ctx: any, next: Next<any>): void => {
         debug_mode && console.log("NepaliStrategy: sendChanges");
-        ctx?.onChange?.({
-            date: ctx.next.date ? BSToAD(ctx.next.date) : ctx.next.date,
-            isNepali: ctx.next.isNepali,
-        });
+        const date = ctx.next.date ? BSToAD(ctx.next.date) : ctx.next.date
+        ctx?.next?.onChange?.(date);
         next();
     }
 }

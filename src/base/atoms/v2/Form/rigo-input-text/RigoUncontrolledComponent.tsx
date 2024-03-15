@@ -6,6 +6,7 @@ import {
 } from '@chakra-ui/react';
 import { UncontrollerComponentProps } from './interface';
 import { useInput } from './useInput';
+import { getNepaliFromEnglish } from '../rigo-nepali-input';
 import { useState } from 'react';
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 
@@ -31,9 +32,9 @@ export const RigoUncontrolledComponent = (
   }, []);
 
   const handleChange = (e: any) => {
-    const inputval = e.target.value;
+    const inputval = e.target.value
     if (isNepaliInput) {
-      const returnValue = inputval
+      let returnValue = getNepaliFromEnglish(inputval);
       _setValue(returnValue);
       _onChange?.(name, returnValue);
       onChangeRHF?.(returnValue);
@@ -42,6 +43,7 @@ export const RigoUncontrolledComponent = (
     _setValue(inputval);
     _onChange?.(name, inputval);
     onChangeRHF?.(inputval);
+      
   };
 
   const inputProps = {

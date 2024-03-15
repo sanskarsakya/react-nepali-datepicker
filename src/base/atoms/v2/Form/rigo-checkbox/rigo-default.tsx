@@ -11,12 +11,12 @@ export const RigoDefault = (props: InputNumberProps) => {
   return (
     <RigoCheckbox {...props}>
       <RigoFormControl>
-        {/* <Flex>
+        <Flex gap={2}>
+          <RigoComponent />
           <RigoFormLabel />
-          <RigoFormHelperText />
-        </Flex> */}
-        
-        <RigoComponent />
+          {/* <RigoFormHelperText /> */}
+        </Flex>
+
         <RigoFormErrorLabel />
       </RigoFormControl>
     </RigoCheckbox>

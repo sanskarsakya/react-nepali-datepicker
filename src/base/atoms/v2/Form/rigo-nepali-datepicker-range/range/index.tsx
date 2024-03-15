@@ -2,7 +2,6 @@ import { ChevronDownIcon } from "@chakra-ui/icons"
 import {
     Box,
     Flex,
-    FormLabel,
     IconButton,
     Menu,
     MenuButton,
@@ -14,6 +13,7 @@ import dayjs from "dayjs"
 import React from "react"
 import { ADToBS, BSToAD, lookUp } from "../components/nepali-date-carburetor"
 import { DatePicker } from "../components/ui"
+
 
 interface RangeComponentProps {
     value: {
@@ -35,8 +35,6 @@ export const RangeComponent = ({ value, isNepali, disabelDateAfter, disabelDateB
         startDate: "",
         endDate: ""
     })
-
-    const [error, setError] = React.useState<string>("")
 
     React.useEffect(() => {
         if (value.startDate) {
@@ -60,33 +58,18 @@ export const RangeComponent = ({ value, isNepali, disabelDateAfter, disabelDateB
                 startDate: newValue,
                 endDate: _value.endDate,
             })
-            const isValid = isStartDateBeforeEndDate(newValue, _value.endDate)
 
-            if (!isValid) {
-                setError("Start date should be before end date")
-            } else {
-                setError("")
-            }
+
         } else {
             onChange({
                 startDate: _value.startDate,
                 endDate: newValue,
             })
-
-            const isValid = isStartDateBeforeEndDate(_value.startDate, newValue)
-
-            if (!isValid) {
-                setError("Start date should be before end date")
-            } else {
-                setError("")
-            }
         }
 
 
     }
-    const isStartDateBeforeEndDate = (startDate: string, endDate: string) => {
-        return dayjs(startDate).isBefore(endDate)
-    }
+
 
     const handleThisWeekClick = () => {
 
@@ -170,6 +153,5 @@ export const RangeComponent = ({ value, isNepali, disabelDateAfter, disabelDateB
 
         </Flex>
 
-        <FormLabel color="red.600">{error}</FormLabel>
     </Flex>
 }

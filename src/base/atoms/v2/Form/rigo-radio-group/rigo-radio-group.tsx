@@ -8,7 +8,7 @@ export const RigoRadioGroup = (props: RadioGroupProps) => {
     components = {
       wrapper: ({ children }: any) => {
         return (
-          <Flex gap={2} direction='column'>
+          <Flex gap={2} direction={props.direction ?? 'column'}>
             {children}
           </Flex>
         );
@@ -25,16 +25,16 @@ export const RigoRadioGroup = (props: RadioGroupProps) => {
             gap={2}
             {...rest}
           >
-            {state?.isChecked ? (
-              <Box {...rest} bg='blue.500' p={2} rounded='full' />
-            ) : (
-              <Box
-                {...rest}
-                p={2}
-                rounded='full'
-                bg={isInvalid ? 'red.500' : 'gray.200'}
-              />
-            )}
+            <Box
+              {...rest}
+              rounded='full'
+              border='2px solid'
+              w={4}
+              h={4}
+              borderColor='gray.300'
+              bg={isInvalid ? 'red.500' : '#fff'}
+              _checked={{ borderColor: 'blue.500', borderWidth: 4 }}
+            />
             <Text>{option.label}</Text>
           </Flex>
         );

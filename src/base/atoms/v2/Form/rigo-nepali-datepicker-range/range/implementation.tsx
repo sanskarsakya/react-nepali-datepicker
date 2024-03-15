@@ -1,9 +1,10 @@
-import { Button, Flex, Input } from "@chakra-ui/react"
+import { Button, Flex, FormLabel, Input } from "@chakra-ui/react"
 import { RangeComponent } from "."
 import React from "react"
+import dayjs from "dayjs"
+import { When } from "react-if"
 
 export const DateRangeImplementation = () => {
-    // const [error, setError] = React.useState("as")
     const [value, setValue] = React.useState<{
         startDate: string;
         endDate: string
@@ -28,6 +29,15 @@ export const DateRangeImplementation = () => {
         setDisabelDateAfter(e.target.value)
     }
 
+    const isStartDateBeforeEndDate = (startDate: string, endDate: string) => {
+        if (!startDate || !endDate) {
+            return true
+        }
+        return dayjs(startDate).isBefore(endDate)
+    }
+
+    const error = isStartDateBeforeEndDate(value.startDate, value.endDate) ? "" : "error"
+
     return <Flex direction="column" gap={2}>
         <pre>{JSON.stringify({
             value
@@ -44,7 +54,6 @@ export const DateRangeImplementation = () => {
             disabelDateBefore={disabelDateBefore}
             isNepali={isNepali}
             onChange={params => {
-                console.log("$$", params)
 
                 setValue(prev => ({
                     ...prev,
@@ -54,5 +63,9 @@ export const DateRangeImplementation = () => {
             }}
             onError={error => console.log(error)}
         />
+        <When condition={error}>
+            <FormLabel color="red.600">{error}</FormLabel>
+        </When>
+
     </Flex>
 }

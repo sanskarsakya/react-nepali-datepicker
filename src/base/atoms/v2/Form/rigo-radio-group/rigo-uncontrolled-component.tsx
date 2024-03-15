@@ -1,11 +1,11 @@
 // @ts-nocheck
 
-import { Box, useRadio, useRadioGroup } from "@chakra-ui/react";
-import { UncontrollerComponentProps } from "./interface";
-import { useRadioGroup as useRigoRadioGroup } from "./use-radio-group";
+import { Box, useRadio, useRadioGroup } from '@chakra-ui/react';
+import { UncontrollerComponentProps } from './interface';
+import { useRadioGroup as useRigoRadioGroup } from './use-radio-group';
 
-import * as fromHelpers from "../@form-helper";
-import { isEmpty } from "lodash";
+import * as fromHelpers from '../@form-helper';
+import { isEmpty } from 'lodash';
 
 function RadioCard(props: any) {
   const { state, getInputProps, getRadioProps } = useRadio(props);
@@ -25,11 +25,12 @@ function RadioCard(props: any) {
 
 // THIS IS MAIN COMPONENT FOR COMPONENT INJECTION
 function Example(props: any) {
+  const { direction = 'column' } = props;
   const { components, name, errors, ...contextRest } = useRigoRadioGroup();
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: props.name,
-    value: props.value + "",
+    value: props.value + '',
     onChange: props.onChange,
   });
 
@@ -42,9 +43,9 @@ function Example(props: any) {
   const isInvalid = !isEmpty(error);
 
   return (
-    <components.wrapper {...rest}>
-      {props?.options?.map((option: any) => {
-        const radio = getRadioProps({ value: option.value + "" });
+    <components.wrapper direction={direction} {...rest}>
+      {props.options.map((option: any) => {
+        const radio = getRadioProps({ value: option.value + '' });
 
         return (
           <RadioCard key={option.value} {...radio}>
@@ -66,7 +67,9 @@ function Example(props: any) {
   );
 }
 
-export const RigoUncontrollerComponent = (props: UncontrollerComponentProps) => {
+export const RigoUncontrollerComponent = (
+  props: UncontrollerComponentProps,
+) => {
   const {
     onChangeRHF,
     // contains rhf defined value

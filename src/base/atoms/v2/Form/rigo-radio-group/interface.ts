@@ -2,7 +2,7 @@ import {
   FormHelperTextProps as RigoFormHelperTextProps,
   FormLabelProps as RigoFormLabelProps,
   TextProps,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 export type FormLabelProps = RigoFormLabelProps;
 
@@ -28,6 +28,7 @@ export type FormErrorLabelProps = TextProps;
 export interface BaseComponentProps extends Record<string, any> {
   onChangeRHF?: any;
   value?: any;
+  direction?: 'column' | 'row' | 'row-reverse' | 'column-reverse';
 }
 
 export type ComponentProps = BaseComponentProps;
