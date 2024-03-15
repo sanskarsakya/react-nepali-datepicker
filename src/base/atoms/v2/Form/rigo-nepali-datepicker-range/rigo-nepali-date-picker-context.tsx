@@ -1,6 +1,6 @@
 import React from "react";
 
-export const RigoNepaliDatePickerContext = React.createContext<any>({
+export const RigoNepaliDatepickerRangeContext = React.createContext<any>({
   label: "Sample label",
   name: "",
   control: undefined,
@@ -12,4 +12,4 @@ export const RigoNepaliDatePickerContext = React.createContext<any>({
   onChange: undefined,
   is_nepali: false,
 });
-RigoNepaliDatePickerContext.displayName = "RigoNepaliDatePickerContext";
+RigoNepaliDatepickerRangeContext.displayName = "RigoNepaliDatepickerRangeContext";

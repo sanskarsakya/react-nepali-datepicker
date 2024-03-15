@@ -6,7 +6,7 @@ import { useDatePicker } from "./use-date-picker";
 export const RigoFormErrorLabel = (props: FormErrorLabelProps) => {
   const context = useDatePicker();
 
-  const { required, name, errors } = context;
+  const { name, errors } = context;
 
   const error =
     errors && fromFormHelpers.resolveObjectValueByPath(errors, name)?.message;
