@@ -32,7 +32,7 @@ export const RigoUncontrolledComponent = (
   }, []);
 
   const handleChange = (e: any) => {
-    const inputval = e.target.value;
+    const inputval = e.target.value
     if (isNepaliInput) {
       let returnValue = getNepaliFromEnglish(inputval);
       _setValue(returnValue);
@@ -43,6 +43,7 @@ export const RigoUncontrolledComponent = (
     _setValue(inputval);
     _onChange?.(name, inputval);
     onChangeRHF?.(inputval);
+      
   };
 
   const inputProps = {

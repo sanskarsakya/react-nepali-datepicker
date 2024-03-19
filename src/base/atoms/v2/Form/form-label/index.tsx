@@ -20,7 +20,6 @@ export const FormLabel = ({ label, customLabel, ...rest }: FormLabelProps) => {
         color='#2e2e2e'
         fontWeight='400'
         fontSize='14px'
-        p={0}
         m={0}
         lineHeight='1.4'
         {...rest}

@@ -299,10 +299,9 @@ export const NepaliStrategy: ICalendarStrategy = {
 
     sendChanges: function (ctx: any, next: Next<any>): void {
         debug_mode && console.log("NepaliStrategy: sendChanges");
-        debugger
         // ALWAYS RETURN GREGORIAN DATE
         // ctx.next.onChange(ctx.next.date);
-        ctx.next.onChange({
+        ctx.params.onChange({
             date: ctx.next.date ? BSToAD(ctx.next.date) : ctx.next.date,
             isNepali: ctx.next.isNepali,
         });

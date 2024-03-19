@@ -5,10 +5,8 @@ import { DateRangeImplementation } from './range/implementation';
 export const RigoUncontrolledComponent = (props: any) => {
 
   const {
-    isRhfBound = false,
     onChangeRHF,
     value: rhfValue,
-    ...propRest
   } = props;
 
   const context = useDatePicker();
@@ -18,13 +16,12 @@ export const RigoUncontrolledComponent = (props: any) => {
     value,
     control,
     onChange: _onChange,
-    ...contextRest
   } = context;
 
   const handleChange = (value: any) => {
     _onChange?.(name, value);
     onChangeRHF?.({
-      startDate: value.startDate, 
+      startDate: value.startDate,
       endDate: value.endDate
     });
   };
@@ -38,7 +35,7 @@ export const RigoUncontrolledComponent = (props: any) => {
     if (rhfValue) {
       valueNormalized = {
         startDate: dayjs(rhfValue.startDate).format('YYYY-MM-DD'),
-        endDate:dayjs(rhfValue.endDate).format('YYYY-MM-DD')
+        endDate: dayjs(rhfValue.endDate).format('YYYY-MM-DD')
       };
     } else {
       valueNormalized = rhfValue;
@@ -46,8 +43,8 @@ export const RigoUncontrolledComponent = (props: any) => {
   } else {
     if (value) {
       valueNormalized = {
-        startDate: dayjs(value.startDate).format('YYYY-MM-DD'), 
-        endDate:dayjs(value.endDate).format('YYYY-MM-DD')
+        startDate: dayjs(value.startDate).format('YYYY-MM-DD'),
+        endDate: dayjs(value.endDate).format('YYYY-MM-DD')
       };
     } else {
       valueNormalized = value;
