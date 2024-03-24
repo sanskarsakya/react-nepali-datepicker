@@ -14,9 +14,7 @@ export const RigoDefault = (props: InputNumberProps) => {
         <Flex gap={2}>
           <RigoComponent />
           <RigoFormLabel />
-          {/* <RigoFormHelperText /> */}
         </Flex>
-
         <RigoFormErrorLabel />
       </RigoFormControl>
     </RigoCheckbox>

@@ -69,6 +69,7 @@ export const RigoUncontrollerComponent = (
 
   return (
     <Select
+    
       onChange={handleChange}
       components={{
         IndicatorSeparator: () => null,
