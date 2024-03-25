@@ -259,7 +259,7 @@ export const EnglishStrategy: ICalendarStrategy = {
     },
     sendChanges: function (ctx: any, next: Next<any>): void {
         debug_mode && console.log("EnglishStrategy: sendChanges");
-        ctx.next.onChange({
+        ctx.params.onChange({
             date: ctx.next.date,
             isNepali: ctx.next.isNepali,
         });

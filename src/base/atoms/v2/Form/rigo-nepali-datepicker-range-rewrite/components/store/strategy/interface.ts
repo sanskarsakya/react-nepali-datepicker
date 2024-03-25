@@ -98,4 +98,5 @@ export interface ICalendarStrategy {
    */
   normalizeDates: (ctx: any, next: Next<any>) => void;
 
+  setStartAndEndDate: (startDate: string, endDate: string) => (ctx: any, next: Next<any>) => void;
 }

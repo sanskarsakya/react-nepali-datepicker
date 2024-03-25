@@ -3,8 +3,8 @@ import type { Meta } from '@storybook/react';
 import NepaliDatepickerRangeV2 from '.';
 import { FormProvider } from '../form-provider';
 import { ConnectForm } from '../connect-form';
-import { ADToBS } from '../rigo-nepali-datepicker/components/nepali-date-carburetor';
 import dayjs from 'dayjs';
+import { ADToBS } from './components/nepali-date-carburetor';
 
 const meta: Meta<typeof NepaliDatepickerRangeV2> = {
   component: NepaliDatepickerRangeV2,

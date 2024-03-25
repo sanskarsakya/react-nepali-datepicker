@@ -4,6 +4,7 @@
 import {
   Box,
   IconButton,
+  Button,
   Input,
   InputGroup,
   InputRightElement,
@@ -13,8 +14,9 @@ import React from 'react';
 import { When } from 'react-if';
 
 // STORE
-import { selectCtx, selectEvents, useDatePickerStore } from '../store';
 import { ModeEnum } from '../entities/model/models';
+import { selectCtx, selectEvents, useDatePickerStore } from '../store';
+import { RangeMenu } from './date-range-menu';
 
 interface DateInputProps {
   styles: any;
@@ -22,6 +24,9 @@ interface DateInputProps {
 
 export const DateInput = forwardRef<DateInputProps, 'div'>(
   (_, ref) => {
+
+    const { startDateRef, endDateRef } = ref;
+
 
     // HOOKS
     const state = useDatePickerStore();
@@ -34,24 +39,31 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
     const [value, setValue] = React.useState('');
     const [endValue, setEndValue] = React.useState('');
 
-    React.useEffect(bindStateDateToLocalValue, [startDate]);
-    React.useEffect(bindStateEndDateToLocalValue, [endDate]);
-
-    // FUNCTIONS
-    function bindStateDateToLocalValue() {
+    React.useEffect(() => {
       setValue(startDate);
-    }
-    function bindStateEndDateToLocalValue() {
-      setEndValue(endDate);
-    }
+    }, [startDate]);
 
-    const handleInputChange = (e: any) => {
+    React.useEffect(() => {
+      setEndValue(endDate);
+    }, [endDate]);
+
+
+    const handleInputChange = (e: any,) => {
       const inputValue = e.target.value;
       if (inputValue?.length > 10) {
         return;
       }
       setValue(inputValue);
-      onDateChange(inputValue);
+      onDateChange(inputValue,);
+    };
+
+    const handleEndInputChange = (e: any,) => {
+      const inputValue = e.target.value;
+      if (inputValue?.length > 10) {
+        return;
+      }
+      setEndValue(inputValue);
+      onDateChange(inputValue,);
     };
 
     const handleOnOpen = (type: "startDate" | "endDate") => {
@@ -59,17 +71,17 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
     }
 
     return (
-      <Box>
-        <InputGroup>
+      <Box >
+        <InputGroup display="flex" justifyContent={"start"}>
           <Input
+            ref={startDateRef}
             autoComplete='off'
             value={value}
             onChange={handleInputChange}
             onClick={() => {
               handleOnOpen("startDate")
             }}
-            ref={ref}
-            width="150px"
+            width="120px"
             placeholder='yyyy-mm-dd'
             bg='white'
             borderColor='#cccccc'
@@ -87,13 +99,13 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
           <When condition={mode === ModeEnum.RANGE}>
             <Input
               autoComplete='off'
-              width="150px"
+              width="160px"
               value={endValue}
-              onChange={handleInputChange}
+              onChange={handleEndInputChange}
               onClick={() => {
                 handleOnOpen("endDate")
               }}
-              ref={ref}
+              ref={endDateRef}
               placeholder='yyyy-mm-dd'
               bg='white'
               borderColor='#cccccc'
@@ -171,6 +183,8 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
                 }}
                 aria-label='Toggle Calendar'
               />
+              <RangeMenu />
+
             </InputRightElement>
           </When>
         </InputGroup>

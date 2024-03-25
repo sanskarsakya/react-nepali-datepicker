@@ -43,10 +43,11 @@ export const EnglishStrategy: ICalendarStrategy = {
     },
 
     setCalendarReferenceDate: function (ctx, next): void {
+        debug_mode && console.log("EnglishStrategy: setCalendarReferenceDate");
         if (ctx.next.isOpen) {
 
-            debug_mode && console.log("EnglishStrategy: setCalendarReferenceDate");
-            ctx.next.calendarReferenceDate = ctx.next.startDate || dayjs().format("YYYY-MM-DD");
+            ctx.next.calendarReferenceDate = ctx.next[ctx.next.currentDateSelection] || dayjs().format("YYYY-MM-DD");
+
         }
         next();
     },
@@ -86,7 +87,7 @@ export const EnglishStrategy: ICalendarStrategy = {
                         weekNum,
                         weekDayNum,
                         ctx.next.calendarReferenceDate,
-                        ctx.next.date,
+                        ctx.next[ctx.next.currentDateSelection],
                         ctx.next.disableDateBefore,
                         ctx.next.disableDateAfter,
                         ctx.next.disabledWeekDays,
@@ -350,6 +351,14 @@ export const EnglishStrategy: ICalendarStrategy = {
     // TODO: REMOVE LATER
     normalizeDates: function (ctx: any, next: Next<any>): void {
         debug_mode && console.log("EnglishStrategy: normalizeDates");
+        next();
+    },
+
+    setStartAndEndDate: (startDate, endDate) => (ctx: any, next: Next<any>) => {
+        debug_mode && console.log("EnglishStrategy: setStartAndEndDate");
+
+        ctx.next.startDate = startDate;
+        ctx.next.endDate = endDate;
         next();
     },
 }

@@ -1,5 +1,4 @@
 // LIBS
-import React from 'react';
 import {
   Box,
   Popover,
@@ -8,8 +7,10 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
+  Flex,
   useOutsideClick
 } from '@chakra-ui/react';
+import React from 'react';
 import { When } from 'react-if';
 
 // STORE
@@ -25,13 +26,16 @@ import Today from './today';
 import { YearViewMode } from './year-view-mode';
 
 // STYLES
-import { get_base_styles } from './style';
 import { ModeEnum } from '../entities/model/models';
+import { get_base_styles } from './style';
 
 export const DatepickerComponent = () => {
 
+
   // VARIABLES
   const ref = React.useRef<HTMLDivElement>(null)
+  const startDateRef = React.useRef<HTMLInputElement>(null);
+  const endDateRef = React.useRef<HTMLInputElement>(null);
 
   // HEADLESS HOOK
   const state = useDatePickerStore();
@@ -40,7 +44,8 @@ export const DatepickerComponent = () => {
     viewMode,
     error,
     monthYearPanelData,
-    isRhfBound
+    isRhfBound,
+    currentDateSelection
   } = selectCtx(state);
 
   const {
@@ -55,50 +60,59 @@ export const DatepickerComponent = () => {
   })
 
   return (
-    <div
-      id={'input-wrapper-2'}
-      style={{
-        position: 'relative',
-      }}
-      ref={ref}
-    >
-      <Popover isOpen={isOpen} closeOnBlur={false}>
-        <PopoverTrigger>
-          <Box>
-            <DateInput
-
-              styles={styles}
-            />
-            <When condition={!isRhfBound && error}>
-              <Text color='red.300'>{error}</Text>
-            </When>
-          </Box>
-        </PopoverTrigger>
-        <PopoverContent >
-          <PopoverArrow />
-          <PopoverBody >
-            <When condition={viewMode === 'YEAR_VIEW'}>
-              <YearViewMode styles={styles} />
-            </When>
-
-            <When condition={viewMode === 'MONTH_VIEW'}>
-              <MonthViewMode styles={styles} />
-            </When>
-            <When condition={viewMode === 'CALENDAR_VIEW'}>
-              <CalendarController styles={styles} />
-              <MonthYearPanel styles={styles} />
-              <DatePickerBody
-                key={monthYearPanelData}
+    <Flex alignItems="center" justifyContent="start">
+      <div
+        id={'input-wrapper-2'}
+        style={{
+          position: 'relative',
+        }}
+        ref={ref}
+      >
+        <Popover
+          initialFocusRef={currentDateSelection === "startDate" ? startDateRef : endDateRef}
+          isOpen={isOpen}
+          closeOnBlur={true}>
+          <PopoverTrigger>
+            <Box>
+              <DateInput
                 styles={styles}
+                ref={{
+                  startDateRef,
+                  endDateRef,
+                }}
               />
-              <Today
-                styles={styles}
-              />
-            </When>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-    </div>
+              <When condition={!isRhfBound && error}>
+                <Text color='red.300'>{error}</Text>
+              </When>
+            </Box>
+          </PopoverTrigger>
+          <PopoverContent >
+            <PopoverArrow />
+            <PopoverBody >
+              <When condition={viewMode === 'YEAR_VIEW'}>
+                <YearViewMode styles={styles} />
+              </When>
+
+              <When condition={viewMode === 'MONTH_VIEW'}>
+                <MonthViewMode styles={styles} />
+              </When>
+              <When condition={viewMode === 'CALENDAR_VIEW'}>
+                <CalendarController styles={styles} />
+                <MonthYearPanel styles={styles} />
+                <DatePickerBody
+                  key={monthYearPanelData}
+                  styles={styles}
+                />
+                <Today
+                  styles={styles}
+                />
+              </When>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+      </div>
+    </Flex>
+
   );
 };
 

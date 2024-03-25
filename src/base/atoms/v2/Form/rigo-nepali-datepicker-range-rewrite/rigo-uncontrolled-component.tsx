@@ -1,6 +1,6 @@
+import { DatePicker } from './components/ui';
 import { useDatePicker } from './use-date-picker';
 import dayjs from 'dayjs';
-import { DateRangeImplementation } from './range/implementation';
 
 export const RigoUncontrolledComponent = (props: any) => {
 
@@ -52,6 +52,6 @@ export const RigoUncontrolledComponent = (props: any) => {
   }
 
   return (
-    <DateRangeImplementation onCHange={handleChange} value={valueNormalized} />
+    <DatePicker onChange={handleChange} value={valueNormalized} />
   );
 };

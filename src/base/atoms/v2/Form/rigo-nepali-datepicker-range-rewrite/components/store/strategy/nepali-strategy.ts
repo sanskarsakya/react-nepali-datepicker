@@ -51,7 +51,7 @@ export const NepaliStrategy: ICalendarStrategy = {
     setCalendarReferenceDate: function (ctx: any, next: Next<any>): void {
         if (ctx.next.isOpen) {
             debug_mode && console.log("NepaliStrategy: setCalendarReferenceDate");
-            ctx.next.calendarReferenceDate = ctx.next.date || ADToBS(dayjs().format("YYYY-MM-DD"));
+            ctx.next.calendarReferenceDate = ctx.next[ctx.next.currentDateSelection] || ADToBS(dayjs().format("YYYY-MM-DD"));
         }
         next();
     },
@@ -407,5 +407,14 @@ export const NepaliStrategy: ICalendarStrategy = {
         ctx?.next?.onChange?.({ startDate, endDate });
 
         next();
-    }
+    },
+
+    setStartAndEndDate: (startDate, endDate) => (ctx: any, next: Next<any>): void => {
+        debug_mode && console.log("NepaliStrategy: setStartAndEndDate");
+
+        ctx.next.startDate = startDate ? ADToBS(startDate) : "";
+        ctx.next.endDate = endDate ? ADToBS(endDate) : "";
+
+        next();
+    },
 }

@@ -117,6 +117,13 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
     },
 
     openCalendar: async (type) => {
+      set({
+        ctx: {
+          ...get().ctx,
+          isOpen: false,
+        }
+      });
+
       const cloned = _.cloneDeep(get().ctx);
 
       const strategyProvider = getStrategy(cloned.isNepali as boolean);
@@ -137,6 +144,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
       const { next } = await p.execute({ next: cloned });
 
       set({ ctx: next });
+
     },
 
     closeCalendar: async () => {
@@ -511,6 +519,21 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
       p.push(strategyProvider.setGridDates);
       p.push(strategyProvider.setMonthYearPanelData);
       p.push(strategyProvider.setCalendarControllerLabels);
+
+      const { next } = await p.execute({
+        next: cloned,
+      });
+
+      set({ ctx: next });
+    },
+    setStartAndEndDate: async (date) => {
+      const cloned = _.cloneDeep(get().ctx);
+
+      const strategyProvider = getStrategy(cloned.isNepali as boolean);
+
+      const p = Pipeline<any>();
+      p.push(strategyProvider.setStartAndEndDate(date.startDate, date.endDate));
+      p.push(strategyProvider.sendChanges);
 
       const { next } = await p.execute({
         next: cloned,

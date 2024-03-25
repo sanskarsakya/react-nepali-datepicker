@@ -1,16 +1,16 @@
 import { DatePickerProps } from './interface';
-import { RigoComponent } from './rigo-component';
+import { RangeComponent } from './range-component';
 import { RigoFormControl } from './rigo-form-control';
 import { RigoFormErrorLabel } from './rigo-form-error-label';
 import { RigoFormLabel } from './rigo-form-label';
 import { RigoNepaliDatepickerRange } from './rigo-nepali-date-picker';
 
-export const RigoDefault = (props: DatePickerProps) => {
+export const RangeDefault = (props: DatePickerProps) => {
   return (
     <RigoNepaliDatepickerRange {...props}>
       <RigoFormControl>
         <RigoFormLabel />
-        <RigoComponent />
+        <RangeComponent />
         <RigoFormErrorLabel />
       </RigoFormControl>
     </RigoNepaliDatepickerRange>

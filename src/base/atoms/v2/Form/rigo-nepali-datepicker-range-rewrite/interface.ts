@@ -21,7 +21,7 @@ export interface FormProviderProps {
 export interface DatePickerProps extends Partial<ICalendarProps>, Record<string, any> {
   children?: React.ReactNode;
   name: string;
-  label: React.ReactNode;
+  label?: React.ReactNode;
   control?: any;
   isNepali?: boolean;
   errors?: any;
@@ -45,7 +45,7 @@ export interface UncontrollerComponentProps extends InputProps {
   onChangeRHF?: any;
 }
 
-export type ControlledComponentProps = InputProps;
+export type ControlledComponentProps = Partial<DatePickerProps> & Partial<InputProps>;
 
 export type FormErrorLabelProps = TextProps;
 

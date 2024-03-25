@@ -140,7 +140,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
       {/* RENDER CALENDAR BODY */}
       <When condition={isOpen}>
-        <Box sx={styles.panel} className='nepali-date-picker'>
+        <Box sx={styles.panel}>
           <When condition={isOpen && viewMode === 'YEAR_VIEW'}>
             <YearViewMode styles={styles} />
           </When>

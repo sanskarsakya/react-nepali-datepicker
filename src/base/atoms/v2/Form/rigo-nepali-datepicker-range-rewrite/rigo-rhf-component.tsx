@@ -3,7 +3,6 @@
 // import * as fromFormHelpers from "../@form-helper";
 import { Controller } from 'react-hook-form';
 
-import { validate } from './components/store/utils';
 import { ControlledComponentProps } from './interface';
 import { RigoUncontrolledComponent } from './rigo-uncontrolled-component';
 import { useDatePicker } from './use-date-picker';
@@ -23,18 +22,37 @@ export const RigoRhfComponent = (props: ControlledComponentProps) => {
           message: 'Required',
         },
         // validate: (value: string) => {
+
+
+        //   /**
+        //    * if mode is range
+        //    *  if start date and end date
+        //    *    validate start date is before end date
+        //    * 
+        //    *  if start date is required
+        //    *    normal validation
+        //    * 
+        //    *  if end date is required
+        //    * 
+        //    * else : 
+        //    *   if date is required
+        //    *      normal validation
+        //    *    
+        //    */
+
+
         //   // always gets english date, avlidate for english date
-        //   const validation_result = validate(
-        //     value,
-        //     context.disableDateBefore as string,
-        //     context.disableDateAfter as string,
-        //   );
+        //   // const validation_result = validate(
+        //   //   value,
+        //   //   context.disableDateBefore as string,
+        //   //   context.disableDateAfter as string,
+        //   // );
 
-        //   // console.log({validation_result, value});
+        //   // // console.log({validation_result, value});
 
-        //   if (!validation_result.is_valid) {
-        //     return validation_result.message;
-        //   }
+        //   // if (!validation_result.is_valid) {
+        //   //   return validation_result.message;
+        //   // }
         //   return true;
         // },
       }}

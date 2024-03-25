@@ -215,7 +215,7 @@ export interface ICalendarEvents {
      * and bind necessary data.
      *
      */
-    openCalendar: (type: "startDate" | "endDate") => void;
+    openCalendar: (type: "startDate" | "endDate",) => void;
 
     /**
      * This is used to close the calendar body
@@ -318,6 +318,16 @@ export interface ICalendarEvents {
      * Switch between nepali and english context
      */
     toggleContext: (context?: boolean) => void;
+
+    /**
+     * This sets the start and end date
+     * @param context 
+     * @returns 
+     */
+    setStartAndEndDate: (params: {
+        startDate: string,
+        endDate: string,
+    }) => void;
 
 }
 
