@@ -3,10 +3,8 @@ import { selectCtx, selectEvents, useDatePickerStore } from '../store';
 
 interface TodayProps {
     styles: any,
-    onClose: any
-    onChange: any,
 }
-const Today = ({ styles, onClose, onChange }: TodayProps) => {
+const Today = ({ styles, }: TodayProps) => {
 
     const state = useDatePickerStore()
 
@@ -18,7 +16,7 @@ const Today = ({ styles, onClose, onChange }: TodayProps) => {
         sx={styles.today}
         isDisabled={!isTodayValid}
         onClick={() => {
-            selectToday(onClose, onChange)
+            selectToday()
         }}
 
     >

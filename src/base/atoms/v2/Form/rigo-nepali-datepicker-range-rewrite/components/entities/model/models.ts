@@ -1,10 +1,15 @@
+export enum ModeEnum {
+    SINGLE = "single",
+    RANGE = "range"
 
+}
 export interface ICalendarProps {
+    // todo: min=ght not need
     /**
      * This is the date that is used to
      * bind in date input.
      */
-    date: string;
+    date: string | { startDate: string, endDate: string };
 
     // todo: [REFACTOR DATE]
     /**
@@ -39,6 +44,12 @@ export interface ICalendarProps {
     isNepali: boolean | null;
 
     /**
+     * This is used to determine if the calendar
+     * context is in nepali or english.
+     */
+    mode: ModeEnum;
+
+    /**
      * Determine if the is nepali toggle button should
      * be shown or not
      */
@@ -60,6 +71,18 @@ export interface ICalendarProps {
      * This is the change handler
      */
     onChange: (date: string) => void;
+
+    /**
+     * This is the determine if input should be 
+     * disabled or not
+     */
+    isDisabled?: boolean;
+
+    /**
+     * This is the determine if input should be 
+     * disabled or not
+     */
+    isRhfBound?: boolean;
 
 }
 
@@ -151,11 +174,6 @@ export interface ICalendarInternals {
 export interface ICalendarCtx extends ICalendarProps, ICalendarInternals { }
 
 export interface ICalendarEvents {
-    /**
-     * todo: might not be nneded
-     * This is used to setup the calendar
-     */
-    mountSetup: (props: any) => void;
 
     /**
      * This is sync the isNepali props

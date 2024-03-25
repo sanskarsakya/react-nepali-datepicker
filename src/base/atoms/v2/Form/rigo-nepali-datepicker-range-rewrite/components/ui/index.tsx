@@ -26,24 +26,11 @@ import { YearViewMode } from './year-view-mode';
 
 // STYLES
 import { get_base_styles } from './style';
+import { ModeEnum } from '../entities/model/models';
 
-interface DatepickerComponentProps extends Record<string, any> {
-  onChange?: (date: string) => void;
-  isRhfBound?: boolean;
-  isNepali?: boolean;
-  date?: string;
-  isDark?: boolean;
-  disableDateBefore?: string;
-  disableDateAfter?: string;
-  disabled?: boolean;
-}
-export const DatepickerComponent = (props: DatepickerComponentProps) => {
+export const DatepickerComponent = () => {
 
-  console.log({
-    props
-  })
   // VARIABLES
-  const { isRhfBound = false, disabled, isDark = false } = props;
   const ref = React.useRef<HTMLDivElement>(null)
 
   // HEADLESS HOOK
@@ -52,15 +39,15 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
     isOpen,
     viewMode,
     error,
-    monthYearPanelData
+    monthYearPanelData,
+    isRhfBound
   } = selectCtx(state);
 
   const {
-    openCalendar,
     closeCalendar
   } = selectEvents(state);
 
-  const styles = get_base_styles(isDark);
+  const styles = get_base_styles(false);
 
   useOutsideClick({
     ref: ref,
@@ -79,10 +66,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
         <PopoverTrigger>
           <Box>
             <DateInput
-              onOpen={() => {
-                openCalendar();
-              }}
-              disabled={disabled}
+
               styles={styles}
             />
             <When condition={!isRhfBound && error}>
@@ -109,8 +93,6 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
               />
               <Today
                 styles={styles}
-                onChange={props.onChange}
-                onClose={closeCalendar}
               />
             </When>
           </PopoverBody>
@@ -124,8 +106,9 @@ interface Props extends Record<string, any> {
   isRhfBound?: boolean;
   isNepali?: boolean;
   isDark?: boolean;
+  mode?: ModeEnum;
   onChange?: (date: string) => void;
-  date?: string;
+  date?: string | { startDate: string, endDate: string };
   disableDateBefore?: string;
   disableDateAfter?: string;
   disabled?: boolean;
@@ -133,12 +116,8 @@ interface Props extends Record<string, any> {
 export const DatePicker = (props: Props) => {
   return (
     <DatePickerStoreProvider props={props}>
-      <DatepickerComponent {...props} />
+      <DatepickerComponent />
     </DatePickerStoreProvider>
   );
 };
 
-// Rule of thumb
-// mount setup
-// state setter => should not fire event which will CAUSE the loop
-// events trigger

@@ -13,22 +13,20 @@ import React from 'react';
 import { When } from 'react-if';
 
 // STORE
-import { selectCtx, selectDateValue, selectEvents, useDatePickerStore } from '../store';
+import { selectCtx, selectEvents, useDatePickerStore } from '../store';
+import { ModeEnum } from '../entities/model/models';
 
 interface DateInputProps {
   styles: any;
-  disabled?: boolean;
-  onOpen: () => void;
 }
 
 export const DateInput = forwardRef<DateInputProps, 'div'>(
-  ({ disabled }, ref) => {
+  (_, ref) => {
 
     // HOOKS
     const state = useDatePickerStore();
-    const { isNepali, showToggle, startDate, endDate } = selectCtx(state);
-    const { openCalendar } = selectEvents(state);
-    const { onDateChange, toggleContext } = selectEvents(state);
+    const { isNepali, showToggle, startDate, endDate, mode, isDisabled, } = selectCtx(state);
+    const { openCalendar, onDateChange, toggleContext } = selectEvents(state);
 
     // todo: [REFACTOR DATE]
 
@@ -77,7 +75,7 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
             borderColor='#cccccc'
             rounded='sm'
             height={'38PX'}
-            disabled={disabled}
+            disabled={isDisabled}
             _placeholder={{
               color: '#878787',
               fontWeight: '300',
@@ -86,28 +84,30 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
             }}
           />
 
-          <Input
-            autoComplete='off'
-            width="150px"
-            value={endValue}
-            onChange={handleInputChange}
-            onClick={() => {
-              handleOnOpen("endDate")
-            }}
-            ref={ref}
-            placeholder='yyyy-mm-dd'
-            bg='white'
-            borderColor='#cccccc'
-            rounded='sm'
-            height={'38PX'}
-            disabled={disabled}
-            _placeholder={{
-              color: '#878787',
-              fontWeight: '300',
-              fontSize: '14px',
-              textTransform: 'lowercase',
-            }}
-          />
+          <When condition={mode === ModeEnum.RANGE}>
+            <Input
+              autoComplete='off'
+              width="150px"
+              value={endValue}
+              onChange={handleInputChange}
+              onClick={() => {
+                handleOnOpen("endDate")
+              }}
+              ref={ref}
+              placeholder='yyyy-mm-dd'
+              bg='white'
+              borderColor='#cccccc'
+              rounded='sm'
+              height={'38PX'}
+              disabled={isDisabled}
+              _placeholder={{
+                color: '#878787',
+                fontWeight: '300',
+                fontSize: '14px',
+                textTransform: 'lowercase',
+              }}
+            />
+          </When>
 
           <When condition={showToggle}>
             <InputRightElement>

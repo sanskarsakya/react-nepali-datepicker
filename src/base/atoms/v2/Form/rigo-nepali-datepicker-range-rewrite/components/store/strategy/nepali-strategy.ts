@@ -7,6 +7,7 @@ import { get_year_list_in_decade, validate } from "../utils";
 import { Next } from "../utils/execution-pipeline";
 import { ICalendarStrategy } from "./interface";
 import { debug_mode } from "./constants";
+import { ModeEnum } from "../../entities/model/models";
 
 /**
  * Global referece for today's date
@@ -30,8 +31,18 @@ export const NepaliStrategy: ICalendarStrategy = {
 
         debug_mode && console.log("NepaliStrategy: setDate");
 
-        if (date) {
-            ctx.next.date = ADToBS(date);
+        if (ctx.next.mode === ModeEnum.RANGE) {
+            const localDate = date as { startDate: string, endDate: string }
+            if (localDate.startDate && localDate.endDate) {
+                ctx.next.startDate = ADToBS(localDate.startDate);
+                ctx.next.endDate = ADToBS(localDate.endDate)
+            }
+        } else {
+            if (date) {
+                if (date) {
+                    ctx.next.date = ADToBS(date as string);
+                }
+            }
         }
 
         next();
@@ -271,6 +282,32 @@ export const NepaliStrategy: ICalendarStrategy = {
 
     },
 
+    checkIfStartDaetIsBeforeEndDate: function (ctx, next): void {
+        // todo: [REFACTOR DATE]
+        debug_mode && console.log("NepaliStrategy: checkIfStartDaetIsBeforeEndDate");
+
+        // if mode is range then proceed
+        if (ctx.next.mode === ModeEnum.SINGLE) {
+            next()
+        }
+
+        const start_date = ctx.next.startDate;
+        const end_date = ctx.next.endDate;
+
+        if (start_date && end_date) {
+            const isValid = dayjs(BSToAD(start_date)).isBefore(dayjs(BSToAD(end_date)));
+
+            if (isValid) {
+                ctx.next.error = "";
+                next();
+            } else {
+                ctx.next.error = "start date cannot be after end date";
+            }
+        } else {
+            next();
+        }
+    },
+
     setTodayAsDate: function (ctx: any, next: Next<any>): void {
         debug_mode && console.log("NepaliStrategy: setTodayAsDate");
         ctx.next.date = ADToBS(today);
@@ -318,8 +355,17 @@ export const NepaliStrategy: ICalendarStrategy = {
 
     convertdatesToCurrentContext: function (ctx: any, next: Next<any>): void {
         debug_mode && console.log("NepaliStrategy: convertdatesToCurrentContext");
-        if (ctx.next.date) {
-            ctx.next.date = ADToBS(ctx.next.date);
+        if (ctx.next.mode === ModeEnum.RANGE) {
+            if (ctx.next.startDate) {
+                ctx.next.startDate = ADToBS(ctx.next.startDate);
+            }
+            if (ctx.next.endDate) {
+                ctx.next.endDate = ADToBS(ctx.next.endDate);
+            }
+        } else {
+            if (ctx.next.date) {
+                ctx.next.startDate = ADToBS(ctx.next.startDate);
+            }
         }
         if (ctx.next.disableDateBefore) {
             ctx.next.disableDateBefore = ADToBS(ctx.next.disableDateBefore);
@@ -355,8 +401,8 @@ export const NepaliStrategy: ICalendarStrategy = {
     // todo: [REFACTOR DATE]
     sendChanges: (ctx: any, next: Next<any>): void => {
         debug_mode && console.log("NepaliStrategy: sendChanges");
-        const startDate = ctx.next.date ? BSToAD(ctx.next.startDate) : ctx.next.date
-        const endDate = ctx.next.date ? BSToAD(ctx.next.endDate) : ctx.next.date
+        const startDate = ctx.next.startDate ? BSToAD(ctx.next.startDate) : ctx.next.startDate
+        const endDate = ctx.next.endDate ? BSToAD(ctx.next.endDate) : ctx.next.endDate
 
         ctx?.next?.onChange?.({ startDate, endDate });
 

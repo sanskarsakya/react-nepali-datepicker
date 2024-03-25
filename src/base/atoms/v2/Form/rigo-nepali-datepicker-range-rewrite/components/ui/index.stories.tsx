@@ -4,6 +4,7 @@ import { FormControl, FormLabel, Switch } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import React from 'react';
 import { DatePicker } from '.';
+import { ModeEnum } from '../entities/model/models';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta = {
@@ -50,7 +51,11 @@ export const Sample: Story = {
 
 export const Controlled: Story = {
     args: {
-        date: dayjs(today).add(10, "day").format("YYYY-MM-DD"),
+        date: {
+            startDate: dayjs(today).add(10, "day").format("YYYY-MM-DD"),
+            endDate: dayjs(today).add(20, "day").format("YYYY-MM-DD")
+        },
+        mode: ModeEnum.RANGE,
         // disableDateBefore: dayjs(today).subtract(1, "month").format("YYYY-MM-DD"),
         // disableDateAfter: dayjs(today).add(1, "month").format("YYYY-MM-DD"),
         onChange: (date: string) => {
@@ -89,9 +94,6 @@ const ComponentRender = (args: any) => {
 
         </FormControl>
 
-        <DatePicker {...{ ...args, isNepali }} onChange={(data: any) => {
-            console.log(data)
-            setIsNepali(data.isNepali)
-        }} />
+        <DatePicker {...{ ...args, isNepali }} />
     </>
 }

@@ -10,7 +10,17 @@ export interface ICalendarStrategy {
    * @returns 
    */
   setDate: (date: string) => (ctx: any, next: Next<any>) => void;
-  setConvrtedDate: (date: string) => (ctx: any, next: Next<any>) => void;
+
+  /**
+   * set date on mount 
+   * if range set start date and end date
+   * if single set start date only
+   * if engish set as it is
+   * if nepali convert and set
+   * @param date 
+   * @returns 
+   */
+  setConvrtedDate: (date: string | { startDate: string, endDate: string }) => (ctx: any, next: Next<any>) => void;
   setCalendarReferenceDate: (ctx: any, next: Next<any>) => void;
   setDisableDateBefore: (disableDateBefore: string) => (ctx: any, next: Next<any>) => void;
   setDisableDateAfter: (disableDateAfter: string) => (ctx: any, next: Next<any>) => void;
@@ -57,6 +67,16 @@ export interface ICalendarStrategy {
     * @returns 
     */
   checkIfDateIsValid: (ctx: any, next: Next<any>) => void;
+
+  /**
+    * check if the date is valid
+    * used while clicking on select day, select today,
+    * on date typing
+    * @param ctx 
+    * @param next 
+    * @returns 
+    */
+  checkIfStartDaetIsBeforeEndDate: (ctx: any, next: Next<any>) => void;
 
   /**
    *

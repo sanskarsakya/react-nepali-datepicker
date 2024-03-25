@@ -6,6 +6,7 @@ import { get_year_list_in_decade, validate } from "../utils";
 import { Next } from "../utils/execution-pipeline";
 import { debug_mode } from "./constants";
 import { ICalendarStrategy } from "./interface";
+import { ModeEnum } from "../../entities/model/models";
 
 /**
  * Global referece for today's date
@@ -26,8 +27,16 @@ export const EnglishStrategy: ICalendarStrategy = {
     setConvrtedDate: (date) => (ctx, next): void => {
         debug_mode && console.log("NepaliStrategy: setDate");
 
-        if (date) {
-            ctx.next.date = date;
+        if (ctx.next.mode === ModeEnum.RANGE) {
+            const localDate = date as { startDate: string, endDate: string }
+            if (localDate.startDate && localDate.endDate) {
+                ctx.next.startDate = localDate.startDate;
+                ctx.next.endDate = localDate.endDate
+            }
+        } else {
+            if (date) {
+                ctx.next.startDate = date;
+            }
         }
 
         next();
@@ -267,10 +276,47 @@ export const EnglishStrategy: ICalendarStrategy = {
         }
     },
 
+    checkIfStartDaetIsBeforeEndDate: function (ctx, next): void {
+        // todo: [REFACTOR DATE]
+        debug_mode && console.log("EnglishStrategy: checkIfStartDaetIsBeforeEndDate");
+
+        // if mode is range then proceed
+
+        if (ctx.next.mode === ModeEnum.SINGLE) {
+            next()
+        }
+
+        const start_date = ctx.next.startDate;
+        const end_date = ctx.next.endDate;
+
+        if (start_date && end_date) {
+            const isValid = dayjs(start_date).isBefore(dayjs(end_date));
+
+            if (isValid) {
+                ctx.next.error = "";
+                next();
+            } else {
+                ctx.next.error = "start date cannot be after end date";
+            }
+        } else {
+            next();
+        }
+    },
+
     convertdatesToCurrentContext: function (ctx, next): void {
         debug_mode && console.log("EnglishStrategy: convertdatesToCurrentContext");
-        if (ctx.next.date) {
-            ctx.next.date = BSToAD(ctx.next.date);
+
+        if (ctx.next.mode === ModeEnum.RANGE) {
+            if (ctx.next.startDate) {
+                ctx.next.startDate = BSToAD(ctx.next.startDate);
+            }
+            if (ctx.next.endDate) {
+                ctx.next.endDate = BSToAD(ctx.next.endDate);
+            }
+        } else {
+            if (ctx.next.date) {
+                ctx.next.startDate = BSToAD(ctx.next.startDate);
+            }
         }
         if (ctx.next.disableDateBefore) {
             ctx.next.disableDateBefore = BSToAD(ctx.next.disableDateBefore);
@@ -293,7 +339,11 @@ export const EnglishStrategy: ICalendarStrategy = {
     sendChanges: (ctx: any, next: Next<any>) => {
         debug_mode && console.log("EnglishStrategy: sendChanges");
 
-        ctx?.next?.onChange?.({ startDate: ctx.next.startDate, endDate: ctx.next.endDate });
+        if (ctx.next.mode === ModeEnum.RANGE) {
+            ctx?.next?.onChange?.({ startDate: ctx.next.startDate, endDate: ctx.next.endDate });
+        } else {
+            ctx?.next?.onChange?.(ctx.next.startDate);
+        }
 
         next();
     },

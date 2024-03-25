@@ -4,13 +4,14 @@ import _ from 'lodash';
 import React from 'react';
 import { createStore, useStore as useZustandStore } from 'zustand';
 import { ENGLISH_MONTHS, weeks } from '../calendar-engine';
-import { ICalendarCtx, ICalendarEvents, ICalendarInternals, ICalendarProps, ICalendarState } from '../entities/model/models';
+import { ICalendarCtx, ICalendarEvents, ICalendarInternals, ICalendarProps, ICalendarState, ModeEnum } from '../entities/model/models';
 import { getStrategy } from './strategy/strategy-provider';
 import { Pipeline } from './utils/execution-pipeline';
 import { selectEvents } from '.';
 
 const DEFAULT_PROPS: ICalendarProps = {
   date: '',
+  mode: ModeEnum.RANGE,
 
   // todo: [REFACTOR DATE]
   startDate: '',
@@ -22,6 +23,8 @@ const DEFAULT_PROPS: ICalendarProps = {
   disableDateAfter: '',
   disabledWeekDays: [],
   holidays: [],
+  isDisabled: false,
+  isRhfBound: false,
   onChange: () => { },
 };
 
@@ -46,33 +49,6 @@ const INTERNAL_PROPS: ICalendarInternals = {
 
 const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Partial<ICalendarState> | ((state: ICalendarState) => ICalendarState | Partial<ICalendarState>), replace?: boolean | undefined) => void): ICalendarEvents => {
   return {
-    mountSetup: async (props) => {
-      const { isNepali, date, disableDateBefore, disableDateAfter } = props || {};
-      const cloned = _.cloneDeep(get().ctx);
-
-      // note: no idea why we need to set this is here and commit to store for disable date before and after to work
-      cloned.disableDateBefore = disableDateBefore;
-      cloned.disableDateAfter = disableDateAfter;
-
-      set({ ctx: cloned });
-
-      cloned.isNepali = isNepali;
-
-      const strategyProvider = getStrategy(cloned.isNepali as boolean);
-
-      const p = Pipeline<any>();
-
-      p.push(strategyProvider.setDate(date));
-      p.push(strategyProvider.normalizeDates);
-      p.push(strategyProvider.setGridMonths);
-      p.push(strategyProvider.setCalendarReferenceDate);
-
-      const { next } = await p.execute({
-        next: cloned,
-      });
-
-      set({ ctx: next });
-    },
 
     propsIsNepaliChange: async (isNepali = false) => {
       const cloned = _.cloneDeep(get().ctx);
@@ -254,12 +230,12 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
       }>();
 
       p.push(strategyProvider.setDate(date));
+      p.push(strategyProvider.checkIfStartDaetIsBeforeEndDate);
       p.push(strategyProvider.setGridDates);
       p.push(strategyProvider.setMonthYearPanelData);
       p.push(strategyProvider.setCalendarControllerLabels);
       p.push(strategyProvider.closeCalendarPicker);
       p.push(strategyProvider.sendChanges);
-
       const { next } = await p.execute({
         next: cloned,
       });
@@ -473,7 +449,7 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
       const cloned = _.cloneDeep(get().ctx);
 
       // ALWAYS TOGGLE FIRST
-      cloned.isNepali = isNepali;
+      cloned.isNepali = isNepali ? isNepali : false;
 
       // THEN GET STRATEGY
       const strategyProvider = getStrategy(cloned.isNepali as boolean);
@@ -546,12 +522,19 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
 }
 
 const createMyStore = (initialProps: ICalendarProps) => {
+  const { date, ...initilPropsRest } = initialProps
+
+  const localDate = date as { startDate: string, endDate: string }
 
   return createStore<ICalendarState>((set, get) => ({
     // ...DEFAULT_PROPS,
     ctx: {
       ...DEFAULT_PROPS,
-      ...initialProps,
+      ...{
+        ...initilPropsRest,
+        ...localDate
+        // ...(initilPropsRest?.mode === ModeEnum.RANGE ? { ...localDate } : { startDate: date }),
+      },
       ...INTERNAL_PROPS
     },
     events: getEvents(get, set)
@@ -565,28 +548,40 @@ const StoreContext = React.createContext<ReturnType<
 > | null>(null);
 
 export const Syncer = (props: any) => {
+  const isFirstRender = useFirstRender();
+
   const state = useDatePickerStore();
   const { syncIsNepaliProps, syncDateProps, syncDisableDateBeforeProps, syncDisableDateAfterProps } = selectEvents(state)
 
+
+
   React.useEffect(() => {
-    syncIsNepaliProps(props.isNepali);
+    if (!isFirstRender) {
+      syncIsNepaliProps(props.isNepali);
+    }
   }, [props.isNepali, syncIsNepaliProps]);
 
   React.useEffect(() => {
-    if (props.date) {
-      syncDateProps(props.date);
+    if (!isFirstRender) {
+      if (props.date) {
+        syncDateProps(props.date);
+      }
     }
   }, [props.date, syncDateProps]);
 
   React.useEffect(() => {
-    if (props.disableDateBefore) {
-      syncDisableDateBeforeProps(props.disableDateBefore);
+    if (!isFirstRender) {
+      if (props.disableDateBefore) {
+        syncDisableDateBeforeProps(props.disableDateBefore);
+      }
     }
   }, [props.disableDateBefore, syncDisableDateBeforeProps]);
 
   React.useEffect(() => {
-    if (props.disableDateAfter) {
-      syncDisableDateAfterProps(props.disableDateAfter);
+    if (!isFirstRender) {
+      if (props.disableDateAfter) {
+        syncDisableDateAfterProps(props.disableDateAfter);
+      }
     }
   }, [props.disableDateAfter, syncDisableDateAfterProps]);
 
@@ -601,6 +596,9 @@ export const DatePickerStoreProvider = ({
   children: React.ReactNode;
 }) => {
   // Reference this for singleton ->  https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md
+  console.log({
+    props2: props
+  })
   const store = React.useRef(createMyStore(props)).current;
   return (
     <StoreContext.Provider value={store}>
@@ -618,6 +616,13 @@ export const useDatePickerStore = () => {
 
   return useZustandStore(store);
 };
+
+export const useFirstRender = () => {
+  const ref = React.useRef(true);
+  const firstRender = ref.current;
+  ref.current = false;
+  return firstRender;
+}
 
 export * from "./selectors"
 
