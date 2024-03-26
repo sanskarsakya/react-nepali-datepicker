@@ -54,7 +54,7 @@ export const EnglishStrategy: ICalendarStrategy = {
 
     setDisableDateBefore: (disableDateBefore) => (ctx, next): void => {
         debug_mode && console.log("EnglishStrategy: setDisableDateBefore");
-        if (disableDateBefore.length >= 10) {
+        if (disableDateBefore.length >= 10 || disableDateBefore.length === 0) {
             ctx.next.disableDateBefore = disableDateBefore || "";
         }
         next();
@@ -62,7 +62,7 @@ export const EnglishStrategy: ICalendarStrategy = {
 
     setDisableDateAfter: (disableDateAfter) => (ctx, next): void => {
         debug_mode && console.log("EnglishStrategy: setDisableDateAfter");
-        if (disableDateAfter.length >= 10) {
+        if (disableDateAfter.length >= 10 || disableDateAfter.length === 0) {
             ctx.next.disableDateAfter = disableDateAfter || "";
         }
         next();
@@ -282,9 +282,8 @@ export const EnglishStrategy: ICalendarStrategy = {
         debug_mode && console.log("EnglishStrategy: checkIfStartDaetIsBeforeEndDate");
 
         // if mode is range then proceed
-
         if (ctx.next.mode === ModeEnum.SINGLE) {
-            next()
+            return next()
         }
 
         const start_date = ctx.next.startDate;
@@ -315,7 +314,7 @@ export const EnglishStrategy: ICalendarStrategy = {
                 ctx.next.endDate = BSToAD(ctx.next.endDate);
             }
         } else {
-            if (ctx.next.date) {
+            if (ctx.next.startDate) {
                 ctx.next.startDate = BSToAD(ctx.next.startDate);
             }
         }

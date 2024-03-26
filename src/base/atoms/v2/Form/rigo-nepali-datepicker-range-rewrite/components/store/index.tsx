@@ -134,6 +134,18 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
       cloned.currentDateSelection = type;
 
       p.push(strategyProvider.checkIfDateIsValid);
+
+      if (cloned.mode === ModeEnum.RANGE) {
+        if (type === "startDate" && cloned.endDate) {
+          p.push(strategyProvider.setDisableDateBefore(""));
+          p.push(strategyProvider.setDisableDateAfter(cloned.endDate));
+        }
+        if (type === "endDate" && cloned.startDate) {
+          p.push(strategyProvider.setDisableDateBefore(cloned.startDate));
+          p.push(strategyProvider.setDisableDateAfter(""));
+        }
+      }
+
       p.push(strategyProvider.setViewModeToCalendar);
       p.push(strategyProvider.setCalendarReferenceDate);
       p.push(strategyProvider.setIsTodayValid);
@@ -238,12 +250,13 @@ const getEvents = (get: () => ICalendarState, set: (partial: ICalendarState | Pa
       }>();
 
       p.push(strategyProvider.setDate(date));
+      p.push(strategyProvider.sendChanges);
       p.push(strategyProvider.checkIfStartDaetIsBeforeEndDate);
       p.push(strategyProvider.setGridDates);
       p.push(strategyProvider.setMonthYearPanelData);
       p.push(strategyProvider.setCalendarControllerLabels);
       p.push(strategyProvider.closeCalendarPicker);
-      p.push(strategyProvider.sendChanges);
+
       const { next } = await p.execute({
         next: cloned,
       });

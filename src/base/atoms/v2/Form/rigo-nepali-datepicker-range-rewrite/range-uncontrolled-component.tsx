@@ -16,10 +16,7 @@ export const RangeUncontrolledComponent = (props: any) => {
 
     const handleChange = (value: any) => {
         _onChange?.(name, value);
-        onChangeRHF?.({
-            startDate: value.startDate,
-            endDate: value.endDate
-        });
+        onChangeRHF?.(value);
     };
 
     // let valueNormalized = {

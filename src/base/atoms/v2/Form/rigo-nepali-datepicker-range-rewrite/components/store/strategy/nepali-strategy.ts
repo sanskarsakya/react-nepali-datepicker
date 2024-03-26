@@ -287,8 +287,9 @@ export const NepaliStrategy: ICalendarStrategy = {
         debug_mode && console.log("NepaliStrategy: checkIfStartDaetIsBeforeEndDate");
 
         // if mode is range then proceed
+
         if (ctx.next.mode === ModeEnum.SINGLE) {
-            next()
+            return next()
         }
 
         const start_date = ctx.next.startDate;
@@ -363,7 +364,7 @@ export const NepaliStrategy: ICalendarStrategy = {
                 ctx.next.endDate = ADToBS(ctx.next.endDate);
             }
         } else {
-            if (ctx.next.date) {
+            if (ctx.next.startDate) {
                 ctx.next.startDate = ADToBS(ctx.next.startDate);
             }
         }
@@ -401,10 +402,18 @@ export const NepaliStrategy: ICalendarStrategy = {
     // todo: [REFACTOR DATE]
     sendChanges: (ctx: any, next: Next<any>): void => {
         debug_mode && console.log("NepaliStrategy: sendChanges");
-        const startDate = ctx.next.startDate ? BSToAD(ctx.next.startDate) : ctx.next.startDate
-        const endDate = ctx.next.endDate ? BSToAD(ctx.next.endDate) : ctx.next.endDate
+        if (ctx.next.mode === ModeEnum.RANGE) {
+            const startDate = ctx.next.startDate ? BSToAD(ctx.next.startDate) : ctx.next.startDate
+            const endDate = ctx.next.endDate ? BSToAD(ctx.next.endDate) : ctx.next.endDate
 
-        ctx?.next?.onChange?.({ startDate, endDate });
+            ctx?.next?.onChange?.({ startDate, endDate });
+
+        } else {
+
+            const startDate = ctx.next.startDate ? BSToAD(ctx.next.startDate) : ctx.next.startDate
+            ctx?.next?.onChange?.(startDate);
+        }
+
 
         next();
     },

@@ -21,7 +21,7 @@ NepaliDatepickerRangeV2.HelperText = RigoFormHelperText;
 NepaliDatepickerRangeV2.ErrorLabel = RigoFormErrorLabel;
 NepaliDatepickerRangeV2.FormControl = RigoFormControl;
 NepaliDatepickerRangeV2.Component = RigoComponent;
-NepaliDatepickerRangeV2.RangeComponet = RangeComponent;
+NepaliDatepickerRangeV2.RangeComponent = RangeComponent;
 
 
 export default NepaliDatepickerRangeV2;

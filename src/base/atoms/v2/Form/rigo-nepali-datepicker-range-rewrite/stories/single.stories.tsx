@@ -4,10 +4,11 @@ import dayjs from 'dayjs';
 import { ConnectForm } from '../../connect-form';
 import { FormProvider } from '../../form-provider';
 import NepaliDatepickerRangeV2 from '..';
+import { ModeEnum } from '../components/entities/model/models';
 
 const meta: Meta<typeof NepaliDatepickerRangeV2> = {
     component: NepaliDatepickerRangeV2,
-    title: 'V2/Forms/Nepali Date Picker/ Range',
+    title: 'V2/Forms/Nepali Date Picker/ Single',
 };
 
 export default meta;
@@ -19,7 +20,7 @@ const argsBase = {
         startDate: dayjs(today).add(1, "month").format("YYYY-MM-DD"),
         endDate: dayjs(today).add(1, "month").format("YYYY-MM-DD")
     },
-    mode: "range",
+    mode: ModeEnum.SINGLE,
     isNepali: false,
     disableDateBefore: dayjs(today).subtract(1, "month").format("YYYY-MM-DD"),
     disableDateAfter: dayjs(today).add(1, "month").format("YYYY-MM-DD"),
