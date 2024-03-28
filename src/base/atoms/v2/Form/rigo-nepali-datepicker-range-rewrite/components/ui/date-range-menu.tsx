@@ -40,7 +40,7 @@ export const RangeMenu = () => {
     return <Menu placement="bottom-end">
         {({ isOpen }) => (
             <>
-                <MenuButton borderRadius="none" isActive={isOpen} as={IconButton} icon={<ChevronDownIcon />} />
+                <MenuButton ml={2} h='38px' mt={'-2px'} border='1px solid #cccccc' borderRadius="none" borderRightRadius='sm' isActive={isOpen} as={IconButton} icon={<ChevronDownIcon />} />
                 <MenuList >
                     <MenuItem onClick={handleThisWeekClick}>This Week</MenuItem>
                     <MenuItem onClick={handleThisMonthClick}>This Month</MenuItem>

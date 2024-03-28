@@ -85,7 +85,8 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
             placeholder='yyyy-mm-dd'
             bg='white'
             borderColor='#cccccc'
-            rounded='sm'
+            rounded={mode === ModeEnum.RANGE? "none" : 'sm'}
+            roundedLeft={mode === ModeEnum.RANGE? "sm" : 'none'}
             height={'38PX'}
             disabled={isDisabled}
             _placeholder={{
@@ -99,7 +100,7 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
           <When condition={mode === ModeEnum.RANGE}>
             <Input
               autoComplete='off'
-              width="160px"
+              width="180px"
               value={endValue}
               onChange={handleEndInputChange}
               onClick={() => {
@@ -109,7 +110,9 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
               placeholder='yyyy-mm-dd'
               bg='white'
               borderColor='#cccccc'
-              rounded='sm'
+              rounded='none'
+              roundedRight='sm'
+              borderLeft='none'
               height={'38PX'}
               disabled={isDisabled}
               _placeholder={{
@@ -120,7 +123,7 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
               }}
             />
             <InputRightElement>
-              <Flex alignItems="center">
+              <Flex alignItems="center" justifyContent='center'>
                 <When condition={showToggle}>
                   <IconButton
                     bg='transparent'
