@@ -3,13 +3,12 @@
 // LIBS
 import {
   Box,
+  Flex,
   IconButton,
-  Button,
   Input,
   InputGroup,
   InputRightElement,
-  forwardRef,
-  Flex,
+  forwardRef
 } from '@chakra-ui/react';
 import React from 'react';
 import { When } from 'react-if';

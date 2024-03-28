@@ -61,7 +61,7 @@ export const NepaliStrategy: ICalendarStrategy = {
         debug_mode && console.log("NepaliStrategy: setDisableDateBefore");
 
         if (disableDateBefore) {
-            ctx.next.disableDateBefore = ADToBS(disableDateBefore) || "";
+            ctx.next.disableDateBefore = disableDateBefore || "";
         }
         next();
     },
