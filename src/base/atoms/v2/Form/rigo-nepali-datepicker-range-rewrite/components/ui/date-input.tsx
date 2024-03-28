@@ -100,7 +100,7 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
           <When condition={mode === ModeEnum.RANGE}>
             <Input
               autoComplete='off'
-              width="180px"
+              width="200px"
               value={endValue}
               onChange={handleEndInputChange}
               onClick={() => {
@@ -123,7 +123,7 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(
               }}
             />
             <InputRightElement>
-              <Flex alignItems="center" justifyContent='center'>
+              <Flex alignItems="center" justifyContent='center' ml={-8}>
                 <When condition={showToggle}>
                   <IconButton
                     bg='transparent'
